@@ -1,0 +1,70 @@
+{
+	"name": "tram-lite",
+	"version": "0.1.0",
+	"description": "💡 Lite Modern View Framework for Vanilla Javascript",
+	"source": "src/index.ts",
+	"main": "dist/main.js",
+	"module": "dist/module.js",
+	"types": "dist/types.d.ts",
+	"exports": {
+		".": {
+			"import": "./dist/tram-lite.mjs",
+			"require": "./dist/tram-lite.cjs"
+		}
+	},
+	"files": [
+		"dist/*",
+		"docs/runkit_example.js"
+	],
+	"scripts": {
+		"watch": "parcel watch",
+		"build": "parcel build"
+	},
+	"runkitExampleFilename": "docs/runkit_example.js",
+	"author": {
+		"name": "Jesse Jurman",
+		"email": "j.r.jurman@gmail.com",
+		"url": "https://jrjurman.com"
+	},
+	"keywords": [
+		"frontend",
+		"framework",
+		"client",
+		"browser",
+		"web-app",
+		"tram-one",
+		"tram-lite",
+		"vanilla",
+		"tram",
+		"one",
+		"lite"
+	],
+	"repository": "https://github.com/Tram-One/tram-lite",
+	"license": "MIT",
+	"dependencies": {
+		"@tram-one/hyperx": "^4.0.3",
+		"@tram-one/nanohtml": "^5.0.0",
+		"@tram-one/rbel": "^2.0.1"
+	},
+	"devDependencies": {
+		"@parcel/packager-ts": "^2.8.2",
+		"@parcel/transformer-typescript-types": "^2.8.2",
+		"@testing-library/dom": "^8.19.1",
+		"@testing-library/jest-dom": "^5.16.5",
+		"@testing-library/user-event": "^14.4.3",
+		"@typescript-eslint/eslint-plugin": "^5.47.0",
+		"@typescript-eslint/parser": "^5.47.0",
+		"eslint": "^8.30.0",
+		"eslint-config-prettier": "^8.5.0",
+		"eslint-plugin-import": "^2.26.0",
+		"eslint-plugin-jest": "^27.1.7",
+		"eslint-plugin-prettier": "^4.2.1",
+		"jest": "^29.3.1",
+		"jest-environment-jsdom": "^29.3.1",
+		"parcel": "^2.8.2",
+		"prettier": "^2.8.1",
+		"ts-jest": "^29.0.3",
+		"tslib": "^2.4.1",
+		"typescript": "^4.9.4"
+	}
+}

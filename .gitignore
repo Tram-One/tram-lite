@@ -1,0 +1,12 @@
+# Library Distributable
+dist
+
+# Coverage Report
+coverage
+
+# Dependency directory
+node_modules
+
+# parcel test app files
+.parcel-cache
+.parcel-dist
