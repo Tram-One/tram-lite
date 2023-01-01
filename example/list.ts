@@ -21,9 +21,7 @@ export const list = (props) => {
 	};
 
 	const onUpdateList = (event) => {
-		const elements = props.elements;
-
-		elements.forEach((element) => {
+		props.elements.forEach((element) => {
 			// if the element doesn't already exist, create it, and append it to the dom
 			if (!event.target.querySelector(`#${element.id}`)) {
 				const onRemove = () => {
@@ -36,7 +34,7 @@ export const list = (props) => {
 			}
 		});
 		// if there are any elements that shouldn't exist anymore, remove them
-		const elementIds = elements.map((element) => element.id);
+		const elementIds = props.elements.map((element) => element.id);
 		[...event.target.children].forEach((listElement) => {
 			if (!elementIds.includes(listElement.id)) {
 				listElement.remove();

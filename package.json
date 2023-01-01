@@ -1,6 +1,6 @@
 {
 	"name": "tram-lite",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"description": "💡 Lite Modern View Framework for Vanilla Javascript",
 	"source": "src/index.ts",
 	"main": "dist/main.js",
@@ -18,7 +18,8 @@
 	],
 	"scripts": {
 		"watch": "parcel watch",
-		"build": "parcel build"
+		"build": "parcel build",
+		"test:app": "parcel example/test.html"
 	},
 	"runkitExampleFilename": "docs/runkit_example.js",
 	"author": {
@@ -43,7 +44,7 @@
 	"license": "MIT",
 	"dependencies": {
 		"@tram-one/hyperx": "^4.0.3",
-		"@tram-one/nanohtml": "^5.0.0",
+		"@tram-one/nanohtml": "^5.1.0",
 		"@tram-one/rbel": "^2.0.1"
 	},
 	"devDependencies": {

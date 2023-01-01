@@ -3,6 +3,7 @@ type onUpdateEventProps = { target: Element };
 export interface TramElement extends HTMLElement {
 	events?: string[];
 	onupdate?: ({ target }: onUpdateEventProps) => void;
+	// observedProps?: any;
 }
 
 /**
