@@ -3,6 +3,7 @@ import rbel from '@tram-one/rbel';
 import hyperx from '@tram-one/hyperx';
 import { Children, Props, Registry, TramElement } from './types.d';
 import { observableProps } from './observableProps';
+import { newAttributeObserver } from './attributeObserver';
 
 /**
  * This function takes in a registry of custom components,
@@ -26,39 +27,15 @@ export const registerDom = (registry: Registry = {}) => {
 			// (pass in observedProps, so that mutations trigger proxy-effects)
 			const result = tagFunction(observedProps, children);
 			observedProps['tram-element'] = result;
-			// set the observeredProps to the element so that we can update it's props
-			// result.observedProps = observedProps;
 
 			// trigger all the `onupdate` effects (to set initial values)
-			// TODO: should this only happen on initial mount?
+			// NEW TODO: this should only happen when the component mounts (otherwise we won't have context data)
 			[result, ...result.querySelectorAll('*')]
 				.filter((element) => (element as TramElement).events?.includes('onupdate'))
 				.forEach((element) => (element as TramElement).onupdate?.({ target: element }));
 
-			// set up a mutation effect to trigger side-effects when
-			// attributes are updated
-			const observeAttrChanges = (mutationList: MutationRecord[]) => {
-				mutationList.forEach((mutationRecord) => {
-					// if this element contains an `onupdate`, trigger those events
-					if ((mutationRecord.target as TramElement).events?.includes('onupdate')) {
-						(mutationRecord.target as any).onupdate({ target: mutationRecord.target });
-					}
-					// if the attribute changed was a context attribute,
-					// trigger the onupdate for those children with this prop
-					if (mutationRecord.attributeName?.match(/context:/)) {
-						const propName = mutationRecord.attributeName.replace('context:', '');
-						const updateTargets = (mutationRecord.target as TramElement).querySelectorAll(`[use\\:${propName}]`);
-						[...updateTargets].forEach((element) => {
-							if ((element as any).events?.includes('onupdate')) {
-								(element as any).onupdate({ target: element });
-							}
-						});
-					}
-				});
-			};
-
 			// setup the mutation observer on the resulting dom
-			const attributeObserver = new MutationObserver(observeAttrChanges);
+			const attributeObserver = newAttributeObserver();
 			attributeObserver.observe(result, { attributes: true, subtree: true });
 
 			// return the final result dom

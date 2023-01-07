@@ -1,4 +1,4 @@
-export const querySelectorAndMatch = (rootElement: Element, selector: string) => {
+export const queryElementOrChild = (rootElement: Element, selector: string) => {
 	const elementHasAttribute = rootElement.matches(selector);
 	const elementChildWithAttribute = rootElement.querySelector(selector);
 	const elementMatchingSelector = elementHasAttribute ? rootElement : elementChildWithAttribute;

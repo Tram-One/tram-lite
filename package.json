@@ -1,6 +1,6 @@
 {
 	"name": "tram-lite",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"description": "💡 Lite Modern View Framework for Vanilla Javascript",
 	"source": "src/index.ts",
 	"main": "dist/main.js",

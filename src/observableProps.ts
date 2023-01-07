@@ -1,7 +1,15 @@
-import { querySelectorAndMatch } from './querySelectorAndMatch';
-import { lookForParentWithContextProp } from './recursiveLookup';
+import { queryElementOrChild } from './utils/queryElementOrChild';
+import { lookForParentWithContextProp } from './utils/recursiveLookup';
+import { safeParse } from './utils/safeParse';
 import { Props, TramElement } from './types';
+import { queryElementAndChildren } from './utils/queryElementAndChildren';
 
+/**
+ * Observable Props is a Proxy object that looks at the Tram-Element
+ * on the DOM and can read / write attributes on the DOM when interacted with
+ * @param props
+ * @returns Proxy Object that can interact with DOM
+ */
 export const observableProps = (props: Props) => {
 	return new Proxy(props, {
 		get(obj, prop, reciever) {
@@ -23,18 +31,10 @@ export const observableProps = (props: Props) => {
 			if (!hasElement) return undefined;
 
 			// check if the element (or child element) has the attribute
-			const elementWithAttr = querySelectorAndMatch(obj['tram-element'], `[${String(prop)}]`);
+			const elementWithAttr = queryElementOrChild(obj['tram-element'], `[${String(prop)}]`);
 			if (elementWithAttr) {
 				const attrValue = elementWithAttr.getAttribute(String(prop));
-				if (attrValue) {
-					try {
-						// try to parse as an object or number
-						return JSON.parse(attrValue);
-					} catch {
-						// if it's actually a string, return that
-						return attrValue;
-					}
-				}
+				return safeParse(attrValue);
 			}
 
 			// check that the element has a `use:<attr>`
@@ -44,15 +44,7 @@ export const observableProps = (props: Props) => {
 				const parentWithContextAttr = lookForParentWithContextProp(String(prop))(obj['tram-element']);
 				if (parentWithContextAttr) {
 					const contextAttrValue = parentWithContextAttr.getAttribute(`context:${String(prop)}`);
-					if (contextAttrValue) {
-						try {
-							// try to parse as an object or number
-							return JSON.parse(contextAttrValue);
-						} catch {
-							// if it's actually a string, return that
-							return contextAttrValue;
-						}
-					}
+					return safeParse(contextAttrValue);
 				}
 			}
 		},
@@ -63,16 +55,15 @@ export const observableProps = (props: Props) => {
 				return Reflect.set(obj, prop, value, reciever);
 			}
 
+			// TODO - if Reflect.get(obj, prop, reciever); is true, this
+			// prop is something that was passed in, and can not be re-written
+			// (or, if it is, it won't be read on subsequent updates, untless we allow that behavior)
+
 			// -- for all other props, look for the attributes in this tram-element --
 			const needsStringification = typeof value !== 'string';
 			const attributeSelector = `[${String(prop)}]`;
 			// check if any element here has this attribute
-			const doesTramElementMatch = obj['tram-element'].matches(attributeSelector);
-			const tramElementChildrenThatMatch = obj['tram-element'].querySelectorAll(attributeSelector);
-			const elementsWithProp = [
-				...(doesTramElementMatch ? [obj['tram-element']] : []),
-				...tramElementChildrenThatMatch,
-			];
+			const elementsWithProp = queryElementAndChildren(obj['tram-element'], attributeSelector);
 			const elementHasProp = elementsWithProp.length > 0;
 			if (elementHasProp) {
 				elementsWithProp.forEach((element) => {
