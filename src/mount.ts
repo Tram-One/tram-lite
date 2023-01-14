@@ -7,6 +7,11 @@ import { TramComponent } from './types';
  * @param container an element to render the component on
  */
 export const mount = (component: TramComponent, container: HTMLElement) => {
+	// setup the mutation observer on the initial container
+	// this will force updates on children when attributes (or dom) changes
+	// const attributeObserver = newAttributeObserver();
+	// attributeObserver.observe(container, { attributes: true, subtree: true });
+
 	const html = registerDom({
 		app: component,
 	});

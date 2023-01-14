@@ -1,12 +1,11 @@
+import { TramElement } from '../types';
+
 // set up a mutation effect to trigger side-effects when
-
-import { TramElement } from './types';
-
 // attributes are updated
 const observeAttrChanges = (mutationList: MutationRecord[]) => {
 	mutationList.forEach((mutationRecord) => {
 		// if this element contains an `onupdate`, trigger those events
-		if ((mutationRecord.target as TramElement).events?.includes('onupdate')) {
+		if ((mutationRecord.target as TramElement)?.events?.includes('onupdate')) {
 			(mutationRecord.target as any).onupdate({ target: mutationRecord.target });
 		}
 		// if the attribute changed was a context attribute,

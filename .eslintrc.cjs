@@ -8,12 +8,20 @@ module.exports = {
 	plugins: ['jest', '@typescript-eslint'],
 	extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended'],
 	rules: {
-		// some of the dependencies do not support module imports... yet
-		'@typescript-eslint/no-var-requires': 'off',
 		// as a framework, we have to sometimes just expect anything
 		'@typescript-eslint/no-explicit-any': 'off',
 		// we shouldn't have console logs in our project
 		'no-console': 'error',
+		// we allow Function type, because as a framework, we'll generically have funtions
+		'@typescript-eslint/ban-types': [
+			'error',
+			{
+				types: {
+					Function: false,
+				},
+				extendDefaults: true,
+			},
+		],
 	},
 	overrides: [
 		// allow module.exports for config, testing, and docs

@@ -2,14 +2,11 @@ import { registerDom } from '../src';
 
 const html = registerDom();
 
-export const counter = (props) => {
-	const incrementCounter = () => {
-		props.count = props.count + 1;
+export const counter = () => {
+	let count = 0;
+	const incrementCount = () => {
+		console.log('COUNTER CLICKED!');
+		count++;
 	};
-
-	const onUpdateCounter = (event) => {
-		event.target.innerHTML = props.count;
-	};
-
-	return html`<button count="0" onclick=${incrementCounter} onupdate=${onUpdateCounter}></button>`;
+	return html` <button onclick=${incrementCount}>${count}</button> `;
 };

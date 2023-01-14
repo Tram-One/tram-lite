@@ -1,8 +1,8 @@
-import { queryElementOrChild } from './utils/queryElementOrChild';
-import { lookForParentWithContextProp } from './utils/recursiveLookup';
-import { safeParse } from './utils/safeParse';
-import { Props, TramElement } from './types';
-import { queryElementAndChildren } from './utils/queryElementAndChildren';
+import { queryElementOrChild } from './queryElementOrChild';
+import { lookForParentWithContextProp } from './recursiveLookup';
+import { safeParse } from './safeParse';
+import { Props, TramElement } from '../types';
+import { queryElementAndChildren } from './queryElementAndChildren';
 
 /**
  * Observable Props is a Proxy object that looks at the Tram-Element

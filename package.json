@@ -1,6 +1,6 @@
 {
 	"name": "tram-lite",
-	"version": "0.2.1",
+	"version": "0.3.0",
 	"description": "💡 Lite Modern View Framework for Vanilla Javascript",
 	"source": "src/index.ts",
 	"main": "dist/main.js",
@@ -42,11 +42,7 @@
 	],
 	"repository": "https://github.com/Tram-One/tram-lite",
 	"license": "MIT",
-	"dependencies": {
-		"@tram-one/hyperx": "^4.0.3",
-		"@tram-one/nanohtml": "^5.1.0",
-		"@tram-one/rbel": "^2.0.1"
-	},
+	"dependencies": {},
 	"devDependencies": {
 		"@parcel/packager-ts": "^2.8.2",
 		"@parcel/transformer-typescript-types": "^2.8.2",

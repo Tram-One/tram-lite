@@ -1,21 +1,18 @@
 import { registerDom, mount } from '../src';
-
-import { listItem } from './list-item';
-import { list } from './list';
 import { counter } from './counter';
+import { newHeader } from './new-header';
 
 const html = registerDom({
-	'list-item': listItem,
+	'new-header': newHeader,
 	counter: counter,
-	list: list,
 });
-const app = (props) => {
+
+const app = () => {
 	return html`
 		<main>
-			<h1>To Do List!</h1>
+			<new-header color="lightblue">Tram-Lite</new-header>
+			<code>Take Two</code>
 			<counter />
-			<counter />
-			<list />
 		</main>
 	`;
 };

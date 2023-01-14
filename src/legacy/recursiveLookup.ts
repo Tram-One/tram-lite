@@ -1,4 +1,4 @@
-import { TramElement } from './types.d';
+import { TramElement } from '../types';
 
 type recursiveLoookup = [(element: TramElement | null) => TramElement | null][0];
 export const lookForParentWithContextProp = (prop: string) => {
