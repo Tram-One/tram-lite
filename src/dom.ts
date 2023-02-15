@@ -1,6 +1,7 @@
 import { Registry } from './types.d';
 import { newRegistryObserver, processNewNodes } from './mutationObservers/registeryObserver';
-import { newFunctionObserver, processFunctionPlaceholders } from './mutationObservers/functionObserver';
+import { processFunctionPlaceholders } from './processFunctionPlaceholders';
+import { processVariablePlaceholders } from './processVariablePlaceholders';
 
 /**
  * This function takes in a registry of custom components,
@@ -13,17 +14,24 @@ export const registerDom = (registry: Registry = {}) => {
 
 	const htmlTagFunction = (strings: TemplateStringsArray, ...variables: any[]) => {
 		const functionPlaceholders: { [key: string]: Function } = {};
+		const variablePlaceholders: { [key: string]: Function } = {};
 
-		// set function placeholders, and then apply them after-the-fact
+		// set function and variable placeholders, and then apply them after-the-fact
 		const varsAndFuncs = variables.map((variable) => {
 			if (typeof variable === 'function') {
-				const newPlaceholder = `fn${Object.keys(functionPlaceholders).length}`;
-				functionPlaceholders[newPlaceholder] = variable;
-				return newPlaceholder;
+				const newFnPlaceholder = `[fn${Object.keys(functionPlaceholders).length}]`;
+				functionPlaceholders[newFnPlaceholder] = variable;
+				return newFnPlaceholder;
+			} else {
+				const newVarPlaceholder = `[var${Object.keys(variablePlaceholders).length}]`;
+				variablePlaceholders[newVarPlaceholder] = variable;
+				return newVarPlaceholder;
 			}
-			return variable;
+			// return variable;
 		});
-		const functionObserver = newFunctionObserver(functionPlaceholders);
+
+		// const functionObserver = newFunctionObserver(functionPlaceholders);
+		// const variableObserver = newVariableObserver(variablePlaceholders);
 
 		const newElement = String.raw({ raw: strings }, ...varsAndFuncs);
 		const emptyContainer = document.createElement('div');
@@ -32,14 +40,16 @@ export const registerDom = (registry: Registry = {}) => {
 
 		// set up the observer that will inject custom components
 		registryObserver.observe(result, { childList: true, subtree: true });
+
 		// set up the observer that will inject functions that we templated
-		functionObserver.observe(result, { childList: true, attributes: true, subtree: true });
+		// functionObserver.observe(result, { childList: true, attributes: true, subtree: true });
+		// variableObserver.observe(result, { childList: true, attributes: true, subtree: true });
 
 		// do an initial process of the elements
 		// JESSE - this wasn't originally required, but is now :thinking:
 		processNewNodes(registry, [...emptyContainer.querySelectorAll('*')]);
 		processFunctionPlaceholders(functionPlaceholders, [...emptyContainer.querySelectorAll('*')]);
-
+		processVariablePlaceholders(variablePlaceholders, [...emptyContainer.querySelectorAll('*')]);
 		return result;
 	};
 	return htmlTagFunction;

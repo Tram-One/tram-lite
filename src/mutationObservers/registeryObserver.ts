@@ -1,3 +1,4 @@
+import { newProxyProps } from '../proxyProps';
 import { Registry } from '../types';
 
 // since all tags in the DOM are capitalized, capitalize all the ones in the registry
@@ -22,6 +23,8 @@ export const processNewNodes = (registry: Registry, newNodes: Node[]) => {
 				{}
 			);
 
+			const proxyProps = newProxyProps(props);
+
 			// pull children from this component
 			// we move these to a new element so that they are removed from this one
 			const childContainer = document.createElement('div');
@@ -30,7 +33,7 @@ export const processNewNodes = (registry: Registry, newNodes: Node[]) => {
 			});
 
 			// call the registry function, and replace this element with that one
-			const newComponent = formattedRegistry[tagName](props, childContainer.childNodes);
+			const newComponent = formattedRegistry[tagName](proxyProps, childContainer.childNodes);
 			addedNode.appendChild(newComponent);
 		}
 	});
