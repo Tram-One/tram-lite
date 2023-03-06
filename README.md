@@ -40,10 +40,9 @@ The idea is that a smaller repository will provide an easier to understand frame
 
 ## This Repo and the Tram-One Org
 
-This repo uses many common dependencies with Tram-One.
+This repo is a reimagining of the existing Tram-One framework.
 [The Tram-One org](https://github.com/Tram-One)
-includes the more featureful Tram-One, the dependencies shared by both projects, as well as the websites and generators for Tram-One.
-The dependencies, as proved by this project, can be used for all sorts of frontend frameworks!
+includes the more featureful Tram-One, utilities, dependencies, as well as the websites and generators for Tram-One.
 
 ### Discord
 

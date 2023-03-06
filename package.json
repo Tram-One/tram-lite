@@ -1,27 +1,11 @@
 {
 	"name": "tram-lite",
-	"version": "0.3.0",
-	"description": "💡 Lite Modern View Framework for Vanilla Javascript",
-	"source": "src/index.ts",
-	"main": "dist/main.js",
-	"module": "dist/module.js",
-	"types": "dist/types.d.ts",
-	"exports": {
-		".": {
-			"import": "./dist/tram-lite.mjs",
-			"require": "./dist/tram-lite.cjs"
-		}
-	},
-	"files": [
-		"dist/*",
-		"docs/runkit_example.js"
-	],
+	"version": "0.4.0",
+	"description": "💡 Lite View Library for Vanilla Javascript",
+	"main": "src/tram-lite.js",
 	"scripts": {
-		"watch": "parcel watch",
-		"build": "parcel build",
-		"test:app": "parcel example/test.html"
+		"start": "npx serve ."
 	},
-	"runkitExampleFilename": "docs/runkit_example.js",
 	"author": {
 		"name": "Jesse Jurman",
 		"email": "j.r.jurman@gmail.com",
@@ -30,6 +14,7 @@
 	"keywords": [
 		"frontend",
 		"framework",
+		"library",
 		"client",
 		"browser",
 		"web-app",
@@ -43,25 +28,5 @@
 	"repository": "https://github.com/Tram-One/tram-lite",
 	"license": "MIT",
 	"dependencies": {},
-	"devDependencies": {
-		"@parcel/packager-ts": "^2.8.2",
-		"@parcel/transformer-typescript-types": "^2.8.2",
-		"@testing-library/dom": "^8.19.1",
-		"@testing-library/jest-dom": "^5.16.5",
-		"@testing-library/user-event": "^14.4.3",
-		"@typescript-eslint/eslint-plugin": "^5.47.0",
-		"@typescript-eslint/parser": "^5.47.0",
-		"eslint": "^8.30.0",
-		"eslint-config-prettier": "^8.5.0",
-		"eslint-plugin-import": "^2.26.0",
-		"eslint-plugin-jest": "^27.1.7",
-		"eslint-plugin-prettier": "^4.2.1",
-		"jest": "^29.3.1",
-		"jest-environment-jsdom": "^29.3.1",
-		"parcel": "^2.8.2",
-		"prettier": "^2.8.1",
-		"ts-jest": "^29.0.3",
-		"tslib": "^2.4.1",
-		"typescript": "^4.9.4"
-	}
+	"devDependencies": {}
 }
