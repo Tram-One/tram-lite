@@ -1,8 +1,20 @@
 let count = 0;
-const increment = () => {
-	console.log('INCREMENTING!', count++);
-};
 
-const counter = html` <button onclick=${increment}>increment</button> `;
+function increment() {
+	count++;
+	fb.setAttribute('count', count);
+	fb2.setAttribute('count', count);
+}
 
-document.body.appendChild(counter);
+define`
+  <foo-bar>
+    <div styles="color: ${'color'}">${'greeting'} ${'name'}</div>
+    <button onclick="increment()">Count: ${'count'}</button>
+  </foo-bar>
+`;
+
+const fb = html`<foo-bar greeting="Hello" name="Jesse" count="0"></foo-bar>`;
+document.body.appendChild(fb);
+
+const fb2 = html`<foo-bar greeting="Hey" name="Tina" count="0"></foo-bar>`;
+document.body.appendChild(fb2);
