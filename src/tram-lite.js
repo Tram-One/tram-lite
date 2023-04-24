@@ -1,3 +1,24 @@
+function getElementsWithTramLiteValuesInAttributes(root) {
+	const result = [];
+	const treeWalker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT, {
+		acceptNode: (node) => {
+			for (const attr of node.attributes) {
+				if (attr.value.match(/tl:(.+?):/)) {
+					return NodeFilter.FILTER_ACCEPT;
+				}
+			}
+			return NodeFilter.FILTER_REJECT;
+		},
+	});
+
+	let currentNode;
+	while ((currentNode = treeWalker.nextNode())) {
+		result.push(currentNode);
+	}
+
+	return result;
+}
+
 function getTextNodesWithTramLiteValues(root) {
 	const result = [];
 	const treeWalker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
@@ -41,6 +62,7 @@ function define(strings, ...values) {
 			console.log('changedCallback', { name, oldValue, newValue });
 			// scan through all text nodes with tagged values
 			this.updateTextNodeTemplates();
+			this.updateAttrNodeTemplates();
 		}
 
 		updateTextNodeTemplates() {
@@ -52,6 +74,18 @@ function define(strings, ...values) {
 				});
 				console.log({ updatedTemplate });
 				textNode.textContent = updatedTemplate;
+			});
+		}
+
+		updateAttrNodeTemplates() {
+			this.taggedValuesAttrNodes.forEach(({ attrNode, originalTemplate }) => {
+				let updatedTemplate = originalTemplate;
+				// we'll need to go through all the attributes, in case this template has other attributes
+				[...this.attributes].forEach((attribute) => {
+					updatedTemplate = updatedTemplate.replace(`tl:${attribute.name}:`, this.getAttribute(attribute.name));
+				});
+				console.log({ updatedTemplate });
+				attrNode.value = updatedTemplate;
 			});
 		}
 
@@ -76,7 +110,21 @@ function define(strings, ...values) {
 				this.taggedValuesTextNodes.push({ textNode, originalTemplate: textNode.textContent });
 			});
 
-			console.log({ taggedValuesTextNodes: this.taggedValuesTextNodes });
+			// list of attribute nodes that have a tagged value
+			this.taggedValuesAttrNodes = [];
+
+			// scan for any elements with attributes that have a tram-lite variable
+			// these are attributes that need to be updated on the attribute being changed
+			const taggedAttrElements = getElementsWithTramLiteValuesInAttributes(shadow);
+			// save the original attribute in the taggedValuesAttributes
+			taggedAttrElements.forEach((element) => {
+				[...element.attributes].forEach((attrNode) => {
+					if (attrNode.value.match(/tl:(.+?):/)) {
+						this.taggedValuesAttrNodes.push({ attrNode, originalTemplate: attrNode.value });
+					}
+				});
+			});
+			console.log({ taggedValuesAttrNodes: this.taggedValuesAttrNodes });
 		}
 	}
 
