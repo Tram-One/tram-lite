@@ -28,13 +28,13 @@
 
 # Tram-Lite
 
-Lite Modern View Framework for Vanilla Javascript
+Lite DOM and Native Component Library for Vanilla Javascript
 <br>
 <br>
 
 ## Summary
 
-Tram-Lite is a lightweight version of Tram-One. This repo is an experiment refactoring that prioritizes simplification, and attempts to provide a functional framework with the smallest amount of code.
+Tram-Lite is a lightweight version of Tram-One. This repo is an experiment refactoring that prioritizes simplification, and attempts to provide a functional library with the smallest amount of code.
 
 The idea is that a smaller repository will provide an easier to understand framework, and allow consumers to confidently read and understand the underpinnings.
 
