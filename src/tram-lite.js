@@ -59,7 +59,6 @@ function define(strings, ...values) {
 		}
 
 		attributeChangedCallback(name, oldValue, newValue) {
-			console.log('changedCallback', { name, oldValue, newValue });
 			// scan through all text nodes with tagged values
 			this.updateTextNodeTemplates();
 			this.updateAttrNodeTemplates();
@@ -72,7 +71,6 @@ function define(strings, ...values) {
 				[...this.attributes].forEach((attribute) => {
 					updatedTemplate = updatedTemplate.replace(`tl:${attribute.name}:`, this.getAttribute(attribute.name));
 				});
-				console.log({ updatedTemplate });
 				textNode.textContent = updatedTemplate;
 			});
 		}
@@ -84,7 +82,6 @@ function define(strings, ...values) {
 				[...this.attributes].forEach((attribute) => {
 					updatedTemplate = updatedTemplate.replace(`tl:${attribute.name}:`, this.getAttribute(attribute.name));
 				});
-				console.log({ updatedTemplate });
 				attrNode.value = updatedTemplate;
 			});
 		}
@@ -124,7 +121,6 @@ function define(strings, ...values) {
 					}
 				});
 			});
-			console.log({ taggedValuesAttrNodes: this.taggedValuesAttrNodes });
 		}
 	}
 
