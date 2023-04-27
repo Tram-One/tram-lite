@@ -49,11 +49,6 @@ function define(strings, ...values) {
 
 	class CustomTramLiteElement extends HTMLElement {
 		static get observedAttributes() {
-			// in the case where we use the tag attributes, we can use the following code
-			// e.g. <foo-counter start> ...
-			// return Array.from(element.attributes, (attr) => attr.name);
-
-			// in the case where we just use all the templated values
 			// e.g. <foo-label>${'label'} ...
 			return values;
 		}
@@ -89,6 +84,13 @@ function define(strings, ...values) {
 		constructor() {
 			super();
 
+			// default all values to be blank (if they are undefined)
+			values.forEach((attributeName) => {
+				if (this.getAttribute(attributeName) === null) {
+					this.setAttribute(attributeName, '');
+				}
+			});
+
 			// Create a shadow root
 			// and append our HTML to it
 			const shadow = this.attachShadow({ mode: 'open' });
@@ -121,6 +123,9 @@ function define(strings, ...values) {
 					}
 				});
 			});
+
+			// an initial call to set the default attributes
+			this.attributeChangedCallback();
 		}
 	}
 

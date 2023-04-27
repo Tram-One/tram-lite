@@ -1,20 +1,17 @@
-let count = 0;
-
-function increment() {
-	count++;
-	fb.setAttribute('count', count);
-	fb2.setAttribute('count', count);
+function increment(event) {
+	const counter = event.target.getRootNode().host;
+	const newCount = parseInt(counter.getAttribute('count')) + 1;
+	counter.setAttribute('count', newCount);
 }
 
 define`
-  <foo-bar>
-    <div style="color: ${'color'}">${'greeting'} ${'name'}</div>
-    <button onclick="increment()">Count: ${'count'}</button>
-  </foo-bar>
+  <tram-counter>
+    <button style="color: ${'color'}" onclick="increment(event)">${'label'}: ${'count'}</button>
+  </tram-counter>
 `;
 
-const fb = html`<foo-bar greeting="Hello" name="Jesse" count="0" color="#CECEFF"></foo-bar>`;
-document.body.appendChild(fb);
+const bc = html`<tram-counter label="Blue" count="0" color="#CECEFF"></tram-counter>`;
+document.body.appendChild(bc);
 
-const fb2 = html`<foo-bar greeting="Hey" name="Tina" count="0" color="#FFCECE"></foo-bar>`;
-document.body.appendChild(fb2);
+const rc = html`<tram-counter label="Red" count="0" color="#FFCECE"></tram-counter>`;
+document.body.appendChild(rc);
