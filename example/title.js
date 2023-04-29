@@ -4,5 +4,9 @@ define`
   </tram-title>
 `;
 
-const newTitle = html`<tram-title>Tram-Lite Components!</tram-title>`;
+const newTitle = html`
+	<tram-example>
+		<tram-title>Tram-Lite Components!</tram-title>
+	</tram-example>
+`;
 document.body.appendChild(newTitle);

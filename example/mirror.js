@@ -11,8 +11,8 @@ define`
 `;
 
 const tm = html`
-	<div style="padding-top: 5px">
+	<tram-example>
 		<tram-mirror>!</tram-mirror>
-	</div>
+	</tram-example>
 `;
 document.body.appendChild(tm);

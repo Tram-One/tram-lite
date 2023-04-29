@@ -18,12 +18,13 @@ const formatMs = (ms) => {
 	return `${minutes}:${secondsPadding}${remainingSeconds}:${msPadding}${remainingMilliseconds}`;
 };
 
-function startTimer(event) {
+function startTimer(form, event) {
+	event.preventDefault();
 	const timer = event.target.getRootNode().host;
 
 	// get the minutes and seconds, and add that to the target time
-	const seconds = timer.getAttribute('seconds');
-	const minutes = timer.getAttribute('minutes');
+	const seconds = form.seconds.value;
+	const minutes = form.minutes.value;
 	const setTime = minutes * 60 * 1000 + seconds * 1000;
 	timer.setAttribute('targettime', new Date().getTime() + setTime);
 
@@ -40,18 +41,19 @@ function startTimer(event) {
 
 define`
   <tram-timer ${'totalms'}>
-		<label>Minutes: <input onkeyup="setMinutes(event)" size="5"></label>
-		<label>Seconds: <input onkeyup="setSeconds(event)" size="5"></label>
+		<form onsubmit="startTimer(this, event)">
+			<label>Minutes: <input name="minutes" size="5"></label>
+			<label>Seconds: <input name="seconds" size="5"></label>
 
-    <button onclick="startTimer(event)">Start!</button>
-		<br>
+			<input type="submit" value="Start!">
+		</form>
 		${'remainingms'}
   </tram-timer>
 `;
 
 const tt = html`
-	<div style="padding-top: 5px;">
+	<tram-example>
 		<tram-timer></tram-timer>
-	</div>
+	</tram-example>
 `;
 document.body.appendChild(tt);
