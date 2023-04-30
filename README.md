@@ -28,15 +28,82 @@
 
 # Tram-Lite
 
-Lite DOM and Native Component Library for Vanilla Javascript
-<br>
-<br>
+Tram-Lite is a library that helps developers build native web-components, and makes building simple native javascript applications easier and more elegant!
 
-## Summary
+## Installation
 
-Tram-Lite is a lightweight version of Tram-One. This repo is an experiment refactoring that prioritizes simplification, and attempts to provide a functional library with the smallest amount of code.
+Tram-Lite is easy to include in any project, simply include the following script tag in your html template.
 
-The idea is that a smaller repository will provide an easier to understand framework, and allow consumers to confidently read and understand the underpinnings.
+```html
+<script src="https://unpkg.com/tram-lite"></script>
+```
+
+This will automatically add `define` and `html` attributes for you to use in your javascript.
+
+## API
+
+Tram-Lite has a simple API with two main functions, `define` and `html`.
+
+### `define`
+
+`define` is a template tag function used to create new web-components.
+
+```js
+define`
+  <my-greeting>
+    <h1>Hello ${'name'}</h1>
+  </my-greeting>
+`;
+```
+
+The outer-most tag (in this case, `<my-greeting>`) is the new component that will be defined, and anything under that will be created as shadow-dom inside our new web-component. This can be created using `document.createElement`, the helper `html` function (detailed below), or as part of your HTML template.
+
+```js
+const greeting = html`<my-greeting name="Ada"></my-greeting>`;
+document.body.appendChild(greeting);
+```
+
+Any templated strings (in this case, `${'name'}`) will become observed attributes on the new component. If we want to change them, you can use the native `setAttribute` function.
+
+```js
+greeting.setAttribute('Nikola'); // our geeting will update automatically!
+```
+
+### `html`
+
+`html` is a helper function to quickly create html dom with all their attributes and content.
+
+```js
+const pageHeader = html`<h1 style="padding: 1em;">Hello World</h1>`;
+```
+
+This can help reduce the amount of javascript needed, removing the need for `document.createElement`, `setAttribute`, `setInnerHTML`, when building initial DOM with javascript.
+
+## Example Component
+
+Here is an example component (you can see more in the [examples folder](/examples/)).
+
+```js
+define`
+  <tram-counter>
+    <button style="color: ${'color'}" onclick="increment(this)">${'label'}: ${'count'}</button>
+  </tram-counter>
+`;
+
+function increment(button) {
+	const counter = button.getRootNode().host;
+	const newCount = parseInt(counter.getAttribute('count')) + 1;
+	counter.setAttribute('count', newCount);
+}
+
+const counters = html`
+	<div>
+		<tram-counter label="Blue" count="0" color="#CECEFF"></tram-counter>
+		<tram-counter label="Red" count="0" color="#FFCECE"></tram-counter>
+	</div>
+`;
+document.body.appendChild(counters);
+```
 
 ## This Repo and the Tram-One Org
 

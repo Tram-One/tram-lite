@@ -1,3 +1,15 @@
+define`
+  <tram-timer ${'totalms'}>
+		<form onsubmit="startTimer(this, event)">
+			<label>Minutes: <input name="minutes" size="5"></label>
+			<label>Seconds: <input name="seconds" size="5"></label>
+
+			<input type="submit" value="Start!">
+		</form>
+		${'remainingms'}
+  </tram-timer>
+`;
+
 function setMinutes(event) {
 	const timer = event.target.getRootNode().host;
 	timer.setAttribute('minutes', event.target.value);
@@ -38,18 +50,6 @@ function startTimer(form, event) {
 
 	window.requestAnimationFrame(update);
 }
-
-define`
-  <tram-timer ${'totalms'}>
-		<form onsubmit="startTimer(this, event)">
-			<label>Minutes: <input name="minutes" size="5"></label>
-			<label>Seconds: <input name="seconds" size="5"></label>
-
-			<input type="submit" value="Start!">
-		</form>
-		${'remainingms'}
-  </tram-timer>
-`;
 
 const tt = html`
 	<tram-example>

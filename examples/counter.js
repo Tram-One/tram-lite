@@ -1,14 +1,14 @@
-function increment(button) {
-	const counter = button.getRootNode().host;
-	const newCount = parseInt(counter.getAttribute('count')) + 1;
-	counter.setAttribute('count', newCount);
-}
-
 define`
   <tram-counter>
     <button style="color: ${'color'}" onclick="increment(this)">${'label'}: ${'count'}</button>
   </tram-counter>
 `;
+
+function increment(button) {
+	const counter = button.getRootNode().host;
+	const newCount = parseInt(counter.getAttribute('count')) + 1;
+	counter.setAttribute('count', newCount);
+}
 
 const counters = html`
 	<tram-example>

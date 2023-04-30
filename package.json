@@ -23,7 +23,8 @@
 		"vanilla",
 		"tram",
 		"one",
-		"lite"
+		"lite",
+		"web-components"
 	],
 	"repository": "https://github.com/Tram-One/tram-lite",
 	"license": "MIT",

@@ -1,8 +1,3 @@
-function checkItem(input) {
-	// trigger an event to the list, so that it can resort accordingly
-	input.getRootNode().host.dispatchEvent(new Event('change', { bubbles: true }));
-}
-
 define`
 	<todo-item>
 		<li style="display: block">
@@ -12,6 +7,21 @@ define`
 			</label>
 		</li>
 	</todo-item>
+`;
+
+function checkItem(input) {
+	// trigger an event to the list, so that it can resort accordingly
+	input.getRootNode().host.dispatchEvent(new Event('change', { bubbles: true }));
+}
+
+define`
+  <todo-list>
+		<form onsubmit="newTodoItem(this, event)" >
+    	<input name="input" placeholder="New Item">
+		</form>
+		<ul style="padding-inline-start: 5px; margin-block-start: 5px;" onchange="moveListItem(this, event)">
+		</ul>
+  </todo-list>
 `;
 
 function newTodoItem(form, event) {
@@ -31,16 +41,6 @@ function moveListItem(list, event) {
 	}
 	checkInput.focus();
 }
-
-define`
-  <todo-list>
-		<form onsubmit="newTodoItem(this, event)" >
-    	<input name="input" placeholder="New Item">
-		</form>
-		<ul style="padding-inline-start: 5px; margin-block-start: 5px;" onchange="moveListItem(this, event)">
-		</ul>
-  </todo-list>
-`;
 
 const todoList = html`
 	<tram-example>
