@@ -23,12 +23,13 @@ function newTodoItem(form, event) {
 }
 
 function moveListItem(list, event) {
-	const isChecked = event.target.shadowRoot.querySelector('input').checked;
-	if (isChecked) {
+	const checkInput = event.target.shadowRoot.querySelector('input');
+	if (checkInput.checked) {
 		list.appendChild(event.target);
 	} else {
 		list.insertBefore(event.target, list.querySelector('todo-item'));
 	}
+	checkInput.focus();
 }
 
 define`

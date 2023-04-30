@@ -87,13 +87,21 @@ function TramLite() {
 
 			updateAttrNodeTemplates() {
 				// go through each element with an attribute that has a template variable, and update thos attribute values
-				this.taggedValuesAttrNodes.forEach(({ attrNode, originalTemplate }) => {
+				this.taggedValuesAttrNodes.forEach(({ attrNode, element, originalTemplate }) => {
 					let updatedTemplate = originalTemplate;
 					// we'll need to go through all the attributes, in case this template has other attributes
 					[...this.attributes].forEach((attribute) => {
 						updatedTemplate = updatedTemplate.replace(`tl:${attribute.name}:`, this.getAttribute(attribute.name));
 					});
+
+					// set the attribute value to the new value (updated with all template variables)
 					attrNode.value = updatedTemplate;
+
+					// these attributes are special, in order to update the live value (after a user has interacted with them),
+					// they need to be set on the element as well
+					if (['value', 'checked', 'selected'].includes(attrNode.name)) {
+						element[attrNode.name] = updatedTemplate;
+					}
 				});
 			}
 
@@ -134,7 +142,7 @@ function TramLite() {
 				taggedAttrElements.forEach((element) => {
 					[...element.attributes].forEach((attrNode) => {
 						if (attrNode.value.match(/tl:(.+?):/)) {
-							this.taggedValuesAttrNodes.push({ attrNode, originalTemplate: attrNode.value });
+							this.taggedValuesAttrNodes.push({ attrNode, element, originalTemplate: attrNode.value });
 						}
 					});
 				});
