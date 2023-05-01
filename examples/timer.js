@@ -1,5 +1,5 @@
 define`
-  <tram-timer ${'totalms'}>
+  <tram-timer onload="initTimer(this)">
 		<form onsubmit="startTimer(this, event)">
 			<label>Minutes: <input name="minutes" size="5"></label>
 			<label>Seconds: <input name="seconds" size="5"></label>
@@ -9,6 +9,12 @@ define`
 		${'remainingms'}
   </tram-timer>
 `;
+
+function initTimer(timer) {
+	const form = timer.shadowRoot.querySelector('form');
+	const mockEvent = { target: form, preventDefault: () => {} };
+	startTimer(form, mockEvent);
+}
 
 function setMinutes(event) {
 	const timer = event.target.getRootNode().host;

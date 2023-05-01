@@ -9,7 +9,7 @@ function TramLite() {
 	const nodeHasTramLiteAttr = (node) =>
 		[...node.attributes].some((attr) => attr.value.match(templateVariableRegex))
 			? NodeFilter.FILTER_ACCEPT
-			: NodeFilter.FILTER_REJECT;
+			: NodeFilter.FILTER_SKIP;
 
 	/**
 	 * function to test if node has an TEXT node with a template variable
@@ -22,7 +22,7 @@ function TramLite() {
 	 * generic function to build a tree walker, and use the filter + tram-lite matcher.
 	 * this should return all elements that match the criteria
 	 */
-	function builtTreeWalkerTramLiteMatcher(root, nodeFilter, nodeMatcher) {
+	function buildTreeWalkerTramLiteMatcher(root, nodeFilter, nodeMatcher) {
 		const result = [];
 		// build a tree walker that goes through each element, and each attribute
 		const treeWalker = document.createTreeWalker(root, nodeFilter, {
@@ -39,12 +39,12 @@ function TramLite() {
 
 	// Returns elements with attributes containing tram-lite template variables.
 	function getElementsWithTramLiteValuesInAttributes(root) {
-		return builtTreeWalkerTramLiteMatcher(root, NodeFilter.SHOW_ELEMENT, nodeHasTramLiteAttr);
+		return buildTreeWalkerTramLiteMatcher(root, NodeFilter.SHOW_ELEMENT, nodeHasTramLiteAttr);
 	}
 
 	// Returns text nodes containing tram-lite template variables.
 	function getTextNodesWithTramLiteValues(root) {
-		return builtTreeWalkerTramLiteMatcher(root, NodeFilter.SHOW_TEXT, nodeHasTextElementWithTramLiteAttr);
+		return buildTreeWalkerTramLiteMatcher(root, NodeFilter.SHOW_TEXT, nodeHasTextElementWithTramLiteAttr);
 	}
 
 	/**
@@ -55,10 +55,16 @@ function TramLite() {
 		const template = document.createElement('template');
 
 		// tag our templateVariables, so we know how to look for them in the dom
-		const templateTemplateVariables = templateVariables.map((value) => `tl:${value}:`);
+		const taggedTemplateVariables = templateVariables.map((value) => `tl:${value}:`);
 
-		template.innerHTML = String.raw({ raw: strings }, ...templateTemplateVariables);
+		template.innerHTML = String.raw({ raw: strings }, ...taggedTemplateVariables);
 		const rootElement = template.content.firstElementChild;
+
+		// any attributes on the root are considered default values
+		const defaultAttributeValues = {};
+		[...rootElement.attributes].forEach((attrNode) => {
+			defaultAttributeValues[attrNode.name] = attrNode.value;
+		});
 
 		// traditionally onload is only available for window and document, but we surface
 		// them as a special interface for when elements are loaded for the first time
@@ -79,10 +85,13 @@ function TramLite() {
 				this.templateValuesAttrNodes = [];
 				this.templateValuesTextNodes = [];
 
-				// default all values to be blank (if they are undefined)
+				// set all attribute values
+				// - the first default value is whatever is set on DOM creation
+				// - next, we check if there are default values that were part of the define
+				// - lastly, we'll set it to an empty string.
 				templateVariables.forEach((attributeName) => {
 					if (this.getAttribute(attributeName) === null) {
-						this.setAttribute(attributeName, '');
+						this.setAttribute(attributeName, defaultAttributeValues[attributeName] || '');
 					}
 				});
 
