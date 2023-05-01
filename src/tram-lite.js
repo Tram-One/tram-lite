@@ -60,49 +60,15 @@ function TramLite() {
 		template.innerHTML = String.raw({ raw: strings }, ...templateTemplateVariables);
 		const rootElement = template.content.firstElementChild;
 
+		// traditionally onload is only available for window and document, but we surface
+		// them as a special interface for when elements are loaded for the first time
+		const onloadFunction = rootElement.getAttribute('onload');
+
 		// Custom element class with tram-lite template support.
 		class CustomTramLiteElement extends HTMLElement {
 			static get observedAttributes() {
 				// all of the template variables are attributes that we'll update on
 				return templateVariables;
-			}
-
-			attributeChangedCallback(name, oldValue, newValue) {
-				// scan through all text nodes and attributes with template values, and update them
-				this.updateTextNodeTemplates();
-				this.updateAttrNodeTemplates();
-			}
-
-			updateTextNodeTemplates() {
-				// go through each text node that has a template variable, and update them
-				this.templateValuesTextNodes.forEach(({ textNode, originalTemplate }) => {
-					let updatedTemplate = originalTemplate;
-					// we'll need to go through all the attributes, in case this template has other attributes
-					[...this.attributes].forEach((attribute) => {
-						updatedTemplate = updatedTemplate.replace(`tl:${attribute.name}:`, this.getAttribute(attribute.name));
-					});
-					textNode.textContent = updatedTemplate;
-				});
-			}
-
-			updateAttrNodeTemplates() {
-				// go through each element with an attribute that has a template variable, and update thos attribute values
-				this.templateValuesAttrNodes.forEach(({ attrNode, element, originalTemplate }) => {
-					let updatedTemplate = originalTemplate;
-					// we'll need to go through all the attributes, in case this template has other attributes
-					[...this.attributes].forEach((attribute) => {
-						updatedTemplate = updatedTemplate.replace(`tl:${attribute.name}:`, this.getAttribute(attribute.name));
-					});
-
-					// set the attribute value to the new value (updated with all template variables)
-					attrNode.value = updatedTemplate;
-
-					// these attributes are special, in order to update the live value (after a user has interacted with them),
-					// they need to be set on the element as well
-					if (['value', 'checked', 'selected'].includes(attrNode.name)) {
-						element[attrNode.name] = updatedTemplate;
-					}
-				});
 			}
 
 			constructor() {
@@ -147,6 +113,45 @@ function TramLite() {
 
 				// an initial call to set the default attributes
 				this.attributeChangedCallback();
+				eval(onloadFunction);
+			}
+
+			attributeChangedCallback(name, oldValue, newValue) {
+				// scan through all text nodes and attributes with template values, and update them
+				this.updateTextNodeTemplates();
+				this.updateAttrNodeTemplates();
+			}
+
+			updateTextNodeTemplates() {
+				// go through each text node that has a template variable, and update them
+				this.templateValuesTextNodes.forEach(({ textNode, originalTemplate }) => {
+					let updatedTemplate = originalTemplate;
+					// we'll need to go through all the attributes, in case this template has other attributes
+					[...this.attributes].forEach((attribute) => {
+						updatedTemplate = updatedTemplate.replace(`tl:${attribute.name}:`, this.getAttribute(attribute.name));
+					});
+					textNode.textContent = updatedTemplate;
+				});
+			}
+
+			updateAttrNodeTemplates() {
+				// go through each element with an attribute that has a template variable, and update thos attribute values
+				this.templateValuesAttrNodes.forEach(({ attrNode, element, originalTemplate }) => {
+					let updatedTemplate = originalTemplate;
+					// we'll need to go through all the attributes, in case this template has other attributes
+					[...this.attributes].forEach((attribute) => {
+						updatedTemplate = updatedTemplate.replace(`tl:${attribute.name}:`, this.getAttribute(attribute.name));
+					});
+
+					// set the attribute value to the new value (updated with all template variables)
+					attrNode.value = updatedTemplate;
+
+					// these attributes are special, in order to update the live value (after a user has interacted with them),
+					// they need to be set on the element as well
+					if (['value', 'checked', 'selected'].includes(attrNode.name)) {
+						element[attrNode.name] = updatedTemplate;
+					}
+				});
 			}
 		}
 
