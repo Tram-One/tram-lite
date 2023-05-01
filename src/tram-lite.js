@@ -55,9 +55,9 @@ function TramLite() {
 		const template = document.createElement('template');
 
 		// tag our templateVariables, so we know how to look for them in the dom
-		const taggedTemplateVariables = templateVariables.map((value) => `tl:${value}:`);
+		const templateTemplateVariables = templateVariables.map((value) => `tl:${value}:`);
 
-		template.innerHTML = String.raw({ raw: strings }, ...taggedTemplateVariables);
+		template.innerHTML = String.raw({ raw: strings }, ...templateTemplateVariables);
 		const rootElement = template.content.firstElementChild;
 
 		// Custom element class with tram-lite template support.
@@ -68,14 +68,14 @@ function TramLite() {
 			}
 
 			attributeChangedCallback(name, oldValue, newValue) {
-				// scan through all text nodes and attributes with tagged values, and update them
+				// scan through all text nodes and attributes with template values, and update them
 				this.updateTextNodeTemplates();
 				this.updateAttrNodeTemplates();
 			}
 
 			updateTextNodeTemplates() {
 				// go through each text node that has a template variable, and update them
-				this.taggedValuesTextNodes.forEach(({ textNode, originalTemplate }) => {
+				this.templateValuesTextNodes.forEach(({ textNode, originalTemplate }) => {
 					let updatedTemplate = originalTemplate;
 					// we'll need to go through all the attributes, in case this template has other attributes
 					[...this.attributes].forEach((attribute) => {
@@ -87,7 +87,7 @@ function TramLite() {
 
 			updateAttrNodeTemplates() {
 				// go through each element with an attribute that has a template variable, and update thos attribute values
-				this.taggedValuesAttrNodes.forEach(({ attrNode, element, originalTemplate }) => {
+				this.templateValuesAttrNodes.forEach(({ attrNode, element, originalTemplate }) => {
 					let updatedTemplate = originalTemplate;
 					// we'll need to go through all the attributes, in case this template has other attributes
 					[...this.attributes].forEach((attribute) => {
@@ -108,6 +108,11 @@ function TramLite() {
 			constructor() {
 				super();
 
+				// list of attribute and text nodes that have a template value
+				// these are scanned through when templated attributes are updated
+				this.templateValuesAttrNodes = [];
+				this.templateValuesTextNodes = [];
+
 				// default all values to be blank (if they are undefined)
 				templateVariables.forEach((attributeName) => {
 					if (this.getAttribute(attributeName) === null) {
@@ -120,29 +125,22 @@ function TramLite() {
 				const shadow = this.attachShadow({ mode: 'open' });
 				shadow.append(...rootElement.cloneNode(true).childNodes);
 
-				// list of text nodes that have a tagged value
-				// we go through all of these when an attribute is updated
-				this.taggedValuesTextNodes = [];
-
 				// scan for any text nodes that have tram-lite wrapped variables (e.g. "tl:label:"),
 				// these are nodes that need to be replaced on the attribute being changed
-				const taggedTextNodes = getTextNodesWithTramLiteValues(shadow);
-				// save the original template in taggedValuesTextNodes
-				taggedTextNodes.forEach((textNode) => {
-					this.taggedValuesTextNodes.push({ textNode, originalTemplate: textNode.textContent });
+				const templateTextNodes = getTextNodesWithTramLiteValues(shadow);
+				// save the original template in templateValuesTextNodes
+				templateTextNodes.forEach((textNode) => {
+					this.templateValuesTextNodes.push({ textNode, originalTemplate: textNode.textContent });
 				});
-
-				// list of attribute nodes that have a tagged value
-				this.taggedValuesAttrNodes = [];
 
 				// scan for any elements with attributes that have a tram-lite variable
 				// these are attributes that need to be updated on the attribute being changed
-				const taggedAttrElements = getElementsWithTramLiteValuesInAttributes(shadow);
-				// save the original attribute in the taggedValuesAttributes
-				taggedAttrElements.forEach((element) => {
+				const templateAttrElements = getElementsWithTramLiteValuesInAttributes(shadow);
+				// save the original attribute in the templateValuesAttributes
+				templateAttrElements.forEach((element) => {
 					[...element.attributes].forEach((attrNode) => {
 						if (attrNode.value.match(/tl:(.+?):/)) {
-							this.taggedValuesAttrNodes.push({ attrNode, element, originalTemplate: attrNode.value });
+							this.templateValuesAttrNodes.push({ attrNode, element, originalTemplate: attrNode.value });
 						}
 					});
 				});
