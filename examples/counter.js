@@ -9,12 +9,3 @@ function increment(button) {
 	const newCount = parseInt(counter.getAttribute('count')) + 1;
 	counter.setAttribute('count', newCount);
 }
-
-const counters = html`
-	<tram-example>
-		<tram-counter label="Blue" color="#CECEFF"></tram-counter>
-		<tram-counter label="Red" color="#FFCECE"></tram-counter>
-		<tram-counter></tram-counter>
-	</tram-example>
-`;
-document.body.appendChild(counters);

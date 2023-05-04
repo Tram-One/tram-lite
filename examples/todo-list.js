@@ -15,8 +15,8 @@ function checkItem(input) {
 }
 
 define`
-  <todo-list>
-		<form onsubmit="newTodoItem(this, event)" >
+  <todo-list onload="createInitialTodos(this)">
+		<form onsubmit="submitNewTodoItem(this, event)" >
     	<input name="input" placeholder="New Item">
 		</form>
 		<ul style="padding-inline-start: 5px; margin-block-start: 5px;" onchange="moveListItem(this, event)">
@@ -24,11 +24,21 @@ define`
   </todo-list>
 `;
 
-function newTodoItem(form, event) {
-	event.preventDefault();
-	const list = form.getRootNode().querySelector('ul');
-	const newItem = html`<todo-item>${form.input.value}</todo-item>`;
+function createInitialTodos(todoList) {
+	addNewTodoItem(todoList, 'Example Initial Item');
+	addNewTodoItem(todoList, 'Learning Tram-Lite');
+}
+
+function addNewTodoItem(todoList, todoText) {
+	const list = todoList.shadowRoot.querySelector('ul');
+	const newItem = html`<todo-item>${todoText}</todo-item>`;
 	list.appendChild(newItem);
+}
+
+function submitNewTodoItem(form, event) {
+	event.preventDefault();
+	const todoList = form.getRootNode().host;
+	addNewTodoItem(todoList, form.input.value);
 	form.reset();
 }
 
@@ -41,10 +51,3 @@ function moveListItem(list, event) {
 	}
 	checkInput.focus();
 }
-
-const todoList = html`
-	<tram-example>
-		<todo-list> </todo-list>
-	</tram-example>
-`;
-document.body.appendChild(todoList);

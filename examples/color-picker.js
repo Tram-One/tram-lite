@@ -18,10 +18,3 @@ function updateColor(event) {
 	const colorPicker = event.target.getRootNode().host;
 	colorPicker.setAttribute('hue', event.target.value);
 }
-
-const colorPicker = html`
-	<tram-example>
-		<color-picker hue="200"></color-picker>
-	</tram-example>
-`;
-document.body.appendChild(colorPicker);

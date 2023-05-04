@@ -80,20 +80,13 @@ function TramLite() {
 			constructor() {
 				super();
 
+				// keep track if our component onload function has been called
+				this.hasloaded = false;
+
 				// list of attribute and text nodes that have a template value
 				// these are scanned through when templated attributes are updated
 				this.templateValuesAttrNodes = [];
 				this.templateValuesTextNodes = [];
-
-				// set all attribute values
-				// - the first default value is whatever is set on DOM creation
-				// - next, we check if there are default values that were part of the define
-				// - lastly, we'll set it to an empty string.
-				templateVariables.forEach((attributeName) => {
-					if (this.getAttribute(attributeName) === null) {
-						this.setAttribute(attributeName, defaultAttributeValues[attributeName] || '');
-					}
-				});
 
 				// Create a shadow root
 				// and append our HTML to it
@@ -119,10 +112,27 @@ function TramLite() {
 						}
 					});
 				});
+			}
+
+			connectedCallback() {
+				// set all attribute values
+				// - the first default value is whatever is set on DOM creation
+				// - next, we check if there are default values that were part of the define
+				// - lastly, we'll set it to an empty string.
+				templateVariables.forEach((attributeName) => {
+					if (this.getAttribute(attributeName) === null) {
+						this.setAttribute(attributeName, defaultAttributeValues[attributeName] || '');
+					}
+				});
 
 				// an initial call to set the default attributes
 				this.attributeChangedCallback();
-				eval(onloadFunction);
+
+				// if we haven't called onload, call it now
+				if (!this.hasloaded) {
+					this.hasloaded = true;
+					eval(onloadFunction);
+				}
 			}
 
 			attributeChangedCallback(name, oldValue, newValue) {

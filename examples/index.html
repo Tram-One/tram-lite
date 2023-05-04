@@ -6,16 +6,31 @@
 			:root {
 				color-scheme: dark light;
 			}
+			body * {
+				display: inline-block;
+				padding-top: 5px;
+			}
 		</style>
 		<script src="../src/tram-lite.js"></script>
-	</head>
-	<body>
-		<script src="./tram-example.js"></script>
+
+		<!-- components -->
 		<script src="./title.js"></script>
 		<script src="./counter.js"></script>
 		<script src="./mirror.js"></script>
 		<script src="./timer.js"></script>
 		<script src="./todo-list.js"></script>
 		<script src="./color-picker.js"></script>
+	</head>
+	<body>
+		<tram-title>Tram-Lite Components!</tram-title>
+		<div>
+			<tram-counter label="Blue" color="#CECEFF"></tram-counter>
+			<tram-counter label="Red" color="#FFCECE"></tram-counter>
+			<tram-counter></tram-counter>
+		</div>
+		<tram-mirror></tram-mirror>
+		<tram-timer></tram-timer>
+		<todo-list></todo-list>
+		<color-picker hue="200"></color-picker>
 	</body>
 </html>
