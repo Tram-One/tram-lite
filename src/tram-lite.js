@@ -147,7 +147,7 @@ function TramLite() {
 					let updatedTemplate = originalTemplate;
 					// we'll need to go through all the attributes, in case this template has other attributes
 					[...this.attributes].forEach((attribute) => {
-						updatedTemplate = updatedTemplate.replace(`tl:${attribute.name}:`, this.getAttribute(attribute.name));
+						updatedTemplate = updatedTemplate.replaceAll(`tl:${attribute.name}:`, this.getAttribute(attribute.name));
 					});
 					textNode.textContent = updatedTemplate;
 				});
@@ -159,7 +159,7 @@ function TramLite() {
 					let updatedTemplate = originalTemplate;
 					// we'll need to go through all the attributes, in case this template has other attributes
 					[...this.attributes].forEach((attribute) => {
-						updatedTemplate = updatedTemplate.replace(`tl:${attribute.name}:`, this.getAttribute(attribute.name));
+						updatedTemplate = updatedTemplate.replaceAll(`tl:${attribute.name}:`, this.getAttribute(attribute.name));
 					});
 
 					// set the attribute value to the new value (updated with all template variables)
