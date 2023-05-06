@@ -22,16 +22,14 @@ define`
 		<ul style="padding-inline-start: 5px; margin-block-start: 5px;" onchange="moveListItem(this, event)">
 		</ul>
 		<script>
-			createInitialTodos()
+			createInitialTodos(this);
 		</script>
   </todo-list>
 `;
 
 function createInitialTodos(todoList) {
-	console.log('TESTING!', todoList);
-	// TBD - need to figure out how to pass in the component
-	// addNewTodoItem(todoList, 'Example Initial Item');
-	// addNewTodoItem(todoList, 'Learning Tram-Lite');
+	addNewTodoItem(todoList, 'Example Initial Item');
+	addNewTodoItem(todoList, 'Learning Tram-Lite');
 }
 
 function addNewTodoItem(todoList, todoText) {

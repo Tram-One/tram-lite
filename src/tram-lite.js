@@ -66,10 +66,6 @@ function TramLite() {
 			defaultAttributeValues[attrNode.name] = attrNode.value;
 		});
 
-		// traditionally onload is only available for window and document, but we surface
-		// them as a special interface for when elements are loaded for the first time
-		const onloadFunction = rootElement.getAttribute('onload');
-
 		// Custom element class with tram-lite template support.
 		class CustomTramLiteElement extends HTMLElement {
 			static get observedAttributes() {
@@ -80,8 +76,8 @@ function TramLite() {
 			constructor() {
 				super();
 
-				// keep track if our component onload function has been called
-				this.hasloaded = false;
+				// keep track if our component script tags should be executed
+				this.shouldExecuteScripts = true;
 
 				// list of attribute and text nodes that have a template value
 				// these are scanned through when templated attributes are updated
@@ -92,17 +88,6 @@ function TramLite() {
 				// and append our HTML to it
 				const shadow = this.attachShadow({ mode: 'open' });
 				shadow.append(...rootElement.cloneNode(true).childNodes);
-
-				// if there are any script tags, those need to be re-inserted (they won't be excuted natively as part of the cloned template)
-				[...shadow.querySelectorAll('script')].forEach((node) => {
-					// Clone the script node
-					const clonedScript = document.createElement('script');
-					[...node.attributes].forEach((attr) => clonedScript.setAttribute(attr.name, attr.value));
-					clonedScript.textContent = node.textContent;
-
-					// Remove the original script tag
-					shadow.replaceChild(clonedScript, node);
-				});
 
 				// scan for any text nodes that have tram-lite wrapped variables (e.g. "tl:label:"),
 				// these are nodes that need to be replaced on the attribute being changed
@@ -139,10 +124,30 @@ function TramLite() {
 				// an initial call to set the default attributes
 				this.attributeChangedCallback();
 
-				// if we haven't called onload, call it now
-				if (!this.hasloaded) {
-					this.hasloaded = true;
-					eval(onloadFunction);
+				// if we have scripts to run, execute them now
+				if (this.shouldExecuteScripts) {
+					// by default, we only do this once (otherwise it would re-trigger on appendChild or other moves)
+					// you can technically retrigger these by setting this.shouldExecuteScripts back to true
+					this.shouldExecuteScripts = false;
+
+					// provide a scoped evaluation of the script tags in this element
+					const scopedEval = (script) => Function(script).bind(this)();
+					const scripts = this.shadowRoot.querySelectorAll('script');
+					scripts.forEach((script) => {
+						// if we have a src attribute, we should just clone and replace the node
+						// otherwise, we call the inline javascript with `this` set to the current node
+						if (script.hasAttribute('src')) {
+							// Clone the script node
+							const clonedScript = document.createElement('script');
+							[...script.attributes].forEach((attr) => clonedScript.setAttribute(attr.name, attr.value));
+							clonedScript.textContent = script.textContent;
+
+							// Remove the original script tag
+							script.parentNode.replaceChild(clonedScript, script);
+						} else {
+							scopedEval(script.innerHTML);
+						}
+					});
 				}
 			}
 
