@@ -131,7 +131,9 @@ function TramLite() {
 					this.shouldExecuteScripts = false;
 
 					// provide a scoped evaluation of the script tags in this element
-					const scopedEval = (script) => Function(script).bind(this)();
+					const scopedEval = (script) => {
+						return Function('document', 'window', script).bind(this)(this.shadowRoot, window);
+					};
 					const scripts = this.shadowRoot.querySelectorAll('script');
 					scripts.forEach((script) => {
 						// if we have a src attribute, we should just clone and replace the node
@@ -142,7 +144,7 @@ function TramLite() {
 							[...script.attributes].forEach((attr) => clonedScript.setAttribute(attr.name, attr.value));
 							clonedScript.textContent = script.textContent;
 
-							// Remove the original script tag
+							// replace the original script tag with this new one (which will cause it to trigger)
 							script.parentNode.replaceChild(clonedScript, script);
 						} else {
 							scopedEval(script.innerHTML);
