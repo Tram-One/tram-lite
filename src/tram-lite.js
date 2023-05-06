@@ -93,6 +93,17 @@ function TramLite() {
 				const shadow = this.attachShadow({ mode: 'open' });
 				shadow.append(...rootElement.cloneNode(true).childNodes);
 
+				// if there are any script tags, those need to be re-inserted (they won't be excuted natively as part of the cloned template)
+				[...shadow.querySelectorAll('script')].forEach((node) => {
+					// Clone the script node
+					const clonedScript = document.createElement('script');
+					[...node.attributes].forEach((attr) => clonedScript.setAttribute(attr.name, attr.value));
+					clonedScript.textContent = node.textContent;
+
+					// Remove the original script tag
+					shadow.replaceChild(clonedScript, node);
+				});
+
 				// scan for any text nodes that have tram-lite wrapped variables (e.g. "tl:label:"),
 				// these are nodes that need to be replaced on the attribute being changed
 				const templateTextNodes = getTextNodesWithTramLiteValues(shadow);

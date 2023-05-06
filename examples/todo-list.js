@@ -15,18 +15,23 @@ function checkItem(input) {
 }
 
 define`
-  <todo-list onload="createInitialTodos(this)">
+  <todo-list>
 		<form onsubmit="submitNewTodoItem(this, event)" >
     	<input name="input" placeholder="New Item">
 		</form>
 		<ul style="padding-inline-start: 5px; margin-block-start: 5px;" onchange="moveListItem(this, event)">
 		</ul>
+		<script>
+			createInitialTodos()
+		</script>
   </todo-list>
 `;
 
 function createInitialTodos(todoList) {
-	addNewTodoItem(todoList, 'Example Initial Item');
-	addNewTodoItem(todoList, 'Learning Tram-Lite');
+	console.log('TESTING!', todoList);
+	// TBD - need to figure out how to pass in the component
+	// addNewTodoItem(todoList, 'Example Initial Item');
+	// addNewTodoItem(todoList, 'Learning Tram-Lite');
 }
 
 function addNewTodoItem(todoList, todoText) {
