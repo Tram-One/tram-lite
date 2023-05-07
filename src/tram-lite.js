@@ -159,34 +159,35 @@ function TramLite() {
 				this.updateAttrNodeTemplates();
 			}
 
+			getUpdatedTemplate(originalTemplate) {
+				let updatedTemplate = originalTemplate;
+
+				templateVariables.forEach((attributeName) => {
+					// fallback on the default values or an empty string if there is no value for this attribute yet
+					const attributeValue = this.getAttribute(attributeName) || defaultAttributeValues[attributeName] || '';
+					updatedTemplate = updatedTemplate.replaceAll(`tl:${attributeName}:`, attributeValue);
+				});
+
+				return updatedTemplate;
+			}
+
 			updateTextNodeTemplates() {
 				// go through each text node that has a template variable, and update them
 				this.templateValuesTextNodes.forEach(({ textNode, originalTemplate }) => {
-					let updatedTemplate = originalTemplate;
-					// we'll need to go through all the attributes, in case this template has other attributes
-					[...this.attributes].forEach((attribute) => {
-						updatedTemplate = updatedTemplate.replaceAll(`tl:${attribute.name}:`, this.getAttribute(attribute.name));
-					});
-					textNode.textContent = updatedTemplate;
+					textNode.textContent = this.getUpdatedTemplate(originalTemplate);
 				});
 			}
 
 			updateAttrNodeTemplates() {
-				// go through each element with an attribute that has a template variable, and update thos attribute values
+				// go through each element with an attribute that has a template variable, and update those attribute values
 				this.templateValuesAttrNodes.forEach(({ attrNode, element, originalTemplate }) => {
-					let updatedTemplate = originalTemplate;
-					// we'll need to go through all the attributes, in case this template has other attributes
-					[...this.attributes].forEach((attribute) => {
-						updatedTemplate = updatedTemplate.replaceAll(`tl:${attribute.name}:`, this.getAttribute(attribute.name));
-					});
-
 					// set the attribute value to the new value (updated with all template variables)
-					attrNode.value = updatedTemplate;
+					attrNode.value = this.getUpdatedTemplate(originalTemplate);
 
 					// these attributes are special, in order to update the live value (after a user has interacted with them),
 					// they need to be set on the element as well
 					if (['value', 'checked', 'selected'].includes(attrNode.name)) {
-						element[attrNode.name] = updatedTemplate;
+						element[attrNode.name] = this.getUpdatedTemplate(originalTemplate);
 					}
 				});
 			}
