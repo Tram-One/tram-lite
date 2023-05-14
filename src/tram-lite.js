@@ -213,7 +213,7 @@ function TramLite() {
 	function queryAllDOM(selector, root = document) {
 		const elements = [...root.querySelectorAll(selector)];
 
-		[...root.querySelectorAll('*')].forEach((element) => {
+		[...root.querySelectorAll('*'), root].forEach((element) => {
 			if (element.shadowRoot) {
 				elements.push(...queryAllDOM(selector, element.shadowRoot));
 			}

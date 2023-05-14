@@ -1,6 +1,6 @@
 {
 	"name": "tram-lite",
-	"version": "2.2.0",
+	"version": "2.2.1",
 	"description": "💡 Lite View Library for Vanilla Javascript",
 	"main": "src/tram-lite.js",
 	"scripts": {
