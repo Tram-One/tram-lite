@@ -207,9 +207,24 @@ function TramLite() {
 		return element;
 	}
 
+	/**
+	 * query function that traverses through light (normal) and shadow DOM
+	 */
+	function queryAllDOM(selector, root = document) {
+		const elements = [...root.querySelectorAll(selector)];
+
+		[...root.querySelectorAll('*')].forEach((element) => {
+			if (element.shadowRoot) {
+				elements.push(...queryAllDOM(selector, element.shadowRoot));
+			}
+		});
+
+		return elements;
+	}
+
 	// expose the html and define functions
 	// all other functions are internal, and not meant to be exposed
-	return { html, define };
+	return { html, define, queryAllDOM };
 }
 
-const { html, define } = TramLite();
+const { html, define, queryAllDOM } = TramLite();
