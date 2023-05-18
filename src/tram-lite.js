@@ -222,9 +222,24 @@ function TramLite() {
 		return elements;
 	}
 
+	/**
+	 * helper function to setup a mutation observer, and trigger a callback on attribute changes
+	 */
+	function onAttrChanged(element, callback) {
+		const observer = new MutationObserver((mutations) => {
+			mutations.forEach((mutation) => {
+				callback(mutation);
+			});
+		});
+
+		observer.observe(element, {
+			attributes: true,
+		});
+	}
+
 	// expose the html and define functions
 	// all other functions are internal, and not meant to be exposed
-	return { html, define, queryAllDOM };
+	return { html, define, onAttrChanged, queryAllDOM };
 }
 
-const { html, define, queryAllDOM } = TramLite();
+const { html, define, queryAllDOM, onAttrChanged } = TramLite();
