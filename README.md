@@ -19,19 +19,50 @@
 
 Tram-Lite is a library that helps developers build native web-components, and makes building simple native javascript applications easier and more elegant!
 
-## Installation
+```js
+define`
+  <custom-title color="blue">
+    <style>
+      h1 { color: ${'color'} }
+    </style>
 
-Tram-Lite is easy to include in any project, simply include the following script tag in your html template.
-
-```html
-<script src="https://unpkg.com/tram-lite"></script>
+    <h1>${'title'}</h1>
+  </custom-title>
+`;
 ```
 
-This will automatically add `define` and `html` attributes for you to use in your javascript.
+## Installation
+
+Tram-Lite is easy to include in any project, and requires no build tooling!
+
+### script tag
+
+To install, you can include a script tag pointed to `unpkg.com` in your `index.html`.
+We recommend pointing to a fixed major version (in the following case, version 2):
+
+```html
+<script src="https://unpkg.com/tram-lite@2"></script>
+```
+
+This will automatically add all the API method to your javascript project (see API section below).
+
+### types
+
+If you use npm, you can get the type definitions by installing them with
+
+```bash
+npm i @types/tram-lite
+```
+
+Then, pull in the types by including the following triple-slash directive at the top of any file:
+
+```typescript
+/// <reference types="tram-lite" />
+```
+
+In typescript powered IDEs (such as Visual Studio Code), you should now see typing for all Tram-Lite API functions.
 
 ## API
-
-Tram-Lite has a simple API with two main functions, `define` and `html`.
 
 ### `define`
 
@@ -67,6 +98,30 @@ const pageHeader = html`<h1 style="padding: 1em;">Hello World</h1>`;
 ```
 
 This can help reduce the amount of javascript needed, removing the need for `document.createElement`, `setAttribute`, `setInnerHTML`, when building initial DOM with javascript.
+
+### `queryAllDOM`
+
+`queryAllDOM` is a helper function to easily query across shadow and light DOM boundaries.
+
+```js
+const page = html`<custom-list></custom-list>`;
+document.body.appendChild(page);
+
+// let's assume the document body looks like the following:
+// <custom-list>
+//   #shadow-root
+//     <ul>
+//       <custom-list-item>
+//         #shadow-root
+//           <li>First Item</li>
+//       </custom-list-item>
+//     </ul>
+// </custom-list>
+
+const listItems = queryAllDOM('li', page);
+```
+
+This is extremely useful when nesting multiple components inside of each other, as the `document.querySelector()` methods won't work through shadow DOM.
 
 ## Example Component
 

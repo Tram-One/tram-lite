@@ -1,8 +1,12 @@
 {
 	"name": "tram-lite",
-	"version": "2.2.1",
+	"version": "2.2.2",
 	"description": "💡 Lite View Library for Vanilla Javascript",
 	"main": "src/tram-lite.js",
+	"types": "src/tram-lite.js",
+	"files": [
+		"src"
+	],
 	"scripts": {
 		"start": "npx serve ."
 	},
