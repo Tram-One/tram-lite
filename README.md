@@ -31,6 +31,12 @@ define`
 `;
 ```
 
+```html
+<body>
+	<custom-title title="Welcome to Tram-Lite!"></custom-title>
+</body>
+```
+
 ## Installation
 
 Tram-Lite is easy to include in any project, and requires no build tooling!
@@ -48,19 +54,13 @@ This will automatically add all the API method to your javascript project (see A
 
 ### types
 
-If you use npm, you can get the type definitions by installing them with
+If you use npm, you can get the type definitions by installing tram-lite (make sure this matches your script tag above)
 
 ```bash
-npm i @types/tram-lite
+npm i tram-lite
 ```
 
-Then, pull in the types by including the following triple-slash directive at the top of any file:
-
-```typescript
-/// <reference types="tram-lite" />
-```
-
-In typescript powered IDEs (such as Visual Studio Code), you should now see typing for all Tram-Lite API functions.
+This will automatically annotate Tram-Lite methods with documentation in your project if you are using a Typescript-aware editor (like Visual Studio Code).
 
 ## API
 
