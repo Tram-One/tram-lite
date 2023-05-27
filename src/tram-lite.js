@@ -1,13 +1,21 @@
-function TramLite() {
+/**
+ * Tram-Lite is a frontend component library to help make native web-components!
+ * The main utility function is `define`, which allows you to craft web-components
+ * using simple template syntax.
+ *
+ * Other helper functions, like `html` and `queryAllDOM`,
+ * and examples can be found at https://github.com/Tram-One/tram-lite#api
+ */
+class TramLite {
 	// regex for finding attributes that have been templated in
-	const templateVariableRegex = /tl:(.+?):/;
+	static templateVariableRegex = /tl:(.+?):/;
 
 	/**
 	 * function to test if node has an attribute value with a template variable
 	 * e.g. <custom-element style="color: ${'color'}">
 	 */
-	const nodeHasTramLiteAttr = (node) =>
-		[...node.attributes].some((attr) => attr.value.match(templateVariableRegex))
+	static nodeHasTramLiteAttr = (node) =>
+		[...node.attributes].some((attr) => attr.value.match(TramLite.templateVariableRegex))
 			? NodeFilter.FILTER_ACCEPT
 			: NodeFilter.FILTER_SKIP;
 
@@ -15,14 +23,14 @@ function TramLite() {
 	 * function to test if node has an TEXT node with a template variable
 	 * e.g. <custom-element>Hello ${'name'}</custom-element>
 	 */
-	const nodeHasTextElementWithTramLiteAttr = (node) =>
-		node.textContent.match(templateVariableRegex) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+	static nodeHasTextElementWithTramLiteAttr = (node) =>
+		node.textContent.match(TramLite.templateVariableRegex) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
 
 	/**
 	 * generic function to build a tree walker, and use the filter + tram-lite matcher.
 	 * this should return all elements that match the criteria
 	 */
-	function buildTreeWalkerTramLiteMatcher(root, nodeFilter, nodeMatcher) {
+	static buildTreeWalkerTramLiteMatcher(root, nodeFilter, nodeMatcher) {
 		const result = [];
 		// build a tree walker that goes through each element, and each attribute
 		const treeWalker = document.createTreeWalker(root, nodeFilter, {
@@ -38,20 +46,24 @@ function TramLite() {
 	}
 
 	// Returns elements with attributes containing tram-lite template variables.
-	function getElementsWithTramLiteValuesInAttributes(root) {
-		return buildTreeWalkerTramLiteMatcher(root, NodeFilter.SHOW_ELEMENT, nodeHasTramLiteAttr);
+	static getElementsWithTramLiteValuesInAttributes(root) {
+		return TramLite.buildTreeWalkerTramLiteMatcher(root, NodeFilter.SHOW_ELEMENT, TramLite.nodeHasTramLiteAttr);
 	}
 
 	// Returns text nodes containing tram-lite template variables.
-	function getTextNodesWithTramLiteValues(root) {
-		return buildTreeWalkerTramLiteMatcher(root, NodeFilter.SHOW_TEXT, nodeHasTextElementWithTramLiteAttr);
+	static getTextNodesWithTramLiteValues(root) {
+		return TramLite.buildTreeWalkerTramLiteMatcher(
+			root,
+			NodeFilter.SHOW_TEXT,
+			TramLite.nodeHasTextElementWithTramLiteAttr
+		);
 	}
 
 	/**
-	 * A template tag function that takes in an HTML template, and
-	 * registers it as a new custom element,
+	 * a template tag function used to create new web-components.
+	 * {@link https://github.com/Tram-One/tram-lite#html Read the full docs here.}
 	 */
-	function define(strings, ...templateVariables) {
+	static define(strings, ...templateVariables) {
 		const template = document.createElement('template');
 
 		// tag our templateVariables, so we know how to look for them in the dom
@@ -91,7 +103,7 @@ function TramLite() {
 
 				// scan for any text nodes that have tram-lite wrapped variables (e.g. "tl:label:"),
 				// these are nodes that need to be replaced on the attribute being changed
-				const templateTextNodes = getTextNodesWithTramLiteValues(shadow);
+				const templateTextNodes = TramLite.getTextNodesWithTramLiteValues(shadow);
 				// save the original template in templateValuesTextNodes
 				templateTextNodes.forEach((textNode) => {
 					this.templateValuesTextNodes.push({ textNode, originalTemplate: textNode.textContent });
@@ -99,7 +111,7 @@ function TramLite() {
 
 				// scan for any elements with attributes that have a tram-lite variable
 				// these are attributes that need to be updated on the attribute being changed
-				const templateAttrElements = getElementsWithTramLiteValuesInAttributes(shadow);
+				const templateAttrElements = TramLite.getElementsWithTramLiteValuesInAttributes(shadow);
 				// save the original attribute in the templateValuesAttributes
 				templateAttrElements.forEach((element) => {
 					[...element.attributes].forEach((attrNode) => {
@@ -198,9 +210,11 @@ function TramLite() {
 	}
 
 	/**
-	 * template tag function to create document elements using simple DOM
+	 * a helper function to quickly create html dom with all their attributes and content.
+	 * {@link https://github.com/Tram-One/tram-lite#html Read the full docs here.}
+	 * @returns {Element}
 	 */
-	function html(strings, ...values) {
+	static html(strings, ...values) {
 		const template = document.createElement('template');
 		template.innerHTML = String.raw({ raw: strings }, ...values);
 		const element = template.content.firstElementChild;
@@ -208,9 +222,15 @@ function TramLite() {
 	}
 
 	/**
-	 * query function that traverses through light (normal) and shadow DOM
+	 * a helper function to easily query across shadow and light DOM boundaries.
+	 * {@link https://github.com/Tram-One/tram-lite#queryAllDOM Read the full docs here.}
+	 * @param {string} selector - The CSS selector to match against each element in the DOM.
+	 * @param {Node} [root=document] - The root element where the search starts. By default, the search starts from the root document.
+	 *
+	 * @returns {Element[]} An array of all elements in the DOM that match the selector, including those within shadow roots.
+	 *
 	 */
-	function queryAllDOM(selector, root = document) {
+	static queryAllDOM(selector, root = document) {
 		const elements = [...root.querySelectorAll(selector)];
 
 		[...root.querySelectorAll('*'), root].forEach((element) => {
@@ -221,10 +241,6 @@ function TramLite() {
 
 		return elements;
 	}
-
-	// expose the html and define functions
-	// all other functions are internal, and not meant to be exposed
-	return { html, define, queryAllDOM };
 }
 
-const { html, define, queryAllDOM } = TramLite();
+const { define, html, queryAllDOM } = TramLite;
