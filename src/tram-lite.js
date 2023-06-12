@@ -241,6 +241,24 @@ class TramLite {
 
 		return elements;
 	}
+
+	/**
+	 * a helper function to set up a callback for when an element's attribute changes
+	 * {@link https://github.com/Tram-One/tram-lite#addAttributeListener Read the full docs here.}
+	 * @param {Element} targetElement - The DOM element to observe.
+	 * @param {string} attributeName - The name of the attribute to observe for changes.
+	 * @param {function(MutationRecord):void} callback - The function to call when the observed attribute changes.
+	 *    This function takes one argument: the MutationRecord representing the change.
+	 */
+	static addAttributeListener(targetElement, attributeName, callback) {
+		const callbackWrapper = (mutationList) => {
+			mutationList.forEach((mutation) => {
+				callback(mutation);
+			});
+		};
+		const observer = new MutationObserver(callbackWrapper);
+		observer.observe(targetElement, { attributes: true, attributeFilter: [attributeName] });
+	}
 }
 
-const { define, html, queryAllDOM } = TramLite;
+const { define, html, queryAllDOM, addAttributeListener } = TramLite;

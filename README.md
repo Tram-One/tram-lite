@@ -102,16 +102,22 @@ greeting.setAttribute('Nikola'); // our geeting will update automatically!
 
 `html` is a helper function to quickly create html dom with all their attributes and content.
 
+This can help reduce the amount of javascript needed, removing the need for `document.createElement`, `setAttribute`,
+`setInnerHTML`, when building initial DOM with javascript.
+
 ```js
 const pageHeader = html`<h1 style="padding: 1em;">Hello World</h1>`;
 ```
 
-This can help reduce the amount of javascript needed, removing the need for `document.createElement`, `setAttribute`,
-`setInnerHTML`, when building initial DOM with javascript.
+You can look at the [examples/todo-list.js](examples/todo-list.js) example to see what this looks like in a real
+component.
 
 ### `queryAllDOM`
 
 `queryAllDOM` is a helper function to easily query across shadow and light DOM boundaries.
+
+This is useful when nesting multiple components inside of each other, as the `document.querySelector()` methods won't
+work through shadow DOM.
 
 ```js
 const page = html`<custom-list></custom-list>`;
@@ -129,10 +135,30 @@ document.body.appendChild(page);
 // </custom-list>
 
 const listItems = queryAllDOM('li', page);
+// listItems => [<li>First Item</li>]
 ```
 
-This is extremely useful when nesting multiple components inside of each other, as the `document.querySelector()`
-methods won't work through shadow DOM.
+You can look at the [examples/mirror.js](examples/mirror.js) example to see what this looks like in a real component.
+
+### `addAttributeListener`
+
+`addAttributeListener` is a helper function to set up a callback for when an element's attribute changes.
+
+This allows your component to react more dynamically to attribute changes (beyond simple templating).
+
+```js
+const alertingCount = html`<mock-counter count="4"></mock-counter>`;
+
+// setup observer
+addAttributeListener(alertingCount, 'count', () => {
+	alert(`New Count: ${alertingCount.getAttribute('count')}`);
+});
+
+// update count, which will trigger the alert
+alertingCount.setAttribute('count', '5');
+```
+
+You can look at the [examples/mirror.js](examples/mirror.js) example to see what this looks like in a real component.
 
 ## Example Component
 
@@ -207,7 +233,7 @@ make the vanilla javascript experience ideal, where only a static web host may b
 To this end, while we should be interoperable with other libraries, we should not be totally contingent on other
 libraries to provide a delightful experience.
 
-_Additionally, as much as possible, this project should try to adhere to this principle as much as possible._
+_Additionally, as much as possible, **this** project should try to adhere to this principle as much as possible._
 
 ## This Repo and the Tram-One Org
 

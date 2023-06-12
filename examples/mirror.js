@@ -1,11 +1,21 @@
 define`
-  <tram-mirror>
-    <input size="10" disabled>
-		<input size="10" onkeyup="setMirrorValue(event)">
+  <tram-mirror value="">
+    <input size="10" id="reflection" disabled>
+		<input size="10" id="source" onkeyup="updateMirrorValue(this, event)">
+		<script>
+			initializeMirror(this)
+		</script>
   </tram-mirror>
 `;
 
-function setMirrorValue(event) {
-	const reflectionInput = event.target.previousElementSibling;
-	reflectionInput.value = event.target.value;
+function initializeMirror(tramMirror) {
+	addAttributeListener(tramMirror, 'value', () => {
+		const [reflection] = queryAllDOM('#reflection', tramMirror);
+		reflection.value = tramMirror.getAttribute('value');
+	});
+}
+
+function updateMirrorValue(input, event) {
+	const tramMirror = input.getRootNode().host;
+	tramMirror.setAttribute('value', event.target.value);
 }
