@@ -1,26 +1,30 @@
 define`
-	<todo-item>
-		<li style="display: block">
-			<label>
-				<input type="checkbox" onchange="checkItem(this, event)">
-				<slot>
-			</label>
-		</li>
+	<todo-item checked="">
+		<label style="display: block">
+			<input type="checkbox" onchange="onTodoItemCheck(this)">
+			<slot>
+		</label>
 	</todo-item>
 `;
 
-function checkItem(input) {
-	// trigger an event to the list, so that it can resort accordingly
-	input.getRootNode().host.dispatchEvent(new Event('change', { bubbles: true }));
+function onTodoItemCheck(input) {
+	const todoItem = input.getRootNode().host;
+	todoItem.setAttribute('checked', todoItem.checked);
 }
 
 define`
-  <todo-list>
+  <todo-list completed="0" total="0">
+		<style>
+			section {
+				padding-inline-start: 5px;
+				margin-block-start: 5px;
+			}
+		</style>
+		<span>To Do List (${'completed'}/${'total'})</span>
 		<form onsubmit="submitNewTodoItem(this, event)" >
-    	<input name="input" placeholder="New Item">
+    	<input name="input" placeholder="New Item" autofill="false">
 		</form>
-		<ul style="padding-inline-start: 5px; margin-block-start: 5px;" onchange="moveListItem(this, event)">
-		</ul>
+		<section></section>
 		<script>
 			createInitialTodos(this);
 		</script>
@@ -33,9 +37,12 @@ function createInitialTodos(todoList) {
 }
 
 function addNewTodoItem(todoList, todoText) {
-	const list = todoList.shadowRoot.querySelector('ul');
+	const list = todoList.shadowRoot.querySelector('section');
 	const newItem = html`<todo-item>${todoText}</todo-item>`;
+	addAttributeListener(newItem, 'checked', () => updateTotalAndCompletedLabel(todoList));
 	list.appendChild(newItem);
+
+	updateTotalAndCompletedLabel(todoList);
 }
 
 function submitNewTodoItem(form, event) {
@@ -45,12 +52,10 @@ function submitNewTodoItem(form, event) {
 	form.reset();
 }
 
-function moveListItem(list, event) {
-	const checkInput = event.target.shadowRoot.querySelector('input');
-	if (checkInput.checked) {
-		list.appendChild(event.target);
-	} else {
-		list.insertBefore(event.target, list.querySelector('todo-item'));
-	}
-	checkInput.focus();
+function updateTotalAndCompletedLabel(todoList) {
+	// query all list items to determine new completed and total
+	const todoItems = queryAllDOM('todo-item', todoList);
+	todoList.setAttribute('total', todoItems.length);
+	const completedItems = queryAllDOM('input:checked', todoList);
+	todoList.setAttribute('completed', completedItems.length);
 }

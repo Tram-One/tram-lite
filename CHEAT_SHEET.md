@@ -11,12 +11,12 @@ define`
 	<color-picker color="blue">
 		<style>
 			/* component specific styles */
-			// these will be scoped to just this component
+			/* these will be scoped to just this component */
 		</style>
-		/* your html */
+		<!-- your html -->
 		<script>
 			/* call any initialization your component might need */
-			// you can reference `this` to get a pointer to this component
+			// you can reference "this" to get a pointer to this component
 		</script>
 	</color-picker>
 `;
