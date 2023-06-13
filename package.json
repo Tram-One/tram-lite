@@ -8,7 +8,8 @@
 		"src"
 	],
 	"scripts": {
-		"start": "npx serve ."
+		"start": "npx serve .",
+		"test": "npx cypress open"
 	},
 	"author": {
 		"name": "Jesse Jurman",
@@ -32,6 +33,7 @@
 	],
 	"repository": "https://github.com/Tram-One/tram-lite",
 	"license": "MIT",
-	"dependencies": {},
-	"devDependencies": {}
+	"devDependencies": {
+		"cypress": "^12.14.0"
+	}
 }
