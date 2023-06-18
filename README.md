@@ -42,6 +42,13 @@ define`
 </body>
 ```
 
+[Explore in JSFiddle](https://jsfiddle.net/gh/get/library/pure/Tram-One/tram-lite/tree/main/jsfiddle/custom-title/)
+
+Throughout this README there are links to the examples in JSFiddle. You can also use
+[this blank template as a starting space](https://jsfiddle.net/gh/get/library/pure/Tram-One/tram-lite/tree/main/jsfiddle/api_define/).
+There is also a [CHEAT_SHEET](/CHEAT_SHEET.md) with tips and recommendations when working with web-components and
+Tram-Lite.
+
 ## Installation
 
 Tram-Lite is easy to include in any project, and requires no build tooling!
@@ -87,7 +94,8 @@ will be created as shadow-dom inside our new web-component. This can be created 
 helper `html` function (detailed below), or as part of your HTML template.
 
 ```js
-const greeting = html`<my-greeting name="Ada"></my-greeting>`;
+const greeting = document.createElement('my-greeting');
+greeting.setAttribute('name', 'Ada');
 document.body.appendChild(greeting);
 ```
 
@@ -95,8 +103,10 @@ Any templated strings (in this case, `${'name'}`) will become observed attribute
 change them, you can use the native `setAttribute` function.
 
 ```js
-greeting.setAttribute('Nikola'); // our geeting will update automatically!
+greeting.setAttribute('Nikola'); // our greeting will update automatically!
 ```
+
+[Explore in JSFiddle](https://jsfiddle.net/gh/get/library/pure/Tram-One/tram-lite/tree/main/jsfiddle/api_define/)
 
 ### `html`
 
@@ -107,10 +117,10 @@ This can help reduce the amount of javascript needed, removing the need for `doc
 
 ```js
 const pageHeader = html`<h1 style="padding: 1em;">Hello World</h1>`;
+document.body.appendChild(pageHeader);
 ```
 
-You can look at the [examples/todo-list.js](examples/todo-list.js) example to see what this looks like in a real
-component.
+[Explore in JSFiddle](https://jsfiddle.net/gh/get/library/pure/Tram-One/tram-lite/tree/main/jsfiddle/api_html/)
 
 ### `queryAllDOM`
 
@@ -120,9 +130,6 @@ This is useful when nesting multiple components inside of each other, as the `do
 work through shadow DOM.
 
 ```js
-const page = html`<custom-list></custom-list>`;
-document.body.appendChild(page);
-
 // let's assume the document body looks like the following:
 // <custom-list>
 //   #shadow-root
@@ -134,11 +141,11 @@ document.body.appendChild(page);
 //     </ul>
 // </custom-list>
 
-const listItems = queryAllDOM('li', page);
+const listItems = queryAllDOM('li');
 // listItems => [<li>First Item</li>]
 ```
 
-You can look at the [examples/mirror.js](examples/mirror.js) example to see what this looks like in a real component.
+[Explore in JSFiddle](https://jsfiddle.net/gh/get/library/pure/Tram-One/tram-lite/tree/main/jsfiddle/api_queryAllDOM/)
 
 ### `addAttributeListener`
 
@@ -158,17 +165,17 @@ addAttributeListener(alertingCount, 'count', () => {
 alertingCount.setAttribute('count', '5');
 ```
 
-You can look at the [examples/mirror.js](examples/mirror.js) example to see what this looks like in a real component.
+[Explore in JSFiddle](https://jsfiddle.net/gh/get/library/pure/Tram-One/tram-lite/tree/main/jsfiddle/api_addAttributeListener/)
 
 ## Example Component
 
-Here is an example component (you can see more in the [examples folder](/examples/)).
+Here is an example component using `define` and `html`:
 
 ```js
 define`
-  <tram-counter>
+  <custom-counter>
     <button style="color: ${'color'}" onclick="increment(this)">${'label'}: ${'count'}</button>
-  </tram-counter>
+  </custom-counter>
 `;
 
 function increment(button) {
@@ -179,12 +186,14 @@ function increment(button) {
 
 const counters = html`
 	<div>
-		<tram-counter label="Blue" count="0" color="#CECEFF"></tram-counter>
-		<tram-counter label="Red" count="0" color="#FFCECE"></tram-counter>
+		<custom-counter label="Blue" count="0" color="#CECEFF"></custom-counter>
+		<custom-counter label="Red" count="0" color="#FFCECE"></custom-counter>
 	</div>
 `;
 document.body.appendChild(counters);
 ```
+
+[Explore in JSFiddle](https://jsfiddle.net/gh/get/library/pure/Tram-One/tram-lite/tree/main/jsfiddle/custom-counter/)
 
 ## Guiding Principles
 
