@@ -42,12 +42,11 @@ define`
 </body>
 ```
 
-[Explore in JSFiddle](https://jsfiddle.net/gh/get/library/pure/Tram-One/tram-lite/tree/main/jsfiddle/custom-title/)
+[Explore in CodePen](https://codepen.io/JRJurman/pen/QWJKQXB)
 
-Throughout this README there are links to the examples in JSFiddle. You can also use
-[this blank template as a starting space](https://jsfiddle.net/gh/get/library/pure/Tram-One/tram-lite/tree/main/jsfiddle/api_define/).
-There is also a [CHEAT_SHEET](/CHEAT_SHEET.md) with tips and recommendations when working with web-components and
-Tram-Lite.
+Throughout this README there are links to the examples in CodePen. You can also use
+[this blank template as a starting space](https://codepen.io/JRJurman/pen/eYQdVao). There is also a
+[CHEAT_SHEET](/CHEAT_SHEET.md) with tips and recommendations when working with web-components and Tram-Lite.
 
 ## Installation
 
@@ -79,6 +78,10 @@ Typescript-aware editor (like Visual Studio Code).
 
 ### `define`
 
+```
+(strings: any, ...templateVariables: any[]) => void
+```
+
 `define` is a template tag function used to create new web-components.
 
 ```js
@@ -106,9 +109,13 @@ change them, you can use the native `setAttribute` function.
 greeting.setAttribute('Nikola'); // our greeting will update automatically!
 ```
 
-[Explore in JSFiddle](https://jsfiddle.net/gh/get/library/pure/Tram-One/tram-lite/tree/main/jsfiddle/api_define/)
+[Explore in CodePen](https://codepen.io/JRJurman/pen/RwqGQmp)
 
 ### `html`
+
+```
+(strings: any, ...values: any[]) => Element
+```
 
 `html` is a helper function to quickly create html dom with all their attributes and content.
 
@@ -120,9 +127,13 @@ const pageHeader = html`<h1 style="padding: 1em;">Hello World</h1>`;
 document.body.appendChild(pageHeader);
 ```
 
-[Explore in JSFiddle](https://jsfiddle.net/gh/get/library/pure/Tram-One/tram-lite/tree/main/jsfiddle/api_html/)
+[Explore in CodePen](https://codepen.io/JRJurman/pen/BaGLYeJ)
 
 ### `queryAllDOM`
+
+```
+(selector: string, root?: Node | undefined) => Element[]
+```
 
 `queryAllDOM` is a helper function to easily query across shadow and light DOM boundaries.
 
@@ -145,9 +156,13 @@ const listItems = queryAllDOM('li');
 // listItems => [<li>First Item</li>]
 ```
 
-[Explore in JSFiddle](https://jsfiddle.net/gh/get/library/pure/Tram-One/tram-lite/tree/main/jsfiddle/api_queryAllDOM/)
+[Explore in CodePen](https://codepen.io/JRJurman/pen/QWJKQRB)
 
 ### `addAttributeListener`
+
+```
+(targetElement: Element, attributeName: string, callback: (arg0: MutationRecord) => void) => void
+```
 
 `addAttributeListener` is a helper function to set up a callback for when an element's attribute changes.
 
@@ -158,14 +173,14 @@ const alertingCount = html`<mock-counter count="4"></mock-counter>`;
 
 // setup observer
 addAttributeListener(alertingCount, 'count', () => {
-	alert(`New Count: ${alertingCount.getAttribute('count')}`);
+	console.log(`New Count: ${alertingCount.getAttribute('count')}`);
 });
 
 // update count, which will trigger the alert
 alertingCount.setAttribute('count', '5');
 ```
 
-[Explore in JSFiddle](https://jsfiddle.net/gh/get/library/pure/Tram-One/tram-lite/tree/main/jsfiddle/api_addAttributeListener/)
+[Explore in CodePen](https://codepen.io/JRJurman/pen/zYMKRXg)
 
 ## Example Component
 
@@ -193,7 +208,7 @@ const counters = html`
 document.body.appendChild(counters);
 ```
 
-[Explore in JSFiddle](https://jsfiddle.net/gh/get/library/pure/Tram-One/tram-lite/tree/main/jsfiddle/custom-counter/)
+[Explore in CodePen](https://codepen.io/JRJurman/pen/qBQaxzO)
 
 ## Guiding Principles
 
