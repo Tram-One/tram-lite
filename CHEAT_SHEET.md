@@ -60,3 +60,20 @@ colorConsumer.addEventListener('color-changed', (event) => {
 	colorConsumer.setAttribute('color', newColor);
 });
 ```
+
+## Style host element of a web-component
+
+If you want to style the host element from inside a web-component, you can use `:host`. This can be useful when the
+parent element is inside a grid or flexbox.
+
+```js
+define`
+	<color-picker color="blue">
+		<style>
+			:host {
+				border: 1px solid red;
+			}
+		</style>
+	</color-picker>
+`;
+```
