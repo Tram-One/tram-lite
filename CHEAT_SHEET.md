@@ -77,3 +77,5 @@ define`
 	</color-picker>
 `;
 ```
+
+Read More here: https://css-tricks.com/web-component-pseudo-classes-and-pseudo-elements/

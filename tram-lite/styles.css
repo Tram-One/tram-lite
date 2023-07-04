@@ -1,0 +1,144 @@
+/* font */
+body {
+	font-family: 'Poppins', sans-serif;
+}
+
+pre,
+code {
+	font-family: 'Ubuntu Mono', monospace;
+}
+
+/* grid styles */
+body {
+	margin: 0;
+	height: 100vh;
+	display: grid;
+	grid-template-columns: auto 1fr;
+	grid-template-rows: auto 1fr;
+	grid-template-areas:
+		'.        top-nav'
+		'side-nav main-content';
+}
+side-nav {
+	margin-top: 5.4rem;
+}
+@media only screen and (max-width: 800px) {
+	body {
+		margin: 0 1rem;
+		height: unset;
+		grid-template-columns: 1fr;
+		grid-template-rows: auto 1fr auto;
+		grid-template-areas:
+			'top-nav'
+			'main-content'
+			'side-nav';
+	}
+	side-nav {
+		margin-top: 1rem;
+		padding-top: 1rem;
+		border-top: solid 1px var(--text-2);
+	}
+}
+
+main {
+	grid-area: main-content;
+	overflow-y: auto;
+	overflow-x: hidden;
+	margin-right: 1rem;
+}
+top-nav {
+	grid-area: top-nav;
+	max-inline-size: var(--size-content-3);
+}
+side-nav {
+	grid-area: side-nav;
+}
+
+/* temp block styling */
+side-nav a,
+side-nav-section a {
+	display: block;
+}
+
+/* navigation items */
+side-nav {
+	display: block;
+	margin-left: 1rem;
+	margin-right: 1rem;
+}
+side-nav > side-nav-section {
+	display: block;
+	margin-left: 1rem;
+}
+top-nav {
+	display: flex;
+	margin: 1rem;
+	justify-content: center;
+}
+top-nav > a {
+	margin: 0rem 1rem;
+}
+
+/* internal link styling */
+a[href^='#'] {
+	color: var(--text-2);
+}
+
+/* external link styling */
+a[href^='http'] {
+	color: var(--text-2);
+	text-decoration: underline;
+}
+
+/* don't color the background for nav links */
+a code {
+	background-color: inherit;
+}
+
+/* margin inbetween content */
+h1,
+h2,
+h3,
+p,
+pre {
+	margin-bottom: 1rem;
+}
+
+dd {
+	margin-left: 1rem;
+}
+
+pre {
+	/* copy code styling for pre tags */
+	background: var(--surface-2);
+	border-radius: var(--radius-2);
+	padding: var(--size-1) var(--size-2);
+	writing-mode: lr;
+
+	/* set tab-size to 2 spaces */
+	tab-size: 2;
+}
+
+/* set element width */
+pre {
+	max-inline-size: unset;
+	width: calc(var(--size-content-3) + 3rem);
+	margin-left: 1rem;
+}
+top-nav,
+dd {
+	max-inline-size: var(--size-content-3);
+}
+
+/* page navigation */
+page {
+	display: none;
+}
+page:target {
+	display: inherit;
+}
+
+/* when the page has no target, display the #about page */
+html:not(:has(:target)) * page#about {
+	display: inherit;
+}
