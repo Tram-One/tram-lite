@@ -1,7 +1,7 @@
 /* custom component for showing code with HTML tags */
 define`
 	<tram-code>
-		<link rel="stylesheet" type="text/css" href="/tram-lite/styles.css" />
+		<link rel="stylesheet" type="text/css" href="./styles.css" />
 		<style>
 			material-icon	{
 				padding-top: -10rem;
