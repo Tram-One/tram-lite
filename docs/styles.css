@@ -16,7 +16,7 @@ body {
 	grid-template-columns: auto 1fr;
 	grid-template-rows: auto 1fr;
 	grid-template-areas:
-		'.        top-nav'
+		'logo     top-nav'
 		'side-nav main-content';
 }
 side-nav {
@@ -29,10 +29,15 @@ side-nav {
 		grid-template-columns: 1fr;
 		grid-template-rows: auto 1fr auto;
 		grid-template-areas:
-			'top-nav'
-			'main-content'
-			'side-nav';
+			'logo         top-nav'
+			'main-content main-content'
+			'side-nav     side-nav';
 	}
+
+	#logo {
+		width: 32px;
+	}
+
 	side-nav {
 		margin-top: 1rem;
 		padding-top: 1rem;
@@ -45,6 +50,11 @@ main {
 	overflow-y: auto;
 	overflow-x: hidden;
 	margin-right: 1rem;
+}
+#logo {
+	grid-area: logo;
+	width: 64px;
+	margin-left: 10px;
 }
 top-nav {
 	grid-area: top-nav;
