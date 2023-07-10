@@ -1,6 +1,6 @@
 {
 	"name": "tram-lite",
-	"version": "2.4.1",
+	"version": "2.4.2",
 	"description": "💡 Lite View Library for Vanilla Javascript",
 	"main": "src/tram-lite.js",
 	"types": "src/tram-lite.js",
@@ -9,7 +9,8 @@
 	],
 	"scripts": {
 		"start": "npx serve .",
-		"test": "npx cypress open"
+		"test": "npx cypress open",
+		"start:site": "npx serve ./docs"
 	},
 	"author": {
 		"name": "Jesse Jurman",

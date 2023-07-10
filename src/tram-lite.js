@@ -4,7 +4,7 @@
  * using simple template syntax.
  *
  * Other helper functions, like `html` and `queryAllDOM`,
- * and examples can be found at https://github.com/Tram-One/tram-lite#api
+ * and examples can be found at https://tram-one.io/tram-lite/
  */
 class TramLite {
 	// regex for finding attributes that have been templated in
@@ -61,7 +61,7 @@ class TramLite {
 
 	/**
 	 * a template tag function used to create new web-components.
-	 * {@link https://github.com/Tram-One/tram-lite#html Read the full docs here.}
+	 * {@link https://tram-one.io/tram-lite/#html Read the full docs here.}
 	 */
 	static define(strings, ...templateVariables) {
 		const template = document.createElement('template');
@@ -211,7 +211,7 @@ class TramLite {
 
 	/**
 	 * a helper function to quickly create html dom with all their attributes and content.
-	 * {@link https://github.com/Tram-One/tram-lite#html Read the full docs here.}
+	 * {@link https://tram-one.io/tram-lite/#html Read the full docs here.}
 	 * @returns {Element}
 	 */
 	static html(strings, ...values) {
@@ -223,7 +223,7 @@ class TramLite {
 
 	/**
 	 * a helper function to easily query across shadow and light DOM boundaries.
-	 * {@link https://github.com/Tram-One/tram-lite#queryAllDOM Read the full docs here.}
+	 * {@link https://tram-one.io/tram-lite/#queryAllDOM Read the full docs here.}
 	 * @param {string} selector - The CSS selector to match against each element in the DOM.
 	 * @param {Node} [root=document] - The root element where the search starts. By default, the search starts from the root document.
 	 *
@@ -244,7 +244,7 @@ class TramLite {
 
 	/**
 	 * a helper function to set up a callback for when an element's attribute changes
-	 * {@link https://github.com/Tram-One/tram-lite#addAttributeListener Read the full docs here.}
+	 * {@link https://tram-one.io/tram-lite/#addAttributeListener Read the full docs here.}
 	 * @param {Element} targetElement - The DOM element to observe.
 	 * @param {string} attributeName - The name of the attribute to observe for changes.
 	 * @param {function(MutationRecord):void} callback - The function to call when the observed attribute changes.
