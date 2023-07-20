@@ -26,7 +26,7 @@ side-nav {
 	body {
 		margin: 0 1rem;
 		height: unset;
-		grid-template-columns: 1fr;
+		grid-template-columns: 64px 1fr;
 		grid-template-rows: auto 1fr auto;
 		grid-template-areas:
 			'logo         top-nav'
@@ -151,4 +151,21 @@ page:target {
 /* when the page has no target, display the #about page */
 html:not(:has(:target)) * page#about {
 	display: inherit;
+}
+
+/* color headers, code, and the active tab */
+:root {
+	--accent-color: #9a9114;
+}
+@media (prefers-color-scheme: dark) {
+	:root {
+		--accent-color: #faf497;
+	}
+}
+
+h1,
+h2,
+h3,
+p code {
+	color: var(--accent-color);
 }
