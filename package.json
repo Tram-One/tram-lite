@@ -1,6 +1,6 @@
 {
 	"name": "tram-lite",
-	"version": "2.5.0",
+	"version": "2.5.1",
 	"description": "💡 Lite View Library for Vanilla Javascript",
 	"main": "src/tram-lite.js",
 	"types": "src/tram-lite.js",
@@ -9,7 +9,7 @@
 	],
 	"scripts": {
 		"start": "serve .",
-		"minify": "uglifyjs src/tram-lite.js -o src/tram-lite.min.js",
+		"minify": "uglifyjs src/tram-lite.js -o src/tram-lite.min.js -c -m",
 		"prepublishOnly": "npm run minify",
 		"test": "cypress open",
 		"start:site": "serve ./docs"
