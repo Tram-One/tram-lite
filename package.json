@@ -1,6 +1,6 @@
 {
 	"name": "tram-lite",
-	"version": "2.4.2",
+	"version": "2.5.0",
 	"description": "💡 Lite View Library for Vanilla Javascript",
 	"main": "src/tram-lite.js",
 	"types": "src/tram-lite.js",
@@ -8,9 +8,11 @@
 		"src"
 	],
 	"scripts": {
-		"start": "npx serve .",
-		"test": "npx cypress open",
-		"start:site": "npx serve ./docs"
+		"start": "serve .",
+		"minify": "uglifyjs src/tram-lite.js -o src/tram-lite.min.js",
+		"prepublishOnly": "npm run minify",
+		"test": "cypress open",
+		"start:site": "serve ./docs"
 	},
 	"author": {
 		"name": "Jesse Jurman",
@@ -35,6 +37,8 @@
 	"repository": "https://github.com/Tram-One/tram-lite",
 	"license": "MIT",
 	"devDependencies": {
-		"cypress": "^12.14.0"
+		"cypress": "^12.14.0",
+		"serve": "^14.2.0",
+		"uglify-js": "^3.17.4"
 	}
 }

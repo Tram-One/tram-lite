@@ -1,12 +1,5 @@
-# Library Distributable
-dist
-
-# Coverage Report
-coverage
+# minified assets
+*.min.js
 
 # Dependency directory
 node_modules
-
-# parcel test app files
-.parcel-cache
-.parcel-dist

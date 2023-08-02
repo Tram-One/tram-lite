@@ -11,10 +11,13 @@
   <a href="https://www.npmjs.com/package/tram-lite">
     <img src="https://img.shields.io/npm/v/tram-lite.svg" alt="Version">
   </a>
+  <a href="https://bundlephobia.com/package/tram-lite">
+    <img src="https://badgen.net/bundlephobia/minzip/tram-lite" alt="Gzipped Size">
+  </a>
   <a href="https://www.npmjs.com/package/tram-lite">
     <img src="https://img.shields.io/npm/l/tram-lite.svg" alt="License">
   </a>
-    <a href="https://discord.gg/dpBXAQC">
+  <a href="https://discord.gg/dpBXAQC">
     <img src="https://img.shields.io/badge/discord-join-5865F2.svg?style=flat" alt="Join Discord">
   </a>
 </div>
