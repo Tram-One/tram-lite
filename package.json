@@ -12,7 +12,7 @@
 		"minify": "uglifyjs src/tram-lite.js -o src/tram-lite.min.js -c -m",
 		"prepublishOnly": "npm run minify",
 		"test": "cypress open",
-		"start:site": "serve ./docs"
+		"docs": "serve ./docs"
 	},
 	"author": {
 		"name": "Jesse Jurman",

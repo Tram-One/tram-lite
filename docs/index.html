@@ -39,7 +39,9 @@
 		<meta property="og:image" content="https://tram-one.io/tram-lite/preview.png" />
 	</head>
 	<body>
-		<img id="logo" src="https://unpkg.com/@tram-one/tram-logo@5.0.1/dist/lite.svg" />
+		<a id="logo" href="https://tram-one.io/tram-lite/"
+			><img src="https://unpkg.com/@tram-one/tram-logo@5.0.1/dist/lite.svg"
+		/></a>
 		<top-nav>
 			<a href="https://tram-one.io/tram-lite/">Tram-Lite</a>
 			<a href="https://github.com/Tram-One/tram-lite">Github</a>
@@ -48,7 +50,11 @@
 		</top-nav>
 		<side-nav>
 			<a href="#about">About</a>
-			<a href="#install">Install</a>
+			<a>Getting Started</a>
+			<side-nav-section>
+				<a href="#install">Install</a>
+				<a href="#building-components">Building Components</a>
+			</side-nav-section>
 			<a>API</a>
 			<side-nav-section>
 				<a href="#define"><code>define</code></a>
@@ -57,7 +63,7 @@
 				<a href="#addAttributeListener"><code>addAttributeListener</code></a>
 			</side-nav-section>
 			<a href="#guiding-principles">Guiding Principles</a>
-			<a href="#cheat-sheet">Cheat Sheet</a>
+			<!-- <a href="#cheat-sheet">Cheat Sheet</a> -->
 		</side-nav>
 		<main>
 			<page id="about">
@@ -68,10 +74,9 @@
 				<p>
 					Tram-Lite is a library that helps developers build native web-components, and makes crafting simple vanilla
 					no-build web applications easier, simple, and fun!
-				</p>
 
-				<tram-code
-					code="
+					<tram-code
+						code="
 					define`
 						<custom-title color='blue'>
 							<style>
@@ -81,7 +86,8 @@
 							<h1>${'title'}</h1>
 						</custom-title>
 					`;"
-				></tram-code>
+					></tram-code>
+				</p>
 
 				<h2>API</h2>
 				<p>
@@ -118,9 +124,12 @@
 				<p>Tram-Lite is easy to include in any project, and requires no build tooling!</p>
 
 				<h2>script tag</h2>
-				<p>To install, you can include a script tag pointed to unpkg.com in your <code>index.html</code>:</p>
+				<p>
+					To install, you can include a script tag pointed to <a href="https://unpkg.com">unpkg.com</a> in your
+					<code>index.html</code>:
 
-				<tram-code code=" <script src='https://unpkg.com/tram-lite@2'></script> "> </tram-code>
+					<tram-code code=" <script src='https://unpkg.com/tram-lite@2'></script> "> </tram-code>
+				</p>
 
 				<p>
 					This will automatically add all the API method to your javascript project. They are attached to the window
@@ -129,10 +138,15 @@
 
 				<p>
 					If you want the minified version of the source code, you can point to the minified version at
-					<code>dist/tram-lite.min.js</code>:
-				</p>
+					<code>src/tram-lite.min.js</code>:
 
-				<tram-code code=" <script src='https://unpkg.com/tram-lite@2/src/tram-lite.min.js'></script> "> </tram-code>
+					<tram-code
+						code="
+				<script src='https://unpkg.com/tram-lite@2/src/tram-lite.min.js'>
+				</script>"
+					>
+					</tram-code>
+				</p>
 
 				<h2>types</h2>
 
@@ -141,7 +155,7 @@
 					any build tooling (make sure this matches your script tag above).
 				</p>
 
-				<tram-code code=" npm i tram-lite "></tram-code>
+				<tram-code code=" npm i tram-lite@2 "></tram-code>
 
 				<p>
 					This will automatically annotate Tram-Lite methods with documentation in your project if you are using a
@@ -151,48 +165,50 @@
 			<page id="define">
 				<h2><code>define</code></h2>
 				<section>
-					<p><code>define</code> is a template tag function used to create new web-components.</p>
-					<tram-code
-						code="
+					<p>
+						<code>define</code> is a template tag function used to create new web-components.
+						<tram-code
+							code="
 						define`
 							<my-greeting>
 								<h1>Hello ${'name'}</h1>
 							</my-greeting>
 						`;
 					"
-					></tram-code>
+						></tram-code>
+					</p>
 					<p>
 						The outer-most tag in the template will be the new component that is defined (
-						<code>&lt;my-greeting&gt;</code> in the above case), and anything under that will be created as shadow-dom
-						inside the new web-component.
+						<tag-code tag="my-greeting"></tag-code> in the above case), and anything under that will be created as
+						shadow-dom inside the new web-component.
 					</p>
 					<p>
 						This can be created using <code>document.createElement</code>, the Tram-Lite <code>html</code> function, or
 						as part of your HTML template.
-					</p>
-					<tram-code
-						code="
+						<tram-code
+							code="
 						<body>
 							<my-greeting name='Jesse'></my-greeting>
 						</body>
 					"
-					></tram-code>
+						></tram-code>
+					</p>
 					<p>
 						Any templated strings (for example, <code>${'name'}</code>) will become observed attributes on the new
 						component. If you want to change them, you can use the native <code>setAttribute</code> function.
-					</p>
-					<tram-code
-						code="
+						<tram-code
+							code="
 						const greeting = document.querySelector('my-greeting');
 						greeting.setAttribute('name', 'Tina')
 					"
-					></tram-code>
+						></tram-code>
+					</p>
+
 					<p>
 						Additionally, you can include script tags that reference <code>this</code>. When the component is mounted,
 						the script tag will run, and <code>this</code> will refer to the newly mounted instance.
-					</p>
-					<tram-code
-						code="
+						<tram-code
+							code="
 						define`
 							<my-greeting>
 								<h1>Hello ${'name'}</h1>
@@ -205,12 +221,14 @@
 							greeting.setAttribute('name', name.toUpperCase())
 						}
 					"
-					></tram-code>
+						></tram-code>
+					</p>
 				</section>
 				<section>
 					<h2>Syntax</h2>
-					<tram-code
-						code="
+					<p>
+						<tram-code
+							code="
 						define`
 							<tag-name default-attributes='default value'>
 								<h1>Template</h1>
@@ -218,7 +236,8 @@
 							</tag-name>
 						`;
 					"
-					></tram-code>
+						></tram-code>
+					</p>
 					<h3>Parameters</h3>
 					<dl>
 						<dt><code>tag name</code></dt>
@@ -272,13 +291,14 @@
 					<p>
 						<code>html</code> is a template tag function to quickly create html dom with all their attributes and
 						content.
-					</p>
-					<tram-code
-						code="
+						<tram-code
+							code="
 						const pageHeader = html`<h1>Hello World</h1>`;
 						document.body.appendChild(pageHeader);
 					"
-					></tram-code>
+						></tram-code>
+					</p>
+
 					<p>
 						This can help reduce the amount of code needed when building components in javascript, removing the need for
 						chains of
@@ -316,12 +336,14 @@
 				</section>
 				<section>
 					<h2>Syntax</h2>
-					<tram-code
-						code="
+					<p>
+						<tram-code
+							code="
 							queryAllDOM(selector)
 							queryAllDOM(selector, root)
 						"
-					></tram-code>
+						></tram-code>
+					</p>
 					<h3>Parameters</h3>
 					<dl>
 						<dt><code>selector</code></dt>
@@ -346,9 +368,10 @@
 				</section>
 				<section>
 					<h2>Example</h2>
-					<p>Let's assume the document body looks like the following:</p>
-					<tram-code
-						code="
+					<p>
+						Let's assume the document body looks like the following:
+						<tram-code
+							code="
 							<custom-list>
 								#shadow-root
 									<ul>
@@ -359,14 +382,17 @@
 									</ul>
 							</custom-list>
 						"
-					></tram-code>
-					<p>You could use <code>queryAllDOM</code> to get the <code>li</code> tag in the deeply nested DOM</p>
-					<tram-code
-						code="
+						></tram-code>
+					</p>
+					<p>
+						You could use <code>queryAllDOM</code> to get the <code>li</code> tag in the deeply nested DOM
+						<tram-code
+							code="
 							const listItems = queryAllDOM('li');
 							// returns [<li>First Item</li>]
 						"
-					></tram-code>
+						></tram-code>
+					</p>
 				</section>
 			</page>
 			<page id="addAttributeListener">
@@ -380,11 +406,13 @@
 				</section>
 				<section>
 					<h2>Syntax</h2>
-					<tram-code
-						code="
+					<p>
+						<tram-code
+							code="
 						addAttributeListener(element, attributeName, callback)
 					"
-					></tram-code>
+						></tram-code>
+					</p>
 					<h3>Parameters</h3>
 					<dl>
 						<dt><code>element</code></dt>
@@ -413,8 +441,9 @@
 				</section>
 				<section>
 					<h2>Example</h2>
-					<tram-code
-						code="
+					<p>
+						<tram-code
+							code="
 							const alertingCount = html`
 								<test-counter count='4'></test-counter>
 							`;
@@ -427,7 +456,8 @@
 							// update count, which will trigger the alert
 							alertingCount.setAttribute('count', '5');
 						"
-					></tram-code>
+						></tram-code>
+					</p>
 				</section>
 			</page>
 			<page id="guiding-principles">
@@ -437,7 +467,7 @@
 					Tram-Lite library.
 				</p>
 
-				<h2>1. Not a Framework</h2>
+				<h3>1. Not a Framework</h3>
 				<p>
 					Tram-Lite is a <b>library</b>, it is <b>not a framework</b>. As much as possible, users should run and
 					orchestrate their own code. In the face of bloat and tradeoffs associated with frameworks, and the difficulty
@@ -452,7 +482,7 @@
 					and does not attach listeners or cause other non-obvious side-effects to the browser.
 				</p>
 				<p><b> This is the main guiding principle that inspires all others. </b></p>
-				<h2>2. Defer to native APIs</h2>
+				<h3>2. Defer to native APIs</h3>
 				<p>
 					Tram-Lite should strive to only offer functions when they would offer substantial benefit over native existing
 					options. This could be because the existing options are tedious (as is the case for
@@ -463,7 +493,7 @@
 					Conversely, functionality that would be traditionally rare, or already has native solutions, should be
 					avoided.
 				</p>
-				<h2>3. Interoperable and optional</h2>
+				<h3>3. Interoperable and optional</h3>
 				<p>
 					Tram-Lite functions should never depend on each other. While we may offer functions that help enable patterns
 					created as a side effect of other elements in the Tram-Lite library, they should be functional in an
@@ -474,7 +504,7 @@
 					means any additional functions that mean to target these objects, should work with other non-Tram-Lite
 					elements.
 				</p>
-				<h2>4. Favor no-build environments</h2>
+				<h3>4. Favor no-build environments</h3>
 				<p>
 					Tram-Lite's target environment is a basic html file. It should offer everything needed, and let developers
 					build immediately, with no other tools or libraries required.
@@ -491,6 +521,219 @@
 					<em>
 						Additionally, as much as possible, this project should try to adhere to this principle as much as possible.
 					</em>
+				</p>
+			</page>
+			<page id="building-components">
+				<h2>Building Components</h2>
+				<p>
+					In this section, we'll go over making components using Tram-Lite, starting out simple, and building on that
+					functionality.
+				</p>
+
+				<h3>Tools required</h3>
+				<p>
+					To use Tram-Lite, you won't need to install anything on your computer! You do have two options when going
+					through this guide, you can either create an <code>index.html</code> and <code>main.js</code> using your
+					favorite editor, or use <a href="https://codepen.io/pen?template=eYQdVao">this codepen</a>.
+				</p>
+
+				<p>
+					If you created an <code>index.html</code> file, include the following content in the file, and open it
+					directly with your browser:
+					<tram-code
+						code="
+							<script src='https://unpkg.com/tram-lite@2'></script>
+							<script src='./main.js'></script>
+						"
+					></tram-code>
+				</p>
+
+				<h3>Building our first component</h3>
+				<p>
+					Let's start with something super simple, a custom button. In the JS section (or <code>main.js</code>), write
+					the following component definition:
+					<tram-code
+						code="
+					define`
+						<my-button>
+							<button>Click Me!</button>
+						</my-button>
+					`
+					"
+					></tram-code>
+				</p>
+				<p>
+					Then, in the HTML, add the following to put our new button on the page:
+					<tram-code
+						code="
+						<my-button></my-button>
+					"
+					></tram-code>
+				</p>
+
+				<h4>What's going on?</h4>
+				<p>
+					What we've done so far is defined a new web-component <tag-code tag="my-button"></tag-code>. Whenever this
+					component is placed on the page, it will have a <tag-code tag="button" content="Click Me!"></tag-code> inside
+					of it.
+				</p>
+
+				<h3>Making our component dynamic</h3>
+				<p>
+					Next, let's do some things to make our component a little more dynamic. First, let's make it so we can change
+					the text inside the component using an attribute. We can do this by replacing the <code>Click Me!</code> with
+					<code>${'label'}</code>
+
+					<tram-code
+						code="
+						define`
+							<my-button>
+								<button>${'label'}</button>
+							</my-button>
+						`
+					"
+					></tram-code>
+				</p>
+
+				<p>
+					Now, let's update our HTML to include this new attribute.
+
+					<tram-code
+						code="
+						<my-button label='My Button'></my-button>
+					"
+					></tram-code>
+				</p>
+
+				<h4>What's going on?</h4>
+				<p>
+					Attributes are directly tied to their contents using the <code>${'...'}</code> syntax. When we put
+					<code>${'label'}</code> in our component, Tram-Lite knows to place whatever the attribute
+					<code>label</code> is inside the button.
+				</p>
+
+				<h3>Default Attribute Values</h3>
+				<p>
+					What if we want to provide a fallback value if no <code>label</code> is set? It's possible to set a default
+					value if one isn't provided. This is done by including the default value in the outer-most tag (next to
+					<code>my-button</code>).
+
+					<tram-code
+						code="
+						define`
+							<my-button label='Clicks'>
+								<button>${'label'}</button>
+							</my-button>
+						`
+					"
+					></tram-code>
+				</p>
+
+				<p>
+					Now, if we remove the label on our HTML component, we can see it falls back on our default value.
+
+					<tram-code
+						code="
+					<my-button></my-button>
+					"
+					></tram-code>
+				</p>
+
+				<h4>What's going on?</h4>
+				<p>
+					Any attributes set in the outer most definition are saved as fallback values. Even if you don't need fallback
+					values, you can use this to better advertise what attributes this component accepts.
+				</p>
+
+				<h3>Adding interactivity</h3>
+				<p>
+					Let's make it so that clicking our button does something! We'll start with an incrementing counter. To do
+					this, we'll add another attribute <code>count</code>, and add an <code>onclick</code> handler for our button.
+					For this attribute, we'll set a default value of <code>"0"</code>.
+
+					<tram-code
+						code="
+					define`
+						<my-button label='Clicks' count='0'>
+							<button onclick='increment(event)'>
+								${'label'}: ${'count'}
+							</button>
+						</my-button>
+					`
+
+					function increment(event) {
+						const myButton = event.target.getRootNode().host;
+						const currentCount = parseInt(myButton.getAttribute('count'));
+						myButton.setAttribute('count', currentCount+1);
+					}
+					"
+					></tram-code>
+				</p>
+
+				<h4>What's going on?</h4>
+				<p>
+					In the <code>increment</code> function, we're able to get the instance of the component using
+					<code>.getRootNode().host</code>, and call methods like <code>getAttribute</code> and
+					<code>setAttribute</code> like any other native element.
+				</p>
+
+				<h3>Adding validation</h3>
+				<p>
+					Since users can override the count with any string, let's make sure it's a valid number. We can add a new
+					function that updates the count for our button if it's invalid.
+					<tram-code
+						code="
+					function validCount(myButton) {
+						const currentCount = myButton.getAttribute('count');
+						const fixedCount = isNaN(currentCount) ? 0 : currentCount;
+						myButton.setAttribute('count', fixedCount);
+					}
+					"
+					></tram-code>
+				</p>
+
+				<p>
+					If we want to call this whenever a component is mounted, we can include a
+					<tag-code tag="script"></tag-code> tag in the definition, and call this new function.
+
+					<tram-code
+						code="
+						define`
+							<my-button label='Clicks' count='0'>
+								<button onclick='increment(event)'>
+									${'label'}: ${'count'}
+								</button>
+								<script>
+									validCount(this)
+								</script>
+							</my-button>
+						`
+					"
+					></tram-code>
+				</p>
+
+				<p>
+					Now, if we update our HTML to include an invalid count, we'll see the attribute defaults to <code>0</code>.
+
+					<tram-code
+						code="
+					<my-button count='abc'></my-button>
+					"
+					></tram-code>
+				</p>
+
+				<h4>What's going on?</h4>
+				<p>
+					<tag-code tag="script"></tag-code> tags are special in Tram-Lite. They will trigger when the component is
+					placed on the page, and only on that initial render. Additionally, they have a reference to the component with
+					the <code>this</code> variable.
+				</p>
+
+				<h3>Congrats!</h3>
+				<p>
+					That's it! You've made your first component in Tram-Lite. Celebrate with your favorite beverage of choice,
+					check out the other docs, and if you have more questions or thoughts, we'd love if you
+					<a href="https://discord.gg/dpBXAQC">joined our discord</a>!
 				</p>
 			</page>
 			<page id="cheat-sheet">

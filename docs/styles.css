@@ -10,18 +10,20 @@ code {
 
 /* grid styles */
 body {
+	--nav-height: 4rem; /* 2rem + 1rem margin on top and bottom */
+	--title-height: 4.5rem; /* 3.5rem + 1rem bottom margin */
+
 	margin: 0;
 	height: 100vh;
 	display: grid;
-	grid-template-columns: auto 1fr;
-	grid-template-rows: auto 1fr;
+	grid-template-columns: 250px 1fr;
+	grid-template-rows: var(--nav-height) var(--title-height) 1fr;
 	grid-template-areas:
 		'logo     top-nav'
+		'logo     main-content'
 		'side-nav main-content';
 }
-side-nav {
-	margin-top: 5.4rem;
-}
+
 @media only screen and (max-width: 800px) {
 	body {
 		margin: 0 1rem;
@@ -33,16 +35,6 @@ side-nav {
 			'main-content main-content'
 			'side-nav     side-nav';
 	}
-
-	#logo {
-		width: 32px;
-	}
-
-	side-nav {
-		margin-top: 1rem;
-		padding-top: 1rem;
-		border-top: solid 1px var(--text-2);
-	}
 }
 
 main {
@@ -51,17 +43,36 @@ main {
 	overflow-x: hidden;
 	margin-right: 1rem;
 }
-#logo {
+
+#logo img {
 	grid-area: logo;
-	width: 64px;
-	margin-left: 10px;
+	width: 215px;
+	height: 170px;
 }
+
+@media only screen and (max-width: 800px) {
+	#logo img {
+		width: 100%;
+		height: inherit;
+	}
+}
+
 top-nav {
 	grid-area: top-nav;
 	max-inline-size: var(--size-content-3);
 }
+
 side-nav {
 	grid-area: side-nav;
+	margin-top: 2rem;
+}
+
+@media only screen and (max-width: 800px) {
+	side-nav {
+		margin-top: 1rem;
+		padding-top: 1rem;
+		border-top: solid 1px var(--text-2);
+	}
 }
 
 /* temp block styling */
@@ -112,6 +123,15 @@ h3,
 p,
 pre {
 	margin-bottom: 1rem;
+}
+
+p + h2,
+p + h3 {
+	margin-top: 2.5rem;
+}
+
+p + h4 {
+	margin-top: 1.5rem;
 }
 
 dd {
@@ -166,6 +186,7 @@ html:not(:has(:target)) * page#about {
 h1,
 h2,
 h3,
-p code {
+p code,
+tag-code {
 	color: var(--accent-color);
 }

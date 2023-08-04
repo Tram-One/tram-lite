@@ -61,3 +61,29 @@ define`
 		<span><slot></slot></span>
 	</optional-badge>
 `;
+
+define`
+	<tag-code tag="" content="">
+		<link rel="stylesheet" type="text/css" href="./styles.css" />
+		<style>
+			code {
+				background: var(--surface-2);
+				border-radius: var(--radius-2);
+				padding: var(--size-1) var(--size-2);
+			}
+		</style>
+		<code>&lt;${'tag'}&gt;</code>
+		<script>
+			injectContent(this)
+		</script>
+	</tag-code>
+`;
+
+function injectContent(tagCode) {
+	if (tagCode.getAttribute('content') !== null) {
+		const [codeTag] = queryAllDOM('code', tagCode);
+		const tag = tagCode.getAttribute('tag');
+		const content = tagCode.getAttribute('content');
+		codeTag.innerText = `<${tag}>${content}</${tag}>`;
+	}
+}
