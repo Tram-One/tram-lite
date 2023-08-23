@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		<title>Tram-Lite Example Components</title>
+		<link rel="icon" type="image/png" href="https://unpkg.com/@tram-one/tram-logo@5.0.1/dist/lite_32.png" />
+
 		<meta charset="utf-8" />
 		<style>
 			:root {
 				color-scheme: dark light;
+			}
+			body {
+				margin: auto;
+				max-width: 800px;
 			}
 			body > * {
 				display: block;
@@ -19,16 +26,23 @@
 		<script src="./mirror.js"></script>
 		<script src="./todo-list.js"></script>
 		<script src="./color-picker.js"></script>
+		<script src="./example-container.js"></script>
 	</head>
 	<body>
 		<tram-title>Tram-Lite Components!</tram-title>
-		<div>
+		<example-container name="Counters">
 			<tram-counter id="blue" label="Blue" color="#CECEFF"></tram-counter>
 			<tram-counter id="red" label="Red" color="#FFCECE"></tram-counter>
 			<tram-counter id="default"></tram-counter>
-		</div>
-		<tram-mirror></tram-mirror>
-		<todo-list></todo-list>
-		<color-picker hue="200"></color-picker>
+		</example-container>
+		<example-container name="Mirror Input">
+			<tram-mirror></tram-mirror>
+		</example-container>
+		<example-container name="To Do List">
+			<todo-list></todo-list>
+		</example-container>
+		<example-container name="Color Picker">
+			<color-picker hue="200"></color-picker>
+		</example-container>
 	</body>
 </html>

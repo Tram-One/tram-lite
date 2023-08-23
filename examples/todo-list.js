@@ -54,8 +54,8 @@ function submitNewTodoItem(form, event) {
 
 function updateTotalAndCompletedLabel(todoList) {
 	// query all list items to determine new completed and total
-	const todoItems = queryAllDOM('todo-item', todoList);
+	const todoItems = todoList.shadowRoot.querySelectorAll('todo-item');
 	todoList.setAttribute('total', todoItems.length);
-	const completedItems = queryAllDOM('input:checked', todoList);
+	const completedItems = todoList.shadowRoot.querySelectorAll('todo-item[checked]');
 	todoList.setAttribute('completed', completedItems.length);
 }

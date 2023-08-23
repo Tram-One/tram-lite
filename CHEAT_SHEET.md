@@ -35,13 +35,10 @@ colorPicker.getAttribute('color');
 
 ## Query an element in a web-component
 
-When you need to interact with elements inside a web-component, use `shadowRoot` or `queryAllDOM`.
+When you need to interact with elements inside a web-component, use `shadowRoot`.
 
 ```js
 const input = colorPicker.shadowRoot.querySelector('input');
-// OR
-const [input] = queryAllDOM('input', colorPicker);
-
 colorPicker.setAttribute('color', input.value);
 ```
 

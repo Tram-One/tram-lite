@@ -81,7 +81,7 @@ define`
 
 function injectContent(tagCode) {
 	if (tagCode.getAttribute('content') !== null) {
-		const [codeTag] = queryAllDOM('code', tagCode);
+		const [codeTag] = tagCode.shadowRoot.querySelectorAll('code');
 		const tag = tagCode.getAttribute('tag');
 		const content = tagCode.getAttribute('content');
 		codeTag.innerText = `<${tag}>${content}</${tag}>`;
