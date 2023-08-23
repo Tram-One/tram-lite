@@ -334,7 +334,7 @@
 					<p>
 						<tram-code
 							code="
-						addAttributeListener(element, attributeName, callback)
+						addAttributeListener(element, attributeNames, callback)
 					"
 						></tram-code>
 					</p>
@@ -342,11 +342,11 @@
 					<dl>
 						<dt><code>element</code></dt>
 						<dd><p>Element to watch attribute changes for.</p></dd>
-						<dt><code>attributeName</code></dt>
-						<dd><p>The attribute name on the element to watch changes for.</p></dd>
+						<dt><code>attributeNames</code></dt>
+						<dd><p>A list of attribute names on the element to watch changes for.</p></dd>
 						<dt><code>callback</code></dt>
 						<dd>
-							<p>The function to call when the attribute changes. It has the following parameters:</p>
+							<p>The function to call when one of the listed attributes changes. It has the following parameters:</p>
 							<dl>
 								<dt><code>mutationRecord</code></dt>
 								<dd>
@@ -374,7 +374,7 @@
 							`;
 
 							// setup observer
-							addAttributeListener(alertingCount, 'count', () => {
+							addAttributeListener(alertingCount, ['count'], () => {
 								console.log(`Count: ${alertingCount.getAttribute('count')}`);
 							});
 

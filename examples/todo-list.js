@@ -39,7 +39,7 @@ function createInitialTodos(todoList) {
 function addNewTodoItem(todoList, todoText) {
 	const list = todoList.shadowRoot.querySelector('section');
 	const newItem = html`<todo-item>${todoText}</todo-item>`;
-	addAttributeListener(newItem, 'checked', () => updateTotalAndCompletedLabel(todoList));
+	addAttributeListener(newItem, ['checked'], () => updateTotalAndCompletedLabel(todoList));
 	list.appendChild(newItem);
 
 	updateTotalAndCompletedLabel(todoList);

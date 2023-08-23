@@ -237,7 +237,7 @@ class TramLite {
 	 * a helper function to set up a callback for when an element's attribute changes
 	 * {@link https://tram-one.io/tram-lite/#addAttributeListener Read the full docs here.}
 	 * @param {Element} targetElement - The DOM element to observe.
-	 * @param {string | string[]} attributeNames - The name of the attribute (or list of attributes) to observe for changes.
+	 * @param {string[]} attributeNames - The name of the attribute (or list of attributes) to observe for changes.
 	 * @param {function(MutationRecord):void} callback - The function to call when the observed attribute changes.
 	 *    This function takes one argument: the MutationRecord representing the change.
 	 */
@@ -251,8 +251,7 @@ class TramLite {
 			});
 		};
 		const observer = new MutationObserver(callbackWrapper);
-		const attributeList = typeof attributeNames === 'string' ? [attributeNames] : attributeNames;
-		observer.observe(targetElement, { attributes: true, attributeFilter: attributeList, attributeOldValue: true });
+		observer.observe(targetElement, { attributes: true, attributeFilter: attributeNames, attributeOldValue: true });
 	}
 
 	static updateRootAttr(attributeName, event) {
