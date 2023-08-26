@@ -320,6 +320,41 @@
 					</dl>
 				</section>
 			</page>
+			<page id="svg">
+				<h2><code>svg</code></h2>
+				<section>
+					<p>
+						<code>svg</code> is a template tag function to quickly create SVG dom with all their attributes and content.
+						<tram-code
+							code="
+						const newCircle = svg`<circle cx='20' cy='20' r='50' />`;
+						const svgContainer = document.querySelector('svg');
+						svgContainer.appendChild(newCircle);
+					"
+						></tram-code>
+					</p>
+
+					<p>This is identical to the <code>html</code> tag, but works for SVG components.</p>
+				</section>
+				<section>
+					<h2>Syntax</h2>
+					<tram-code code="svg`template`"></tram-code>
+					<h3>Parameters</h3>
+					<dt><code>template</code></dt>
+					<dd>
+						<p>any valid SVG DOM</p>
+					</dd>
+					<h3>Return Value</h3>
+					<p>
+						The template as an <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a>, or null
+						if the template is invalid
+					</p>
+					<h3>Exceptions</h3>
+					<dl>
+						<dt>N/A</dt>
+					</dl>
+				</section>
+			</page>
 			<page id="addAttributeListener">
 				<h2><code>addAttributeListener</code></h2>
 				<section>

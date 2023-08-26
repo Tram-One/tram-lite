@@ -254,10 +254,34 @@ class TramLite {
 		observer.observe(targetElement, { attributes: true, attributeFilter: attributeNames, attributeOldValue: true });
 	}
 
+	/**
+	 *
+	 * @param {*} attributeName
+	 * @param {*} event
+	 */
 	static updateRootAttr(attributeName, event) {
 		const rootNodeHost = event.target.getRootNode().host;
 		rootNodeHost.setAttribute(attributeName, event.target.value);
 	}
+
+	/**
+	 *
+	 * @param {HTMLTemplateElement} templateTag
+	 */
+	static processTemplateDefinition(templateTag) {
+		const definitionString = templateTag.content.firstElementChild.outerHTML;
+
+		// we expect template variables to be in the following pattern, matching "${'...'}"
+		const variablePattern = /\$\{\'(.*?)\'\}/;
+		// Split the string by the above pattern, which lets us get an alternating list of strings and variables
+		const parts = definitionString.split(variablePattern);
+
+		// Extract the strings and the variables
+		const rawStrings = parts.filter((_, index) => index % 2 === 0);
+		const templateVaraibles = parts.filter((_, index) => index % 2 !== 0);
+
+		define(rawStrings, ...templateVaraibles);
+	}
 }
 
-const { define, html, svg, addAttributeListener, updateRootAttr } = TramLite;
+const { define, html, svg, addAttributeListener, updateRootAttr, processTemplateDefinition } = TramLite;
