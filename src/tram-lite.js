@@ -282,6 +282,33 @@ class TramLite {
 
 		define(rawStrings, ...templateVaraibles);
 	}
+
+	static watchForTemplateDefinitions(targetElement) {
+		const processNewNodes = (mutationRecords) => {
+			mutationRecords.forEach((mutationRecord) => {
+				mutationRecord.addedNodes.forEach((newNode) => {
+					if (newNode.matches?.('template[define-component]')) {
+						processTemplateDefinition(newNode);
+					}
+				});
+			});
+		};
+
+		const observer = new MutationObserver(processNewNodes);
+		observer.observe(targetElement, { subtree: true, childList: true });
+	}
 }
 
-const { define, html, svg, addAttributeListener, updateRootAttr, processTemplateDefinition } = TramLite;
+// expose functions for external usage
+const {
+	define,
+	html,
+	svg,
+	addAttributeListener,
+	updateRootAttr,
+	processTemplateDefinition,
+	watchForTemplateDefinitions,
+} = TramLite;
+
+// kick off mutation observer for processing templates with component definitions
+watchForTemplateDefinitions(document);
