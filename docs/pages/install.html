@@ -6,7 +6,7 @@
 	To install, you can include a script tag pointed to <a href="https://unpkg.com">unpkg.com</a> in your
 	<code>index.html</code>:
 
-	<tram-code syntax="html" code="<script src='https://unpkg.com/tram-lite@3'></script>"> </tram-code>
+	<tram-code syntax="html" code='<script src="https://unpkg.com/tram-lite@3"></script>'> </tram-code>
 </p>
 
 <p>
@@ -18,7 +18,11 @@
 	If you want the minified version of the source code, you can point to the minified version at
 	<code>src/tram-lite.min.js</code>:
 
-	<tram-code syntax="html" code="<script src='https://unpkg.com/tram-lite@3/src/tram-lite.min.js'></script>">
+	<tram-code
+		syntax="html"
+		code='<script src="https://unpkg.com/tram-lite@3/src/tram-lite.min.js">
+</script>'
+	>
 	</tram-code>
 </p>
 
@@ -29,7 +33,7 @@
 	tooling (make sure this matches your script tag above).
 </p>
 
-<tram-code syntax="bash" code=" npm i tram-lite@3 "></tram-code>
+<tram-code syntax="bash" code="npm i tram-lite@3"></tram-code>
 
 <p>
 	This will automatically annotate Tram-Lite methods with documentation in your project if you are using a

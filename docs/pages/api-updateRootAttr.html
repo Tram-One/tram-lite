@@ -1,0 +1,41 @@
+<h2><code>updateRootAttr</code></h2>
+<section>
+	<p>
+		<code>updateRootAttr</code> is a helper function automatically update an attribute on a web-component when an input
+		value changes. This is a convenience utility that simplifies a common pattern in controlled components.
+	</p>
+	<p>This is intended to be used in the <code>onchange</code> and <code>oninput</code> event handlers.</p>
+</section>
+<section>
+	<h2>Syntax</h2>
+	<p>
+		<tram-code syntax="javascript" code="updateRootAttr(attributeName, event)"></tram-code>
+	</p>
+	<h3>Parameters</h3>
+	<dl>
+		<dt><code>attributeName</code></dt>
+		<dd><p>Attribute to set on the host web-component.</p></dd>
+		<dt><code>event</code></dt>
+		<dd><p>The default event object for an input component.</p></dd>
+	</dl>
+	<h3>Return Value</h3>
+	<p>None</p>
+	<h3>Exceptions</h3>
+	<p>To Be Added...</p>
+</section>
+<section>
+	<h2>Example</h2>
+	<p>
+		<tram-code
+			syntax="html"
+			code="<template is=&quot;component-definition&quot;>
+	<x-greeting>
+		<label>
+			Name: <input oninput=&quot;updateRootAttr('name', event)&quot; />
+		</label>
+		<p>Hello ${'name'}!</p>
+	</x-greeting>
+</template>"
+		></tram-code>
+	</p>
+</section>

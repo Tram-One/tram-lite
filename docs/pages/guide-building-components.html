@@ -14,7 +14,7 @@
 <p>
 	If you created an <code>index.html</code> file, include the following content in the file, and open the html file
 	directly with your browser:
-	<tram-code syntax="html" code="<script src='https://unpkg.com/tram-lite@3'></script>"></tram-code>
+	<tram-code syntax="html" code='<script src="https://unpkg.com/tram-lite@3"></script>'></tram-code>
 </p>
 
 <h3>Building our first component</h3>
@@ -23,11 +23,11 @@
 	definition:
 	<tram-code
 		syntax="html"
-		code="<template is='component-definition'>
+		code='<template is="component-definition">
 	<my-button>
 		<button>Click Me!</button>
 	</my-button>
-</template>"
+</template>'
 	></tram-code>
 </p>
 <p>
@@ -49,7 +49,7 @@
 
 	<tram-code
 		syntax="html"
-		code="<template is='component-definition'>
+		code="<template is=&quot;component-definition&quot;>
 	<my-button>
 		<button>${'label'}</button>
 	</my-button>
@@ -60,7 +60,7 @@
 <p>
 	Now, let's update our HTML to include this new attribute.
 
-	<tram-code syntax="html" code="<my-button label='My Button'></my-button>"></tram-code>
+	<tram-code syntax="html" code='<my-button label="My Button"></my-button>'></tram-code>
 </p>
 
 <h4>What's going on?</h4>
@@ -78,11 +78,11 @@
 
 	<tram-code
 		syntax="html"
-		code="<template is='component-definition'>
-	<my-button label='Clicks'>
-		<button>${'label'}</button>
+		code='<template is="component-definition">
+	<my-button label="Clicks">
+		<button>${&apos;label&apos;}</button>
 	</my-button>
-</template>"
+</template>'
 	></tram-code>
 </p>
 
@@ -106,13 +106,13 @@
 
 	<tram-code
 		syntax="html"
-		code="<template is='component-definition'>
-	<my-button label='Clicks' count='0'>
-		<button onclick='increment(event)'>
-			${'label'}: ${'count'}
+		code='<template is="component-definition">
+	<my-button label="Clicks" count="0">
+		<button onclick="increment(event)">
+			${&apos;label&apos;}: ${&apos;count&apos;}
 		</button>
 	</my-button>
-</template>"
+</template>'
 	></tram-code>
 </p>
 <p>
@@ -144,16 +144,16 @@
 
 	<tram-code
 		syntax="html"
-		code="<template is='component-definition'>
-	<my-button label='Clicks' count='0'>
-		<button onclick='increment(event)'>
-			${'label'}: ${'count'}
+		code='<template is="component-definition">
+	<my-button label="Clicks" count="0">
+		<button onclick="increment(event)">
+			${&apos;label&apos;}: ${&apos;count&apos;}
 		</button>
 		<script>
-			this.shadowRoot.querySelector('button').focus()
+			this.shadowRoot.querySelector(&apos;button&apos;).focus()
 		</script>
 	</my-button>
-</template>"
+</template>'
 	></tram-code>
 </p>
 
@@ -165,7 +165,8 @@
 </p>
 <p>
 	The <code>.shadowRoot.querySelector('button')</code> is how we access the underlying button in the web-component. In a
-	future tutorial we'll go more into interacting with the shadow DOM.
+	future tutorial we'll go more into interacting with the shadow DOM, and other common tools for web-components in
+	general.
 </p>
 
 <h3>Congrats!</h3>

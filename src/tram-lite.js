@@ -263,9 +263,17 @@ class TramLite {
 		const rootNodeHost = event.target.getRootNode().host;
 		rootNodeHost.setAttribute(attributeName, event.target.value);
 	}
+}
 
+// expose functions for external usage
+const { define, html, svg, addAttributeListener, updateRootAttr } = TramLite;
+
+// The following is logic to watch for component definitions in the template
+// this will have the following syntax `<template is="component-definition">`
+
+class ComponentDefinition extends HTMLTemplateElement {
 	/**
-	 *
+	 * static function to process template tags and define components
 	 * @param {HTMLTemplateElement} templateTag
 	 */
 	static processTemplateDefinition(templateTag) {
@@ -282,15 +290,7 @@ class TramLite {
 
 		define(rawStrings, ...templateVaraibles);
 	}
-}
 
-// expose functions for external usage
-const { define, html, svg, addAttributeListener, updateRootAttr, processTemplateDefinition } = TramLite;
-
-// The following is logic to watch for component definitions in the template
-// this will have the following syntax `<template is="component-definition">`
-
-class ComponentDefinition extends HTMLTemplateElement {
 	constructor() {
 		super();
 
