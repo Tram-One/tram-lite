@@ -1,0 +1,46 @@
+<h1>Tram-Lite</h1>
+
+<p>Vanilla javascript and HTML library for building native web-components!</p>
+
+<p>
+	Tram-Lite is a library that helps developers build native web-components, and makes crafting simple vanilla no-build
+	web applications easier, simple, and fun!
+
+	<tram-code
+		syntax="html"
+		code="<template is='component-definition'>
+	<custom-title color='blue'>
+		<style>
+			h1 { color: ${'color'} }
+		</style>
+
+		<h1>${'title'}</h1>
+	</custom-title>
+</template>"
+	></tram-code>
+</p>
+
+<h2>API</h2>
+<p>
+	Tram-Lite is a small library with a few functions all focused on building and interfacing with native web-components.
+</p>
+<p>
+	While Tram-Lite's <code>define</code> function is the most unique, all the functions provided in Tram-Lite work
+	independently, and can help interact with web components and other elements, regardless of whether they were built
+	with Tram-Lite or not.
+</p>
+
+<dl>
+	<dt>
+		<a href="#define"><code>define</code></a>
+	</dt>
+	<dd><p>Template tag function for building native web-components.</p></dd>
+	<dt>
+		<a href="#html"><code>html</code></a>
+	</dt>
+	<dd><p>Template tag function for building HTML elements in javascript</p></dd>
+	<dt>
+		<a href="#addAttributeListener"><code>addAttributeListener</code></a>
+	</dt>
+	<dd><p>Function to set up a callback for when an element's attribute changes</p></dd>
+</dl>

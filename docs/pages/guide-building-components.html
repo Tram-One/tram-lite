@@ -1,0 +1,176 @@
+<h2>Building Components</h2>
+<p>
+	In this section, we'll go over making components using Tram-Lite, starting out simple, and building on that
+	functionality.
+</p>
+
+<h3>Tools required</h3>
+<p>
+	To use Tram-Lite, you won't need to install anything on your computer! You do have two options when going through this
+	guide, you can either create an <code>index.html</code> using your favorite editor, or use
+	<a href="https://codepen.io/pen?template=yLGeadO">this codepen</a>.
+</p>
+
+<p>
+	If you created an <code>index.html</code> file, include the following content in the file, and open the html file
+	directly with your browser:
+	<tram-code syntax="html" code="<script src='https://unpkg.com/tram-lite@3'></script>"></tram-code>
+</p>
+
+<h3>Building our first component</h3>
+<p>
+	Let's start with something super simple, a custom button. In the HTML section, write the following component
+	definition:
+	<tram-code
+		syntax="html"
+		code="<template is='component-definition'>
+	<my-button>
+		<button>Click Me!</button>
+	</my-button>
+</template>"
+	></tram-code>
+</p>
+<p>
+	Then, add the following to put our new button on the page:
+	<tram-code syntax="html" code="<my-button></my-button>"></tram-code>
+</p>
+
+<h4>What's going on?</h4>
+<p>
+	What we've done so far is defined a new web-component <tag-code tag="my-button"></tag-code>. Whenever this component
+	is placed on the page, it will have a <tag-code tag="button" content="Click Me!"></tag-code> inside of it.
+</p>
+
+<h3>Making our component dynamic</h3>
+<p>
+	Next, let's do some things to make our component a little more dynamic. First, let's make it so we can change the text
+	inside the component using an attribute. We can do this by replacing the <code>Click Me!</code> with
+	<code>${'label'}</code>
+
+	<tram-code
+		syntax="html"
+		code="<template is='component-definition'>
+	<my-button>
+		<button>${'label'}</button>
+	</my-button>
+</template>"
+	></tram-code>
+</p>
+
+<p>
+	Now, let's update our HTML to include this new attribute.
+
+	<tram-code syntax="html" code="<my-button label='My Button'></my-button>"></tram-code>
+</p>
+
+<h4>What's going on?</h4>
+<p>
+	Attributes are directly tied to their contents using the <code>${'...'}</code> syntax. When we put
+	<code>${'label'}</code> in our component, Tram-Lite knows to place whatever the attribute <code>label</code> is inside
+	the button.
+</p>
+
+<h3>Default Attribute Values</h3>
+<p>
+	What if we want to provide a fallback value if no <code>label</code> is set? It's possible to set a default value if
+	one isn't provided. This is done by including the default value in the outer-most tag (next to
+	<code>my-button</code>).
+
+	<tram-code
+		syntax="html"
+		code="<template is='component-definition'>
+	<my-button label='Clicks'>
+		<button>${'label'}</button>
+	</my-button>
+</template>"
+	></tram-code>
+</p>
+
+<p>
+	Now, if we remove the label on our HTML component, we can see it falls back on our default value.
+
+	<tram-code syntax="html" code="<my-button></my-button>"></tram-code>
+</p>
+
+<h4>What's going on?</h4>
+<p>
+	Any attributes set in the outer most definition are saved as fallback values. Even if you don't need fallback values,
+	you can use this to better advertise what attributes this component accepts.
+</p>
+
+<h3>Adding interactivity</h3>
+<p>
+	Let's make it so that clicking our button does something! We'll start with an incrementing counter. To do this, we'll
+	add another attribute <code>count</code>, and add an <code>onclick</code> handler for our button. For this attribute,
+	we'll set a default value of <code>"0"</code>.
+
+	<tram-code
+		syntax="html"
+		code="<template is='component-definition'>
+	<my-button label='Clicks' count='0'>
+		<button onclick='increment(event)'>
+			${'label'}: ${'count'}
+		</button>
+	</my-button>
+</template>"
+	></tram-code>
+</p>
+<p>
+	After our template definition, add the following function definition (you can either do this in JS, or in your HTML in
+	a script tag, which we have below).
+	<tram-code
+		syntax="html"
+		code="<script>
+	function increment(event) {
+		const myButton = event.target.getRootNode().host;
+		const currentCount = parseInt(myButton.getAttribute('count'));
+		myButton.setAttribute('count', currentCount+1);
+	}
+</script>"
+	></tram-code>
+</p>
+
+<h4>What's going on?</h4>
+<p>
+	In the <code>increment</code> function, we're able to get the instance of the component using
+	<code>.getRootNode().host</code>, and call methods like <code>getAttribute</code> and <code>setAttribute</code> like
+	any other native element.
+</p>
+
+<h3>Adding startup scripts</h3>
+<p>
+	When the component loads, let's focus it, so that users can immediately interact with it! To do this, we can include a
+	<tag-code tag="script"></tag-code> tag in the definition.
+
+	<tram-code
+		syntax="html"
+		code="<template is='component-definition'>
+	<my-button label='Clicks' count='0'>
+		<button onclick='increment(event)'>
+			${'label'}: ${'count'}
+		</button>
+		<script>
+			this.shadowRoot.querySelector('button').focus()
+		</script>
+	</my-button>
+</template>"
+	></tram-code>
+</p>
+
+<h4>What's going on?</h4>
+<p>
+	<tag-code tag="script"></tag-code> tags are special in Tram-Lite. They will trigger when the component is placed on
+	the page, and only on that initial render. Additionally, they have a reference to the component with the
+	<code>this</code> variable.
+</p>
+<p>
+	The <code>.shadowRoot.querySelector('button')</code> is how we access the underlying button in the web-component. In a
+	future tutorial we'll go more into interacting with the shadow DOM.
+</p>
+
+<h3>Congrats!</h3>
+<p>
+	That's it! You've made your first component in Tram-Lite. Celebrate with your favorite beverage of choice, check out
+	the other docs, and if you have more questions or thoughts, we'd love if you
+	<a href="https://discord.gg/dpBXAQC">joined our discord</a>!
+</p>

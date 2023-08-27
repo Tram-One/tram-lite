@@ -1,0 +1,114 @@
+<h2><code>define</code></h2>
+<section>
+	<p>
+		<code>define</code> is a template tag function used to create new web-components.
+		<tram-code
+			syntax="javascript"
+			code="define`
+	<my-greeting>
+		<h1>Hello ${'name'}</h1>
+	</my-greeting>
+`;"
+		></tram-code>
+	</p>
+	<p>
+		The outer-most tag in the template will be the new component that is defined (
+		<tag-code tag="my-greeting"></tag-code> in the above case), and anything under that will be created as shadow-dom
+		inside the new web-component.
+	</p>
+	<p>
+		This can be created using <code>document.createElement</code>, the Tram-Lite <code>html</code> function, or as part
+		of your HTML template.
+		<tram-code
+			syntax="html"
+			code="<body>
+	<my-greeting name='Jesse'></my-greeting>
+</body>"
+		></tram-code>
+	</p>
+	<p>
+		Any templated strings (for example, <code>${'name'}</code>) will become observed attributes on the new component. If
+		you want to change them, you can use the native <code>setAttribute</code> function.
+		<tram-code
+			syntax="javascript"
+			code="const greeting = document.querySelector('my-greeting');
+greeting.setAttribute('name', 'Tina');"
+		></tram-code>
+	</p>
+
+	<p>
+		Additionally, you can include script tags that reference <code>this</code>. When the component is mounted, the
+		script tag will run, and <code>this</code> will refer to the newly mounted instance.
+		<tram-code
+			syntax="javascript"
+			code="define`
+	<my-greeting>
+		<h1>Hello ${'name'}</h1>
+		<script>capitalizeGreetingName(this)</script>
+	</my-greeting>
+`;
+
+function capitalizeGreetingName(greeting) {
+	name = greeting.getAttribute('name');
+	greeting.setAttribute('name', name.toUpperCase())
+}"
+		></tram-code>
+	</p>
+</section>
+<section>
+	<h2>Syntax</h2>
+	<p>
+		<tram-code
+			syntax="javascript"
+			code="define`
+	<tag-name default-attributes='default value'>
+		<h1>Template</h1>
+		<p>${'template-variables'}</p>
+	</tag-name>
+`;"
+		></tram-code>
+	</p>
+	<h3>Parameters</h3>
+	<dl>
+		<dt><code>tag name</code></dt>
+		<dd>
+			<p>
+				the name of the new custom component. this is defined in the outer most tag, and must be a hyphenated string
+			</p>
+		</dd>
+		<dt><code>default attributes</code> <optional-badge>optional</optional-badge></dt>
+		<dd>
+			<p>
+				attributes defined in the outer-most tag, these are the default values when the component is mounted without
+				supplied values
+			</p>
+		</dd>
+		<dt><code>template</code></dt>
+		<dd>
+			<p>
+				any DOM inside the outer most tag, this template that will be injected as shadow DOM on mounting the component
+			</p>
+		</dd>
+		<dt><code>template variables</code> <optional-badge>optional</optional-badge></dt>
+		<dd>
+			<p>
+				any string variables in the template will become attributes for the component. When these attributes are
+				updated, it will trigger specific updates in specific spots in the DOM
+			</p>
+		</dd>
+	</dl>
+	<h3>Return Value</h3>
+	<p>None</p>
+	<h3>Exceptions</h3>
+	<dl>
+		<dt>Element Definition Errors</dt>
+		<dd>
+			<p>
+				Any errors that can occur from creating custom components, (<a
+					href="https://developer.mozilla.org/en-US/docs/Web/API/CustomElementRegistry/define#exceptions"
+					>see on MDN</a
+				>)
+			</p>
+		</dd>
+	</dl>
+</section>

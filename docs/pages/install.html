@@ -1,0 +1,37 @@
+<h2>Install</h2>
+<p>Tram-Lite is easy to include in any project, and requires no build tooling!</p>
+
+<h2>script tag</h2>
+<p>
+	To install, you can include a script tag pointed to <a href="https://unpkg.com">unpkg.com</a> in your
+	<code>index.html</code>:
+
+	<tram-code syntax="html" code="<script src='https://unpkg.com/tram-lite@3'></script>"> </tram-code>
+</p>
+
+<p>
+	This will automatically add all the API method to your javascript project. They are attached to the window object, and
+	also available via the <code>TramLite</code> object.
+</p>
+
+<p>
+	If you want the minified version of the source code, you can point to the minified version at
+	<code>src/tram-lite.min.js</code>:
+
+	<tram-code syntax="html" code="<script src='https://unpkg.com/tram-lite@3/src/tram-lite.min.js'></script>">
+	</tram-code>
+</p>
+
+<h2>types</h2>
+
+<p>
+	If you use npm, you can get the type definitions by installing <code>tram-lite</code>, even if you don't use any build
+	tooling (make sure this matches your script tag above).
+</p>
+
+<tram-code syntax="bash" code=" npm i tram-lite@3 "></tram-code>
+
+<p>
+	This will automatically annotate Tram-Lite methods with documentation in your project if you are using a
+	Typescript-aware editor (like Visual Studio Code).
+</p>
