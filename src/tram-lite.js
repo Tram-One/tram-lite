@@ -297,7 +297,7 @@ class ComponentDefinition extends HTMLTemplateElement {
 		// need a mutation observer to determine exactly when the template content is available
 		// once the content is available, we can disconnect immediately
 		this.observer = new MutationObserver((mutations, observer) => {
-			processTemplateDefinition(this);
+			ComponentDefinition.processTemplateDefinition(this);
 			observer.disconnect();
 		});
 	}
@@ -307,7 +307,7 @@ class ComponentDefinition extends HTMLTemplateElement {
 			this.observer.observe(this.content, { childList: true });
 		} else {
 			// we already have the template content, process it!
-			processTemplateDefinition(this);
+			ComponentDefinition.processTemplateDefinition(this);
 		}
 	}
 	disconnectedCallback() {
@@ -325,7 +325,7 @@ try {
 		mutationRecords.forEach((mutationRecord) => {
 			mutationRecord.addedNodes.forEach((newNode) => {
 				if (newNode.matches?.('template[is=component-definition]')) {
-					processTemplateDefinition(newNode);
+					ComponentDefinition.processTemplateDefinition(newNode);
 				}
 			});
 		});

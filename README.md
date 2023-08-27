@@ -48,7 +48,7 @@ define`
 To install, you can simply include a script tag pointed to `unpkg.com` in your `index.html`:
 
 ```html
-<script src="https://unpkg.com/tram-lite@2"></script>
+<script src="https://unpkg.com/tram-lite@3"></script>
 ```
 
 To learn more check out the website at https://tram-one.io/tram-lite

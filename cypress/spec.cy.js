@@ -3,18 +3,46 @@ describe('Tram-Lite Example Components', () => {
 		cy.visit('../examples/index.html');
 	});
 	it('should render a component with a slot', () => {
+		cy.get('tram-title').contains('Title');
 		cy.get('tram-title').contains('Tram-Lite Components!');
 	});
-	it('should template default values', () => {
-		cy.get('tram-counter#default').contains(/Green: 0/);
+	describe('when using external template', () => {
+		it('should template default values', () => {
+			cy.get('temp-counter#temp-default').contains(/Green: 0/);
+		});
+		it('should template passed in values', () => {
+			cy.get('temp-counter#temp-red').contains(/Red: 0/);
+		});
+		it('should update templates on attribute change', () => {
+			cy.get('temp-counter#temp-red').click();
+			cy.get('temp-counter#temp-red').contains(/Red: 1/);
+		});
 	});
-	it('should template passed in values', () => {
-		cy.get('tram-counter#red').contains(/Red: 0/);
+	describe('when using inline template', () => {
+		it('should template default values', () => {
+			cy.get('inline-counter#inline-default').contains(/Green: 0/);
+		});
+		it('should template passed in values', () => {
+			cy.get('inline-counter#inline-red').contains(/Red: 0/);
+		});
+		it('should update templates on attribute change', () => {
+			cy.get('inline-counter#inline-red').click();
+			cy.get('inline-counter#inline-red').contains(/Red: 1/);
+		});
 	});
-	it('should update templates on attribute change', () => {
-		cy.get('tram-counter#red').click();
-		cy.get('tram-counter#red').contains(/Red: 1/);
+	describe('when using javascript defined component', () => {
+		it('should template default values', () => {
+			cy.get('js-counter#js-default').contains(/Green: 0/);
+		});
+		it('should template passed in values', () => {
+			cy.get('js-counter#js-red').contains(/Red: 0/);
+		});
+		it('should update templates on attribute change', () => {
+			cy.get('js-counter#js-red').click();
+			cy.get('js-counter#js-red').contains(/Red: 1/);
+		});
 	});
+
 	it('should update the value for inputs via template changes', () => {
 		cy.get('input#source').type('Hello, World');
 		cy.get('input#reflection').should('have.value', 'Hello, World');
