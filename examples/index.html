@@ -13,49 +13,63 @@
 				margin: auto;
 				max-width: 800px;
 			}
-			body > * {
-				display: block;
-				padding-top: 5px;
-			}
 		</style>
+
+		<script src="https://unpkg.com/html-import-element@1"></script>
 		<script src="../src/tram-lite.js"></script>
-
-		<!-- components -->
-		<script src="./title.js"></script>
-		<script src="./counter.js"></script>
-		<script src="./mirror.js"></script>
-		<script src="./todo-list.js"></script>
-		<script src="./color-picker.js"></script>
-		<script src="./example-container.js"></script>
-		<script src="./line-drawer.js"></script>
-
-		<!-- template component -->
-		<template define-component>
-			<temp-converter fahrenheit="">
-				<label>
-					Fahrenheit:
-					<input unit="fahrenheit" oninput="updateRootAttr('fahrenheit', event)" value="${'fahrenheit'}" />
-				</label>
-				<label>
-					Celsius:
-					<input unit="celsius" readonly />
-				</label>
-				<script>
-					addAttributeListener(this, ['fahrenheit'], () => {
-						const f = parseInt(this.getAttribute('fahrenheit')) || 0;
-						const celsiusInput = this.shadowRoot.querySelector('input[unit="celsius"]');
-						celsiusInput.value = ((f - 32) * (5 / 9)).toFixed(0);
-					});
-				</script>
-			</temp-converter>
-		</template>
 	</head>
 	<body>
+		<!-- component definitions -->
+		<html-import src="./title.html"></html-import>
+
+		<!-- build counter 3 different ways, just to make sure they all work as expected! -->
+		<counter-examples>
+			<!-- via template -->
+			<html-import src="./temp-counter.html"></html-import>
+			<!-- via javascript -->
+			<script src="./js-counter.js"></script>
+			<!-- via inline-template -->
+			<template is="component-definition">
+				<inline-counter count="0" label="Green" color="#CEFFCE">
+					<button style="color: ${'color'}" onclick="increment(this)">${'label'}: ${'count'}</button>
+				</inline-counter>
+			</template>
+			<script>
+				function increment(button) {
+					const counter = button.getRootNode().host;
+					const newCount = parseInt(counter.getAttribute('count')) + 1;
+					counter.setAttribute('count', newCount);
+				}
+			</script>
+		</counter-examples>
+
+		<html-import src="./mirror.html"></html-import>
+		<html-import src="./todo-list.html"></html-import>
+		<html-import src="./color-picker.html"></html-import>
+		<html-import src="./example-container.html"></html-import>
+		<html-import src="./line-drawer.html"></html-import>
+		<html-import src="./temp-converter.html"></html-import>
+
 		<tram-title>Tram-Lite Components!</tram-title>
 		<example-container name="Counters">
-			<tram-counter id="blue" label="Blue" color="#CECEFF"></tram-counter>
-			<tram-counter id="red" label="Red" color="#FFCECE"></tram-counter>
-			<tram-counter id="default"></tram-counter>
+			<div>
+				External Template:
+				<temp-counter id="temp-blue" label="Blue" color="#CECEFF"></temp-counter>
+				<temp-counter id="temp-red" label="Red" color="#FFCECE"></temp-counter>
+				<temp-counter id="temp-default"></temp-counter>
+			</div>
+			<div>
+				Javascript Define Template Tag:
+				<js-counter id="js-blue" label="Blue" color="#CECEFF"></js-counter>
+				<js-counter id="js-red" label="Red" color="#FFCECE"></js-counter>
+				<js-counter id="js-default"></js-counter>
+			</div>
+			<div>
+				Inline Template
+				<inline-counter id="inline-blue" label="Blue" color="#CECEFF"></inline-counter>
+				<inline-counter id="inline-red" label="Red" color="#FFCECE"></inline-counter>
+				<inline-counter id="inline-default"></inline-counter>
+			</div>
 		</example-container>
 		<example-container name="Mirror Input">
 			<tram-mirror></tram-mirror>

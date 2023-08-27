@@ -1,0 +1,27 @@
+<template is="component-definition">
+	<line-drawer>
+		<button onclick="addLine(event)">
+			<svg viewbox="0 0 100 20" xmlns="http://www.w3.org/2000/svg" width="100%" height="55px"></svg>
+		</button>
+	</line-drawer>
+</template>
+
+<script>
+	function addLine(event) {
+		const svgContainer = event.target.getRootNode().querySelector('svg');
+		const containerRect = svgContainer.getBoundingClientRect();
+
+		// scale to the size of the viewbox (as it is rendered)
+		const rectWidth = containerRect.right - containerRect.left;
+		const rectHeight = containerRect.bottom - containerRect.top;
+
+		const xScale = 100 / rectWidth;
+		const yScale = 20 / rectHeight;
+
+		const x = (event.clientX - containerRect.left) * xScale;
+		const y = (event.clientY - containerRect.top) * yScale;
+
+		const newLine = svg`<line stroke="white" x1="50%" y1="50%" x2="${x}" y2="${y}" />`;
+		svgContainer.appendChild(newLine);
+	}
+</script>

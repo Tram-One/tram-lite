@@ -282,33 +282,55 @@ class TramLite {
 
 		define(rawStrings, ...templateVaraibles);
 	}
-
-	static watchForTemplateDefinitions(targetElement) {
-		const processNewNodes = (mutationRecords) => {
-			mutationRecords.forEach((mutationRecord) => {
-				mutationRecord.addedNodes.forEach((newNode) => {
-					if (newNode.matches?.('template[define-component]')) {
-						processTemplateDefinition(newNode);
-					}
-				});
-			});
-		};
-
-		const observer = new MutationObserver(processNewNodes);
-		observer.observe(targetElement, { subtree: true, childList: true });
-	}
 }
 
 // expose functions for external usage
-const {
-	define,
-	html,
-	svg,
-	addAttributeListener,
-	updateRootAttr,
-	processTemplateDefinition,
-	watchForTemplateDefinitions,
-} = TramLite;
+const { define, html, svg, addAttributeListener, updateRootAttr, processTemplateDefinition } = TramLite;
 
-// kick off mutation observer for processing templates with component definitions
-watchForTemplateDefinitions(document);
+// The following is logic to watch for component definitions in the template
+// this will have the following syntax `<template is="component-definition">`
+
+class ComponentDefinition extends HTMLTemplateElement {
+	constructor() {
+		super();
+
+		// need a mutation observer to determine exactly when the template content is available
+		// once the content is available, we can disconnect immediately
+		this.observer = new MutationObserver((mutations, observer) => {
+			processTemplateDefinition(this);
+			observer.disconnect();
+		});
+	}
+	connectedCallback() {
+		if (this.content.firstElementChild === null) {
+			// we don't have the template content yet, wait for it to exist
+			this.observer.observe(this.content, { childList: true });
+		} else {
+			// we already have the template content, process it!
+			processTemplateDefinition(this);
+		}
+	}
+	disconnectedCallback() {
+		this.observer.disconnect();
+	}
+}
+
+customElements.define('component-definition', ComponentDefinition, { extends: 'template' });
+try {
+	// try to generate a component definition, if this fails, that means that
+	//   custom built-ins are not supported, so we'll need to use a mutation observer
+	new ComponentDefinition();
+} catch (error) {
+	const processNewNodes = (mutationRecords) => {
+		mutationRecords.forEach((mutationRecord) => {
+			mutationRecord.addedNodes.forEach((newNode) => {
+				if (newNode.matches?.('template[is=component-definition]')) {
+					processTemplateDefinition(newNode);
+				}
+			});
+		});
+	};
+
+	const observer = new MutationObserver(processNewNodes);
+	observer.observe(document, { subtree: true, childList: true });
+}

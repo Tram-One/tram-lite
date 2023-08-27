@@ -1,18 +1,20 @@
-define`
+<template is="component-definition">
 	<todo-item checked="">
 		<label style="display: block">
 			<input type="checkbox" onchange="onTodoItemCheck(this)">
 			<slot>
 		</label>
 	</todo-item>
-`;
+</template>
 
-function onTodoItemCheck(input) {
-	const todoItem = input.getRootNode().host;
-	todoItem.setAttribute('checked', todoItem.checked);
-}
+<script>
+	function onTodoItemCheck(input) {
+		const todoItem = input.getRootNode().host;
+		todoItem.setAttribute('checked', todoItem.checked);
+	}
+</script>
 
-define`
+<template is="component-definition">
   <todo-list completed="0" total="0">
 		<style>
 			section {
@@ -29,8 +31,9 @@ define`
 			createInitialTodos(this);
 		</script>
   </todo-list>
-`;
+</template>
 
+<script>
 function createInitialTodos(todoList) {
 	addNewTodoItem(todoList, 'Example Initial Item');
 	addNewTodoItem(todoList, 'Learning Tram-Lite');
@@ -59,3 +62,4 @@ function updateTotalAndCompletedLabel(todoList) {
 	const completedItems = todoList.shadowRoot.querySelectorAll('todo-item[checked]');
 	todoList.setAttribute('completed', completedItems.length);
 }
+</script>

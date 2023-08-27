@@ -1,0 +1,19 @@
+<template is="component-definition">
+	<temp-converter fahrenheit="">
+		<label>
+			Fahrenheit:
+			<input unit="fahrenheit" oninput="updateRootAttr('fahrenheit', event)" value="${'fahrenheit'}" />
+		</label>
+		<label>
+			Celsius:
+			<input unit="celsius" readonly />
+		</label>
+		<script>
+			addAttributeListener(this, ['fahrenheit'], () => {
+				const f = parseInt(this.getAttribute('fahrenheit')) || 0;
+				const celsiusInput = this.shadowRoot.querySelector('input[unit="celsius"]');
+				celsiusInput.value = ((f - 32) * (5 / 9)).toFixed(0);
+			});
+		</script>
+	</temp-converter>
+</template>
