@@ -42,7 +42,6 @@ describe('Tram-Lite Example Components', () => {
 			cy.get('js-counter#js-red').contains(/Red: 1/);
 		});
 	});
-
 	it('should update the value for inputs via template changes', () => {
 		cy.get('input#source').type('Hello, World');
 		cy.get('input#reflection').should('have.value', 'Hello, World');
@@ -73,10 +72,14 @@ describe('Tram-Lite Example Components', () => {
 		cy.get('todo-list').get('span').contains('(1/3)');
 	});
 	it('should remove attributes when set to false', () => {
-		// click a todo item, verify the top label updates, and then unclick it
+		// click a todo item, verify the top label updates, and then unclick it, verify it says 0/2 selected
 		cy.get('todo-item').contains('Example Initial Item').click();
 		cy.get('todo-list').get('span').contains('(1/2)');
 		cy.get('todo-item').contains('Example Initial Item').click();
 		cy.get('todo-list').get('span').contains('(0/2)');
+	});
+	it('should create svg elements', () => {
+		cy.get('line-drawer').get('button#svg-button').click();
+		cy.get('line-drawer').get('line').should('have.attr', 'stroke', 'white');
 	});
 });
