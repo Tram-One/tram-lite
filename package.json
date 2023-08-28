@@ -1,7 +1,7 @@
 {
 	"name": "tram-lite",
 	"version": "3.0.0-beta.4",
-	"description": "💡 Lite View Library for Vanilla Javascript",
+	"description": "💡 Lite Web-Component Library for HTML and vanilla Javascript",
 	"main": "output/tram-lite.js",
 	"types": "output/tram-lite.js",
 	"files": [
