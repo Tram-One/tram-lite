@@ -255,13 +255,20 @@ class TramLite {
 	}
 
 	/**
-	 *
-	 * @param {*} attributeName
-	 * @param {*} event
+	 * a helper function to update the root web-component when an input updates
+	 * {@link https://tram-one.io/tram-lite/#updateRootAttr Read the full docs here.}
+	 * @param {string} attributeName
+	 * @param {Event} event
+	 * @param {string} [targetAttribute="value"]
 	 */
-	static updateRootAttr(attributeName, event) {
+	static updateRootAttr(attributeName, event, targetAttribute = 'value') {
 		const rootNodeHost = event.target.getRootNode().host;
-		rootNodeHost.setAttribute(attributeName, event.target.value);
+		const targetValue = event.target[targetAttribute];
+		if (targetValue) {
+			rootNodeHost.setAttribute(attributeName, event.target[targetAttribute]);
+		} else {
+			rootNodeHost.removeAttribute(attributeName);
+		}
 	}
 }
 

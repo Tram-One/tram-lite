@@ -1,18 +1,11 @@
 <template is="component-definition">
 	<todo-item checked="">
 		<label style="display: block">
-			<input type="checkbox" onchange="onTodoItemCheck(this)" />
+			<input type="checkbox" onchange="updateRootAttr('checked', event, 'checked')" />
 			<slot></slot>
 		</label>
 	</todo-item>
 </template>
-
-<script>
-	function onTodoItemCheck(input) {
-		const todoItem = input.getRootNode().host;
-		todoItem.setAttribute('checked', todoItem.checked);
-	}
-</script>
 
 <template is="component-definition">
 	<todo-list completed="0" total="0">
