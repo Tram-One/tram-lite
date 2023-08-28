@@ -3,8 +3,7 @@
  * The main utility function is `define`, which allows you to craft web-components
  * using simple template syntax.
  *
- * Other helper functions, like `html` and `queryAllDOM`,
- * and examples can be found at https://tram-one.io/tram-lite/
+ * {@link https://tram-one.io/tram-lite/}
  */
 class TramLite {
 	// regex for finding attributes that have been templated in
@@ -274,70 +273,3 @@ class TramLite {
 
 // expose functions for external usage
 const { define, html, svg, addAttributeListener, updateRootAttr } = TramLite;
-
-// The following is logic to watch for component definitions in the template
-// this will have the following syntax `<template is="component-definition">`
-
-class ComponentDefinition extends HTMLTemplateElement {
-	/**
-	 * static function to process template tags and define components
-	 * @param {HTMLTemplateElement} templateTag
-	 */
-	static processTemplateDefinition(templateTag) {
-		const definitionString = templateTag.content.firstElementChild.outerHTML;
-
-		// we expect template variables to be in the following pattern, matching "${'...'}"
-		const variablePattern = /\$\{\'(.*?)\'\}/;
-		// Split the string by the above pattern, which lets us get an alternating list of strings and variables
-		const parts = definitionString.split(variablePattern);
-
-		// Extract the strings and the variables
-		const rawStrings = parts.filter((_, index) => index % 2 === 0);
-		const templateVaraibles = parts.filter((_, index) => index % 2 !== 0);
-
-		define(rawStrings, ...templateVaraibles);
-	}
-
-	constructor() {
-		super();
-
-		// need a mutation observer to determine exactly when the template content is available
-		// once the content is available, we can disconnect immediately
-		this.observer = new MutationObserver((mutations, observer) => {
-			ComponentDefinition.processTemplateDefinition(this);
-			observer.disconnect();
-		});
-	}
-	connectedCallback() {
-		if (this.content.firstElementChild === null) {
-			// we don't have the template content yet, wait for it to exist
-			this.observer.observe(this.content, { childList: true });
-		} else {
-			// we already have the template content, process it!
-			ComponentDefinition.processTemplateDefinition(this);
-		}
-	}
-	disconnectedCallback() {
-		this.observer.disconnect();
-	}
-}
-
-customElements.define('component-definition', ComponentDefinition, { extends: 'template' });
-try {
-	// try to generate a component definition, if this fails, that means that
-	//   custom built-ins are not supported, so we'll need to use a mutation observer
-	new ComponentDefinition();
-} catch (error) {
-	const processNewNodes = (mutationRecords) => {
-		mutationRecords.forEach((mutationRecord) => {
-			mutationRecord.addedNodes.forEach((newNode) => {
-				if (newNode.matches?.('template[is=component-definition]')) {
-					ComponentDefinition.processTemplateDefinition(newNode);
-				}
-			});
-		});
-	};
-
-	const observer = new MutationObserver(processNewNodes);
-	observer.observe(document, { subtree: true, childList: true });
-}

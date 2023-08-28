@@ -1,5 +1,5 @@
 # minified assets
-*.min.js
+output
 
 # Dependency directory
 node_modules
