@@ -9,7 +9,7 @@
 <section>
 	<h2>Syntax</h2>
 	<p>
-		<tram-code syntax="javascript" code="updateRootAttr(attributeName, event)"></tram-code>
+		<tram-code syntax="javascript" code="updateRootAttr(attributeName, event, targetAttribute='value')"></tram-code>
 	</p>
 	<h3>Parameters</h3>
 	<dl>
@@ -17,6 +17,10 @@
 		<dd><p>Attribute to set on the host web-component.</p></dd>
 		<dt><code>event</code></dt>
 		<dd><p>The default event object for an input component.</p></dd>
+		<dt><code>targetAttribute</code></dt>
+		<dd>
+			<p>The attribute to read from the <code>event.target</code>, defaults to <code>"value"</code></p>
+		</dd>
 	</dl>
 	<h3>Return Value</h3>
 	<p>None</p>
