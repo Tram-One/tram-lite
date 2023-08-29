@@ -1,0 +1,39 @@
+<style>
+	preview-section {
+		display: inline-flex;
+		align-items: center;
+		/* border: yellow solid 1px; */
+		font-size: 1.8em;
+
+		/* 1200x630 is the recommended meta image resolution */
+		width: 1200px;
+		height: 630px;
+	}
+
+	preview-section img {
+		margin-right: -1em;
+	}
+</style>
+<!-- to use, right click on the node in the element explorer, and "capture node screenshot"-->
+<preview-section>
+	<img src="https://unpkg.com/@tram-one/tram-logo@5.0.1/dist/lite.svg" width="450px" />
+	<tram-code
+		syntax="html"
+		code="
+
+	<template is=&quot;component-definition&quot;>
+		<custom-title color=&quot;blue&quot;>
+			<style>
+				h1 { color: ${'color'} }
+			</style>
+			<h1>${'page'}</h1>
+			<script>
+				document.title = this.getAttribute('page')
+			</script>
+		</custom-title>
+	</template>
+
+
+	"
+	></tram-code>
+</preview-section>

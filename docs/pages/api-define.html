@@ -44,14 +44,9 @@ greeting.setAttribute('name', 'Tina');"
 			code="define`
 	<my-greeting>
 		<h1>Hello ${'name'}</h1>
-		<script>capitalizeGreetingName(this)</script>
+		<script>document.title = &quot;${'name'}'s Dashboard&quot;</script>
 	</my-greeting>
-`;
-
-function capitalizeGreetingName(greeting) {
-	name = greeting.getAttribute('name');
-	greeting.setAttribute('name', name.toUpperCase())
-}"
+`;"
 		></tram-code>
 	</p>
 </section>

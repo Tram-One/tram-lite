@@ -34,11 +34,15 @@ simple native web-applications easier and more elegant!
 			h1 { color: ${'color'} }
 		</style>
 
-		<h1>${'title'}</h1>
+		<h1>${'page'}</h1>
+
+		<script>
+			document.title = this.getAttribute('page');
+		</script>
 	</custom-title>
 </template>
 
-<custom-title title="Welcome to Tram-Lite!"></custom-title>
+<custom-title page="Introduction!"></custom-title>
 ```
 
 To install, you can simply include a script tag pointed to `unpkg.com` in your `index.html`:
