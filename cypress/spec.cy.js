@@ -1,25 +1,38 @@
 describe('Tram-Lite Example Components', () => {
-	beforeEach(() => {
+	// per Cypress best practices (https://docs.cypress.io/guides/references/best-practices#Creating-Tiny-Tests-With-A-Single-Assertion)
+	// it is often better to run all tests together, rather than having unit-like tests... so we'll comment the intent of each test,
+	// rather than doing a reset between each test. The results should still be just as obvious in the cypress runner!
+	it('should validate all Tram-Lite APIs and Use Cases', () => {
+		// visit index.html (this works because the test page doesn't need to be hosted to work!)
 		cy.visit('../examples/index.html');
-	});
-	it('should render a component with a slot', () => {
+
+		/* validate that slot elements are rendered as expected in Tram-Lite */
+		cy.get('tram-title').contains('Title');
 		cy.get('tram-title').contains('Tram-Lite Components!');
-	});
-	it('should template default values', () => {
-		cy.get('tram-counter#default').contains(/Green: 0/);
-	});
-	it('should template passed in values', () => {
-		cy.get('tram-counter#red').contains(/Red: 0/);
-	});
-	it('should update templates on attribute change', () => {
-		cy.get('tram-counter#red').click();
-		cy.get('tram-counter#red').contains(/Red: 1/);
-	});
-	it('should update the value for inputs via template changes', () => {
+
+		/* validate that the counter elements, when defined using an external template (html-import), work as expected */
+		cy.get('temp-counter#temp-default').contains(/Green: 0/); // default values should populate
+		cy.get('temp-counter#temp-red').contains(/Red: 0/); // passed in values should populate
+		cy.get('temp-counter#temp-red').click(); // clicking a counter should increment
+		cy.get('temp-counter#temp-red').contains(/Red: 1/);
+
+		/* repeat the above tests for a component definition using an inline template (template is="component-definition") */
+		cy.get('inline-counter#inline-default').contains(/Green: 0/);
+		cy.get('inline-counter#inline-red').contains(/Red: 0/);
+		cy.get('inline-counter#inline-red').click();
+		cy.get('inline-counter#inline-red').contains(/Red: 1/);
+
+		/* and finally, do so for a javascript defined component (define`...`) */
+		cy.get('js-counter#js-default').contains(/Green: 0/);
+		cy.get('js-counter#js-red').contains(/Red: 0/);
+		cy.get('js-counter#js-red').click();
+		cy.get('js-counter#js-red').contains(/Red: 1/);
+
+		/* verify that updating inputs updates attributes as expected (updateRootAttr) */
 		cy.get('input#source').type('Hello, World');
 		cy.get('input#reflection').should('have.value', 'Hello, World');
-	});
-	it('should update multiple element templates', () => {
+
+		/* verify that updating an attribute copies to multiple elements and attributes */
 		cy.get('color-picker').invoke('attr', 'hue', '120');
 		cy.get('input#hue-range-input').should('have.value', '120');
 		cy.get('input#hue-text-input').should('have.value', '120');
@@ -27,21 +40,26 @@ describe('Tram-Lite Example Components', () => {
 			const rawColor = window.getComputedStyle($element[0])['fill'];
 			expect(rawColor).to.equal('oklch(0.7 0.1 120)');
 		});
-	});
-	it('should execute script tags', () => {
+
+		/* verify that startup scripts in component definitions trigger as expected */
 		cy.get('todo-item').contains('Example Initial Item');
 		cy.get('todo-item').contains('Learning Tram-Lite');
-	});
-	it('should support creating elements at runtime', () => {
-		// create new todo item
-		cy.get('todo-list').get('form input').type('Cypress Test');
+
+		/* verify that creating elements works as expected (html`...`) */
+		cy.get('todo-list').get('form input').type('Cypress Test'); // create new todo item
 		cy.get('todo-list').get('form').submit();
 
-		// verify it exists
-		cy.get('todo-item').contains('Cypress Test');
+		cy.get('todo-item').contains('Cypress Test'); // verify it exists
 
-		// click it, and verify that the top label updates
-		cy.get('todo-item').contains('Cypress Test').click();
+		cy.get('todo-item').contains('Cypress Test').click(); // click it, and verify that the top label updates
 		cy.get('todo-list').get('span').contains('(1/3)');
+
+		/* verify that updating an input with a false value unsets the attribute value */
+		cy.get('todo-item').contains('Cypress Test').click();
+		cy.get('todo-list').get('span').contains('(0/3)');
+
+		/* verify that creating svg elements works as expected (svg`...`) */
+		cy.get('line-drawer').get('button#svg-button').click();
+		cy.get('line-drawer').get('line').should('have.attr', 'stroke', 'white');
 	});
 });

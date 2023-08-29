@@ -1,0 +1,54 @@
+<h2>Guiding Principles</h2>
+<p>
+	The following are principles that motivate the design philosophy around the interface and methods found in the
+	Tram-Lite library.
+</p>
+
+<h3>1. Not a Framework</h3>
+<p>
+	Tram-Lite is a <b>library</b>, it is <b>not a framework</b>. As much as possible, users should run and orchestrate
+	their own code. In the face of bloat and tradeoffs associated with frameworks, and the difficulty associated with
+	learning new syntax and data models, we'd like Tram-Lite to be a simple alternative. With respect to the
+	<a href="https://github.com/frameworkless-movement/manifesto">Frameworkless Manifesto</a>, we believe that Tram-Lite
+	can be an alternative that offers few tradeoffs, and seamless integration with other libraries or frameworks.
+</p>
+<p>
+	In practice, this means that Tram-Lite is not an all encompassing framework that you tie all functions and state to.
+	Tram-Lite does not heavily bind itself into the window object (save for exposing its own functions), and does not
+	attach listeners or cause other non-obvious side-effects to the browser.
+</p>
+<p><b> This is the main guiding principle that inspires all others. </b></p>
+<h3>2. Defer to native APIs</h3>
+<p>
+	Tram-Lite should strive to only offer functions when they would offer substantial benefit over native existing
+	options. This could be because the existing options are tedious (as is the case for
+	<code>.createElement()</code> and <code>.setAttribute()</code>), or because the existing option is complex (as is the
+	case for creating new web-components).
+</p>
+<p>Conversely, functionality that would be traditionally rare, or already has native solutions, should be avoided.</p>
+<h3>3. Interoperable and optional</h3>
+<p>
+	Tram-Lite functions should never depend on each other. While we may offer functions that help enable patterns created
+	as a side effect of other elements in the Tram-Lite library, they should be functional in an environment where no
+	other Tram-Lite functions are being used.
+</p>
+<p>
+	To this end, all functions that are generative should expose objects with common and native interfaces. This means any
+	additional functions that mean to target these objects, should work with other non-Tram-Lite elements.
+</p>
+<h3>4. Favor no-build environments</h3>
+<p>
+	Tram-Lite's target environment is a basic html file. It should offer everything needed, and let developers build
+	immediately, with no other tools or libraries required.
+</p>
+<p>
+	While many frameworks will recommend generators or platforms for an optimal development experience, we should strive
+	to make the vanilla javascript experience ideal, where only a static web host may be available.
+</p>
+<p>
+	To this end, while we should be interoperable with other libraries, we should not be totally contingent on other
+	libraries to provide a delightful experience.
+</p>
+<p>
+	<em> Additionally, as much as possible, this project should try to adhere to this principle as much as possible. </em>
+</p>

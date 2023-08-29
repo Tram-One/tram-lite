@@ -1,0 +1,36 @@
+<h2><code>html</code></h2>
+<section>
+	<p>
+		<code>html</code> is a template tag function to quickly create html dom with all their attributes and content.
+		<tram-code
+			syntax="javascript"
+			code="const pageHeader = html`<h1>Hello World</h1>`;
+document.body.appendChild(pageHeader);"
+		></tram-code>
+	</p>
+
+	<p>
+		This can help reduce the amount of code needed when building components in javascript, removing the need for chains
+		of
+		<code>document.createElement</code>, <code>setAttribute</code>, and setting <code>innerHTML</code> or
+		<code>innerText</code>.
+	</p>
+</section>
+<section>
+	<h2>Syntax</h2>
+	<tram-code syntax="javascript" code="html`template`"></tram-code>
+	<h3>Parameters</h3>
+	<dt><code>template</code></dt>
+	<dd>
+		<p>any HTML DOM, with props, inner HTML and inner text.</p>
+	</dd>
+	<h3>Return Value</h3>
+	<p>
+		The template as an <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a>, or null if the
+		template is invalid
+	</p>
+	<h3>Exceptions</h3>
+	<dl>
+		<dt>N/A</dt>
+	</dl>
+</section>

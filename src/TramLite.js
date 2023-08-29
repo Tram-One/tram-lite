@@ -3,8 +3,7 @@
  * The main utility function is `define`, which allows you to craft web-components
  * using simple template syntax.
  *
- * Other helper functions, like `html` and `queryAllDOM`,
- * and examples can be found at https://tram-one.io/tram-lite/
+ * {@link https://tram-one.io/tram-lite/}
  */
 class TramLite {
 	// regex for finding attributes that have been templated in
@@ -222,43 +221,55 @@ class TramLite {
 	}
 
 	/**
-	 * a helper function to easily query across shadow and light DOM boundaries.
-	 * {@link https://tram-one.io/tram-lite/#queryAllDOM Read the full docs here.}
-	 * @param {string} selector - The CSS selector to match against each element in the DOM.
-	 * @param {Node} [root=document] - The root element where the search starts. By default, the search starts from the root document.
-	 *
-	 * @returns {Element[]} An array of all elements in the DOM that match the selector, including those within shadow roots.
-	 *
+	 * a helper function to quickly create svg dom with all their attributes and content.
+	 * {@link https://tram-one.io/tram-lite/#svg Read the full docs here.}
+	 * @returns {Element}
 	 */
-	static queryAllDOM(selector, root = document) {
-		const elements = [...root.querySelectorAll(selector)];
-
-		[...root.querySelectorAll('*'), root].forEach((element) => {
-			if (element.shadowRoot) {
-				elements.push(...queryAllDOM(selector, element.shadowRoot));
-			}
-		});
-
-		return elements;
+	static svg(strings, ...values) {
+		const svgContainer = document.createElementNS('http://www.w3.org/2000/svg', 'template');
+		svgContainer.innerHTML = String.raw({ raw: strings }, ...values);
+		const element = svgContainer.firstElementChild;
+		return element;
 	}
 
 	/**
 	 * a helper function to set up a callback for when an element's attribute changes
 	 * {@link https://tram-one.io/tram-lite/#addAttributeListener Read the full docs here.}
 	 * @param {Element} targetElement - The DOM element to observe.
-	 * @param {string} attributeName - The name of the attribute to observe for changes.
+	 * @param {string[]} attributeNames - The name of the attribute (or list of attributes) to observe for changes.
 	 * @param {function(MutationRecord):void} callback - The function to call when the observed attribute changes.
 	 *    This function takes one argument: the MutationRecord representing the change.
 	 */
-	static addAttributeListener(targetElement, attributeName, callback) {
+	static addAttributeListener(targetElement, attributeNames, callback) {
 		const callbackWrapper = (mutationList) => {
 			mutationList.forEach((mutation) => {
-				callback(mutation);
+				// only call the mutation if an attribute changed
+				if (mutation.oldValue !== targetElement.getAttribute(mutation.attributeName)) {
+					callback(mutation);
+				}
 			});
 		};
 		const observer = new MutationObserver(callbackWrapper);
-		observer.observe(targetElement, { attributes: true, attributeFilter: [attributeName] });
+		observer.observe(targetElement, { attributes: true, attributeFilter: attributeNames, attributeOldValue: true });
+	}
+
+	/**
+	 * a helper function to update the root web-component when an input updates
+	 * {@link https://tram-one.io/tram-lite/#updateRootAttr Read the full docs here.}
+	 * @param {string} attributeName
+	 * @param {Event} event
+	 * @param {string} [targetAttribute="value"]
+	 */
+	static updateRootAttr(attributeName, event, targetAttribute = 'value') {
+		const rootNodeHost = event.target.getRootNode().host;
+		const targetValue = event.target[targetAttribute];
+		if (targetValue) {
+			rootNodeHost.setAttribute(attributeName, event.target[targetAttribute]);
+		} else {
+			rootNodeHost.removeAttribute(attributeName);
+		}
 	}
 }
 
-const { define, html, queryAllDOM, addAttributeListener } = TramLite;
+// expose functions for external usage
+const { define, html, svg, addAttributeListener, updateRootAttr } = TramLite;

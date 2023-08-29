@@ -1,34 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		<title>Tram-Lite Example Components</title>
+		<link rel="icon" type="image/png" href="https://unpkg.com/@tram-one/tram-logo@5.0.1/dist/lite_32.png" />
+
 		<meta charset="utf-8" />
 		<style>
 			:root {
 				color-scheme: dark light;
 			}
-			body > * {
-				display: block;
-				padding-top: 5px;
+			body {
+				margin: auto;
+				max-width: 800px;
 			}
 		</style>
-		<script src="../src/tram-lite.js"></script>
 
-		<!-- components -->
-		<script src="./title.js"></script>
-		<script src="./counter.js"></script>
-		<script src="./mirror.js"></script>
-		<script src="./todo-list.js"></script>
-		<script src="./color-picker.js"></script>
+		<script src="https://unpkg.com/html-import-element@1"></script>
+		<script src="../src/TramLite.js"></script>
+		<script src="../src/ComponentDefinition.js"></script>
 	</head>
 	<body>
+		<!-- component definitions -->
+		<html-import src="./title.html"></html-import>
+
+		<!-- build counter 3 different ways, just to make sure they all work as expected! -->
+		<counter-examples>
+			<!-- via template -->
+			<html-import src="./temp-counter.html"></html-import>
+			<!-- via javascript -->
+			<script src="./js-counter.js"></script>
+			<!-- via inline-template -->
+			<template is="component-definition">
+				<inline-counter count="0" label="Green" color="#CEFFCE">
+					<button style="color: ${'color'}" onclick="increment(this)">${'label'}: ${'count'}</button>
+				</inline-counter>
+			</template>
+			<script>
+				function increment(button) {
+					const counter = button.getRootNode().host;
+					const newCount = parseInt(counter.getAttribute('count')) + 1;
+					counter.setAttribute('count', newCount);
+				}
+			</script>
+		</counter-examples>
+
+		<html-import src="./mirror.html"></html-import>
+		<html-import src="./todo-list.html"></html-import>
+		<html-import src="./color-picker.html"></html-import>
+		<html-import src="./example-container.html"></html-import>
+		<html-import src="./line-drawer.html"></html-import>
+
 		<tram-title>Tram-Lite Components!</tram-title>
-		<div>
-			<tram-counter id="blue" label="Blue" color="#CECEFF"></tram-counter>
-			<tram-counter id="red" label="Red" color="#FFCECE"></tram-counter>
-			<tram-counter id="default"></tram-counter>
-		</div>
-		<tram-mirror></tram-mirror>
-		<todo-list></todo-list>
-		<color-picker hue="200"></color-picker>
+		<example-container name="Counters">
+			<div>
+				External Template:
+				<temp-counter id="temp-blue" label="Blue" color="#CECEFF"></temp-counter>
+				<temp-counter id="temp-red" label="Red" color="#FFCECE"></temp-counter>
+				<temp-counter id="temp-default"></temp-counter>
+			</div>
+			<div>
+				Javascript Define Template Tag:
+				<js-counter id="js-blue" label="Blue" color="#CECEFF"></js-counter>
+				<js-counter id="js-red" label="Red" color="#FFCECE"></js-counter>
+				<js-counter id="js-default"></js-counter>
+			</div>
+			<div>
+				Inline Template
+				<inline-counter id="inline-blue" label="Blue" color="#CECEFF"></inline-counter>
+				<inline-counter id="inline-red" label="Red" color="#FFCECE"></inline-counter>
+				<inline-counter id="inline-default"></inline-counter>
+			</div>
+		</example-container>
+		<example-container name="Mirror Input">
+			<tram-mirror></tram-mirror>
+		</example-container>
+		<example-container name="To Do List">
+			<todo-list></todo-list>
+		</example-container>
+		<example-container name="Color Picker">
+			<color-picker hue="200"></color-picker>
+		</example-container>
+		<example-container name="Line Drawer">
+			<line-drawer></line-drawer>
+		</example-container>
 	</body>
 </html>

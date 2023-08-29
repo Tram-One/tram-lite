@@ -24,31 +24,27 @@
 
 # Tram-Lite
 
-Tram-Lite is a library that helps developers build native web-components, and makes building simple native javascript
-applications easier and more elegant!
-
-```js
-define`
-  <custom-title color="blue">
-    <style>
-      h1 { color: ${'color'} }
-    </style>
-
-    <h1>${'title'}</h1>
-  </custom-title>
-`;
-```
+Tram-Lite is a lite javascript and HTML library that helps developers build native web-components, and makes building
+simple native web-applications easier and more elegant!
 
 ```html
-<body>
-	<custom-title title="Welcome to Tram-Lite!"></custom-title>
-</body>
+<template is="component-defintion">
+	<custom-title color="blue">
+		<style>
+			h1 { color: ${'color'} }
+		</style>
+
+		<h1>${'title'}</h1>
+	</custom-title>
+</template>
+
+<custom-title title="Welcome to Tram-Lite!"></custom-title>
 ```
 
 To install, you can simply include a script tag pointed to `unpkg.com` in your `index.html`:
 
 ```html
-<script src="https://unpkg.com/tram-lite@2"></script>
+<script src="https://unpkg.com/tram-lite@3"></script>
 ```
 
 To learn more check out the website at https://tram-one.io/tram-lite

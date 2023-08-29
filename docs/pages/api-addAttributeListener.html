@@ -1,0 +1,55 @@
+<h2><code>addAttributeListener</code></h2>
+<section>
+	<p>
+		<code>addAttributeListener</code> is a helper function to set up a callback for when an element's attribute changes.
+	</p>
+	<p>This allows your component to react more dynamically to attribute changes (beyond simple templating).</p>
+</section>
+<section>
+	<h2>Syntax</h2>
+	<p>
+		<tram-code syntax="javascript" code="addAttributeListener(element, attributeNames, callback)"></tram-code>
+	</p>
+	<h3>Parameters</h3>
+	<dl>
+		<dt><code>element</code></dt>
+		<dd><p>Element to watch attribute changes for.</p></dd>
+		<dt><code>attributeNames</code></dt>
+		<dd><p>A list of attribute names on the element to watch changes for.</p></dd>
+		<dt><code>callback</code></dt>
+		<dd>
+			<p>The function to call when one of the listed attributes changes. It has the following parameters:</p>
+			<dl>
+				<dt><code>mutationRecord</code></dt>
+				<dd>
+					A
+					<a href="https://developer.mozilla.org/en-US/docs/Web/API/MutationRecord"><code>MutationRecord</code></a>
+					object for the change that was triggered.
+				</dd>
+			</dl>
+		</dd>
+	</dl>
+	<h3>Return Value</h3>
+	<p>None</p>
+	<h3>Exceptions</h3>
+	<p>To Be Added...</p>
+</section>
+<section>
+	<h2>Example</h2>
+	<p>
+		<tram-code
+			syntax="javascript"
+			code="const alertingCount = html`
+	<test-counter count=&quot;4&quot;></test-counter>
+`;
+
+// setup observer
+addAttributeListener(alertingCount, ['count'], () => {
+	console.log(`Count: ${alertingCount.getAttribute('count')}`);
+});
+
+// update count, which will trigger the alert
+alertingCount.setAttribute('count', '5');"
+		></tram-code>
+	</p>
+</section>
