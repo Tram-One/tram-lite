@@ -28,20 +28,25 @@ Tram-Lite is a lite javascript and HTML library that helps developers build nati
 simple native web-applications easier and more elegant!
 
 ```html
+<!-- define a new web-component in HTML -->
 <template is="component-defintion">
 	<custom-title color="blue">
+		<!-- components have encapsulated styles -->
 		<style>
 			h1 { color: ${'color'} }
 		</style>
 
+		<!-- embed attributes right in the template -->
 		<h1>${'page'}</h1>
 
+		<!-- run script as soon as the component mounts -->
 		<script>
 			document.title = this.getAttribute('page');
 		</script>
 	</custom-title>
 </template>
 
+<!-- use your new component anywhere in your HTML! -->
 <custom-title page="Introduction!"></custom-title>
 ```
 

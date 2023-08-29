@@ -8,15 +8,26 @@
 
 	<tram-code
 		syntax="html"
-		code="<template is=&quot;component-definition&quot;>
+		code="<!-- define a new web-component in HTML -->
+<template is=&quot;component-defintion&quot;>
 	<custom-title color=&quot;blue&quot;>
+		<!-- components have encapsulated styles -->
 		<style>
 			h1 { color: ${'color'} }
 		</style>
 
-		<h1>${'title'}</h1>
+		<!-- embed attributes right in the template -->
+		<h1>${'page'}</h1>
+
+		<!-- run script as soon as the component mounts -->
+		<script>
+			document.title = this.getAttribute('page');
+		</script>
 	</custom-title>
-</template>"
+</template>
+
+<!-- use your new component anywhere in your HTML! -->
+<custom-title page=&quot;Introduction!&quot;></custom-title>"
 	></tram-code>
 </p>
 
