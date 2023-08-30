@@ -32,7 +32,7 @@ simple native web-applications easier and more elegant!
 <script src="https://unpkg.com/tram-lite@3"></script>
 
 <!-- define a new web-component -->
-<template is="component-defintion">
+<template is="component-definition">
 	<custom-title color="blue">
 		<!-- components have encapsulated styles -->
 		<style>

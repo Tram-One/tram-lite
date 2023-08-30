@@ -65,7 +65,7 @@ class ComponentDefinition extends HTMLTemplateElement {
 }
 
 // associate this class as a custom built-in for the template tag
-// e.g. it can be created with a <template is="component-defintion"> tag in HTML
+// e.g. it can be created with a <template is="component-definition"> tag in HTML
 customElements.define('component-definition', ComponentDefinition, { extends: 'template' });
 
 try {
