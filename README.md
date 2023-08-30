@@ -28,7 +28,10 @@ Tram-Lite is a lite javascript and HTML library that helps developers build nati
 simple native web-applications easier and more elegant!
 
 ```html
-<!-- define a new web-component in HTML -->
+<!-- include the tram-lite library -->
+<script src="https://unpkg.com/tram-lite@3"></script>
+
+<!-- define a new web-component -->
 <template is="component-defintion">
 	<custom-title color="blue">
 		<!-- components have encapsulated styles -->

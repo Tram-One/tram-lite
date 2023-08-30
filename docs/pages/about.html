@@ -6,26 +6,29 @@
 
 	<tram-code
 		syntax="html"
-		code="<!-- define a new web-component in HTML -->
-<template is=&quot;component-defintion&quot;>
-	<custom-title color=&quot;blue&quot;>
-		<!-- components have encapsulated styles -->
+		code='<!-- include the tram-lite library -->
+<script src="https://unpkg.com/tram-lite@3"></script>
+
+<!-- define a new web-component, custom-title -->
+<template is="component-defintion">
+	<custom-title color="blue">
+		<!-- web-components have encapsulated styles -->
 		<style>
-			h1 { color: ${'color'} }
+			h1 { color: ${&apos;color&apos;} }
 		</style>
 
 		<!-- embed attributes right in the template -->
-		<h1>${'page'}</h1>
+		<h1>${&apos;page&apos;}</h1>
 
-		<!-- run script as soon as the component mounts -->
+		<!-- scripts run as soon as the component mounts -->
 		<script>
-			document.title = this.getAttribute('page');
+			document.title = this.getAttribute(&apos;page&apos;);
 		</script>
 	</custom-title>
 </template>
 
 <!-- use your new component anywhere in your HTML! -->
-<custom-title page=&quot;Introduction!&quot;></custom-title>"
+<custom-title page="Introduction!"></custom-title>'
 	></tram-code>
 </p>
 
