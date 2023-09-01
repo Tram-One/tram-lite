@@ -1,13 +1,13 @@
 <template is="component-definition">
+	<!-- todo-item -->
 	<todo-item checked="">
 		<label style="display: block">
 			<input type="checkbox" onchange="updateRootAttr('checked', event, 'checked')" />
 			<slot></slot>
 		</label>
 	</todo-item>
-</template>
 
-<template is="component-definition">
+	<!-- todo-list -->
 	<todo-list completed="0" total="0">
 		<style>
 			section {

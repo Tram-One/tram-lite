@@ -10,18 +10,22 @@ class ComponentDefinition extends HTMLTemplateElement {
 	 * @param {HTMLTemplateElement} templateTag
 	 */
 	static processTemplateDefinition(templateTag) {
-		const definitionString = templateTag.content.firstElementChild.outerHTML;
+		// get all child elements (in case more than one was defined in this tag)
+		const allChildElements = templateTag.content.children;
+		[...allChildElements].forEach((elementToDefine) => {
+			const definitionString = elementToDefine.outerHTML;
 
-		// we expect template variables to be in the following pattern, matching "${'...'}"
-		const variablePattern = /\$\{\'(.*?)\'\}/;
-		// Split the string by the above pattern, which lets us get an alternating list of strings and variables
-		const parts = definitionString.split(variablePattern);
+			// we expect template variables to be in the following pattern, matching "${'...'}"
+			const variablePattern = /\$\{\'(.*?)\'\}/;
+			// Split the string by the above pattern, which lets us get an alternating list of strings and variables
+			const parts = definitionString.split(variablePattern);
 
-		// Extract the strings and the variables
-		const rawStrings = parts.filter((_, index) => index % 2 === 0);
-		const templateVaraibles = parts.filter((_, index) => index % 2 !== 0);
+			// Extract the strings and the variables
+			const rawStrings = parts.filter((_, index) => index % 2 === 0);
+			const templateVaraibles = parts.filter((_, index) => index % 2 !== 0);
 
-		TramLite.define(rawStrings, ...templateVaraibles);
+			TramLite.define(rawStrings, ...templateVaraibles);
+		});
 	}
 
 	constructor() {
