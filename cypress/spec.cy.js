@@ -31,6 +31,7 @@ describe('Tram-Lite Example Components', () => {
 		/* verify that updating inputs updates attributes as expected (updateRootAttr) */
 		cy.get('input#source').type('Hello, World');
 		cy.get('input#reflection').should('have.value', 'Hello, World');
+		cy.get('tram-mirror').should('have.attr', 'is-mirrored', '');
 
 		/* verify that updating an attribute copies to multiple elements and attributes */
 		cy.get('color-picker').invoke('attr', 'hue', '120');

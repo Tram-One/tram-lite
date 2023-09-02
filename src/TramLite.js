@@ -126,7 +126,8 @@ class TramLite {
 				// - the first default value is whatever is set on DOM creation
 				// - next, we check if there are default values that were part of the define
 				// - lastly, we'll set it to an empty string.
-				templateVariables.forEach((attributeName) => {
+				const defaultAttributes = Object.keys(defaultAttributeValues);
+				[...templateVariables, ...defaultAttributes].forEach((attributeName) => {
 					if (this.getAttribute(attributeName) === null) {
 						this.setAttribute(attributeName, defaultAttributeValues[attributeName] || '');
 					}
