@@ -15,7 +15,7 @@
 			}
 		</style>
 
-		<script src="https://unpkg.com/html-import-element@1"></script>
+		<script src="../node_modules/html-import-element/html-import-element.js"></script>
 		<script src="../src/TramLite.js"></script>
 		<script src="../src/ComponentDefinition.js"></script>
 	</head>
@@ -24,8 +24,9 @@
 		<html-import src="./title.html"></html-import>
 
 		<!-- build counter 3 different ways, just to make sure they all work as expected! -->
-		<counter-examples>
-			<!-- via template -->
+		<!-- <counter-definitions> is just a block to organize all the imports -->
+		<counter-definitions>
+			<!-- via external template -->
 			<html-import src="./temp-counter.html"></html-import>
 			<!-- via javascript -->
 			<script src="./js-counter.js"></script>
@@ -42,7 +43,36 @@
 					counter.setAttribute('count', newCount);
 				}
 			</script>
-		</counter-examples>
+		</counter-definitions>
+
+		<!-- inline component definitions (to validate multiple inline definitions) -->
+		<template is="component-definition">
+			<hover-tooltip>
+				<style>
+					span {
+						display: none;
+						position: relative;
+						top: -1.4em;
+						left: -3.5em;
+						background: black;
+						padding: 0.2em;
+						border: grey 1px solid;
+						border-radius: 0.2em;
+					}
+				</style>
+				<slot></slot>
+				<span>${'content'}</span>
+				<script>
+					/* Script interrupts HTML Parser */
+					this.shadowRoot.querySelector('span').style.display = 'inherit';
+				</script>
+			</hover-tooltip>
+			<tooltip-example>
+				<hover-tooltip content="Hello!">
+					<button>Tooltips!</button>
+				</hover-tooltip>
+			</tooltip-example>
+		</template>
 
 		<html-import src="./mirror.html"></html-import>
 		<html-import src="./todo-list.html"></html-import>
@@ -82,6 +112,9 @@
 		</example-container>
 		<example-container name="Line Drawer">
 			<line-drawer></line-drawer>
+		</example-container>
+		<example-container name="Tooltip">
+			<tooltip-example></tooltip-example>
 		</example-container>
 	</body>
 </html>

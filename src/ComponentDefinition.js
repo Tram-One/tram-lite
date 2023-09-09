@@ -13,6 +13,13 @@ class ComponentDefinition extends HTMLTemplateElement {
 		// get all child elements (in case more than one was defined in this tag)
 		const allChildElements = templateTag.content.children;
 		[...allChildElements].forEach((elementToDefine) => {
+			// verify this element hasn't already been defined
+			const elementHasBeenDefined = customElements.get(elementToDefine.tagName.toLowerCase()) !== undefined;
+			if (elementHasBeenDefined) {
+				// it has been defined already, skip this
+				return;
+			}
+
 			const definitionString = elementToDefine.outerHTML;
 
 			// we expect template variables to be in the following pattern, matching "${'...'}"
@@ -31,11 +38,9 @@ class ComponentDefinition extends HTMLTemplateElement {
 	constructor() {
 		super();
 
-		// need a mutation observer to determine exactly when the template content is available
-		// once the content is available, we can disconnect immediately
-		this.observer = new MutationObserver((mutations, observer) => {
+		// need a mutation observer to catch new elements trying to be defined
+		this.observer = new MutationObserver(() => {
 			this.processTemplateDefinition();
-			observer.disconnect();
 		});
 	}
 
@@ -48,19 +53,12 @@ class ComponentDefinition extends HTMLTemplateElement {
 	}
 
 	connectedCallback() {
-		// if we've already defined this component, don't try to define it again
-		if (this.hasAttribute('defined')) {
-			return;
-		}
+		// if we already have some content, process that now
+		this.processTemplateDefinition();
 
-		// if this is the first time we've been processed, check if we have template content
-		if (this.content.firstElementChild === null) {
-			// we don't have the template content yet, wait for it to exist
-			this.observer.observe(this.content, { childList: true });
-		} else {
-			// we already have the template content, process it!
-			this.processTemplateDefinition();
-		}
+		// set up a mutation observer so we can process any new tags
+		// that may be added after the initial processing
+		this.observer.observe(this.content, { childList: true });
 	}
 
 	disconnectedCallback() {

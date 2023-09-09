@@ -62,5 +62,9 @@ describe('Tram-Lite Example Components', () => {
 		/* verify that creating svg elements works as expected (svg`...`) */
 		cy.get('line-drawer').get('button#svg-button').click();
 		cy.get('line-drawer').get('line').should('have.attr', 'stroke', 'white');
+
+		/* verify that multiple inline element definitions are successful */
+		cy.get('tooltip-example').contains('Tooltips!');
+		cy.get('tooltip-example').contains('Hello!');
 	});
 });
