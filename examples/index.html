@@ -27,7 +27,7 @@
 		<!-- <counter-definitions> is just a block to organize all the imports -->
 		<counter-definitions>
 			<!-- via external template -->
-			<html-import src="./temp-counter.html"></html-import>
+			<html-import src="./template-counter.html"></html-import>
 			<!-- via javascript -->
 			<script src="./js-counter.js"></script>
 			<!-- via inline-template -->
@@ -79,14 +79,15 @@
 		<html-import src="./color-picker.html"></html-import>
 		<html-import src="./example-container.html"></html-import>
 		<html-import src="./line-drawer.html"></html-import>
+		<html-import src="./temperature-converter.html"></html-import>
 
 		<tram-title>Tram-Lite Components!</tram-title>
 		<example-container name="Counters">
 			<div>
 				External Template:
-				<temp-counter id="temp-blue" label="Blue" color="#CECEFF"></temp-counter>
-				<temp-counter id="temp-red" label="Red" color="#FFCECE"></temp-counter>
-				<temp-counter id="temp-default"></temp-counter>
+				<template-counter id="temp-blue" label="Blue" color="#CECEFF"></template-counter>
+				<template-counter id="temp-red" label="Red" color="#FFCECE"></template-counter>
+				<template-counter id="temp-default"></template-counter>
 			</div>
 			<div>
 				Javascript Define Template Tag:

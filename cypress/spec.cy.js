@@ -11,10 +11,10 @@ describe('Tram-Lite Example Components', () => {
 		cy.get('tram-title').contains('Tram-Lite Components!');
 
 		/* validate that the counter elements, when defined using an external template (html-import), work as expected */
-		cy.get('temp-counter#temp-default').contains(/Green: 0/); // default values should populate
-		cy.get('temp-counter#temp-red').contains(/Red: 0/); // passed in values should populate
-		cy.get('temp-counter#temp-red').click(); // clicking a counter should increment
-		cy.get('temp-counter#temp-red').contains(/Red: 1/);
+		cy.get('template-counter#temp-default').contains(/Green: 0/); // default values should populate
+		cy.get('template-counter#temp-red').contains(/Red: 0/); // passed in values should populate
+		cy.get('template-counter#temp-red').click(); // clicking a counter should increment
+		cy.get('template-counter#temp-red').contains(/Red: 1/);
 
 		/* repeat the above tests for a component definition using an inline template (template is="component-definition") */
 		cy.get('inline-counter#inline-default').contains(/Green: 0/);
