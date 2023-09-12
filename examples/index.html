@@ -18,6 +18,7 @@
 		<script src="../node_modules/html-import-element/html-import-element.js"></script>
 		<script src="../src/TramLite.js"></script>
 		<script src="../src/ComponentDefinition.js"></script>
+		<script src="../src/ComponentEffect.js"></script>
 	</head>
 	<body>
 		<!-- component definitions -->
@@ -62,7 +63,7 @@
 				</style>
 				<slot></slot>
 				<span>${'content'}</span>
-				<script>
+				<script is="component-effect">
 					/* Script interrupts HTML Parser */
 					this.shadowRoot.querySelector('span').style.display = 'inherit';
 				</script>
@@ -116,6 +117,9 @@
 		</example-container>
 		<example-container name="Tooltip">
 			<tooltip-example></tooltip-example>
+		</example-container>
+		<example-container name="Temperature Converter">
+			<temperature-converter></temperature-converter>
 		</example-container>
 	</body>
 </html>

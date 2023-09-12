@@ -10,7 +10,7 @@
 	<!-- todo-list -->
 	<todo-list completed="0" total="0">
 		<style>
-			section {
+			todo-section {
 				padding-inline-start: 5px;
 				margin-block-start: 5px;
 			}
@@ -19,8 +19,8 @@
 		<form onsubmit="submitNewTodoItem(this, event)">
 			<input name="input" placeholder="New Item" autofill="false" />
 		</form>
-		<section></section>
-		<script>
+		<todo-section></todo-section>
+		<script is="component-effect">
 			createInitialTodos(this);
 		</script>
 	</todo-list>
@@ -33,7 +33,7 @@
 	}
 
 	function addNewTodoItem(todoList, todoText) {
-		const list = todoList.shadowRoot.querySelector('section');
+		const list = todoList.shadowRoot.querySelector('todo-section');
 		const newItem = html`<todo-item>${todoText}</todo-item>`;
 		addAttributeListener(newItem, ['checked'], () => updateTotalAndCompletedLabel(todoList));
 		list.appendChild(newItem);

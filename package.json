@@ -1,6 +1,6 @@
 {
 	"name": "tram-lite",
-	"version": "3.1.2",
+	"version": "4.0.0",
 	"description": "💡 Lite Web-Component Library for HTML and vanilla Javascript",
 	"main": "output/tram-lite.js",
 	"types": "output/tram-lite.js",
@@ -10,7 +10,7 @@
 	"scripts": {
 		"start": "serve .",
 		"build": "npm run bundle && npm run minify",
-		"bundle": "uglifyjs src/TramLite.js src/ComponentDefinition.js -o output/tram-lite.js -b --comments all",
+		"bundle": "uglifyjs src/*.js -o output/tram-lite.js -b --comments all",
 		"minify": "uglifyjs output/tram-lite.js -o output/tram-lite.min.js -c -m",
 		"prepublishOnly": "npm run build",
 		"test": "cypress open",

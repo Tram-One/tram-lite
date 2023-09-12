@@ -87,9 +87,6 @@ class TramLite {
 			constructor() {
 				super();
 
-				// keep track if our component script tags should be executed
-				this.shouldExecuteScripts = true;
-
 				// list of attribute and text nodes that have a template value
 				// these are scanned through when templated attributes are updated
 				this.templateValuesAttrNodes = [];
@@ -135,34 +132,6 @@ class TramLite {
 
 				// an initial call to set the default attributes
 				this.attributeChangedCallback();
-
-				// if we have scripts to run, execute them now
-				if (this.shouldExecuteScripts) {
-					// by default, we only do this once (otherwise it would re-trigger on appendChild or other moves)
-					// you can technically retrigger these by setting this.shouldExecuteScripts back to true
-					this.shouldExecuteScripts = false;
-
-					// provide a scoped evaluation of the script tags in this element
-					const scopedEval = (script) => {
-						return Function('document', 'window', script).bind(this)(this.shadowRoot, window);
-					};
-					const scripts = this.shadowRoot.querySelectorAll('script');
-					scripts.forEach((script) => {
-						// if we have a src attribute, we should just clone and replace the node
-						// otherwise, we call the inline javascript with `this` set to the current node
-						if (script.hasAttribute('src')) {
-							// Clone the script node
-							const clonedScript = document.createElement('script');
-							[...script.attributes].forEach((attr) => clonedScript.setAttribute(attr.name, attr.value));
-							clonedScript.textContent = script.textContent;
-
-							// replace the original script tag with this new one (which will cause it to trigger)
-							script.parentNode.replaceChild(clonedScript, script);
-						} else {
-							scopedEval(script.innerHTML);
-						}
-					});
-				}
 			}
 
 			attributeChangedCallback(name, oldValue, newValue) {

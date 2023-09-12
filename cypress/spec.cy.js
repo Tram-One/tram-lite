@@ -66,5 +66,11 @@ describe('Tram-Lite Example Components', () => {
 		/* verify that multiple inline element definitions are successful */
 		cy.get('tooltip-example').contains('Tooltips!');
 		cy.get('tooltip-example').contains('Hello!');
+
+		/* verify that component effects trigger on dependency updates */
+		cy.get('temperature-converter').get('input#f').type('19');
+		cy.get('temperature-converter').get('input#c').should('have.value', '-7');
+		cy.get('temperature-converter').get('input#f').should('have.value', '19');
+		cy.get('temperature-converter').contains('Updated!');
 	});
 });
