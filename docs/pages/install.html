@@ -6,7 +6,11 @@
 	To install, you can include a script tag pointed to <a href="https://unpkg.com">unpkg.com</a> in your
 	<code>index.html</code>:
 
-	<tram-code syntax="html" code='<script src="https://unpkg.com/tram-lite@3"></script>'> </tram-code>
+	<code-template-html>
+		<template>
+			<script src="https://unpkg.com/tram-lite@3"></script>
+		</template>
+	</code-template-html>
 </p>
 
 <p>
@@ -18,12 +22,11 @@
 	If you want the minified version of the source code, you can point to the minified version at
 	<code>output/tram-lite.min.js</code>:
 
-	<tram-code
-		syntax="html"
-		code='<script src="https://unpkg.com/tram-lite@3/output/tram-lite.min.js">
-</script>'
-	>
-	</tram-code>
+	<code-template-html>
+		<template>
+			<script src="https://unpkg.com/tram-lite@3/output/tram-lite.min.js"></script>
+		</template>
+	</code-template-html>
 </p>
 
 <h2>types</h2>
@@ -31,9 +34,15 @@
 <p>
 	If you use npm, you can get the type definitions by installing <code>tram-lite</code>, even if you don't use any build
 	tooling (make sure this matches your script tag above).
-</p>
 
-<tram-code syntax="bash" code="npm i tram-lite@3"></tram-code>
+	<code-template-js>
+		<template>
+			<script>
+				npm i tram-lite@3
+			</script>
+		</template>
+	</code-template-js>
+</p>
 
 <p>
 	This will automatically annotate Tram-Lite methods with documentation in your project if you are using a

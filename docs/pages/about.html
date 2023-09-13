@@ -4,32 +4,33 @@
 	Tram-Lite is a lite javascript and HTML library that helps developers build native web-components, and makes building
 	simple native web-applications easier and more elegant!
 
-	<tram-code
-		syntax="html"
-		code='<!-- include the tram-lite library -->
-<script src="https://unpkg.com/tram-lite@3"></script>
+	<code-template-html>
+		<template>
+			<!-- include the tram-lite library -->
+			<script src="https://unpkg.com/tram-lite@3"></script>
 
-<!-- define a new web-component, custom-title -->
-<template is="component-definition">
-	<custom-title color="blue">
-		<!-- web-components have encapsulated styles -->
-		<style>
-			h1 { color: ${&apos;color&apos;} }
-		</style>
+			<!-- define a new web-component, custom-title -->
+			<template is="component-definition">
+				<custom-title color="blue">
+					<!-- web-components have encapsulated styles -->
+					<style>
+						h1 { color: ${'color'} }
+					</style>
 
-		<!-- embed attributes right in the template -->
-		<h1>${&apos;page&apos;}</h1>
+					<!-- embed attributes right in the template -->
+					<h1>${'page'}</h1>
 
-		<!-- scripts run as soon as the component mounts -->
-		<script>
-			document.title = this.getAttribute(&apos;page&apos;);
-		</script>
-	</custom-title>
-</template>
+					<!-- scripts run as soon as the component mounts -->
+					<script>
+						document.title = this.getAttribute('page');
+					</script>
+				</custom-title>
+			</template>
 
-<!-- use your new component anywhere in your HTML! -->
-<custom-title page="Introduction!"></custom-title>'
-	></tram-code>
+			<!-- use your new component anywhere in your HTML! -->
+			<custom-title page="Introduction!"></custom-title>
+		</template>
+	</code-template-html>
 </p>
 
 <h2>API</h2>

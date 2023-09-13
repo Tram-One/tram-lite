@@ -9,7 +9,14 @@
 <section>
 	<h2>Syntax</h2>
 	<p>
-		<tram-code syntax="javascript" code="updateRootAttr(attributeName, event, targetAttribute='value')"></tram-code>
+		<code-template-js>
+			<template>
+				<script>
+					// prettier-ignore
+					updateRootAttr(attributeName, event, targetAttribute = 'value')
+				</script>
+			</template>
+		</code-template-js>
 	</p>
 	<h3>Parameters</h3>
 	<dl>
@@ -30,16 +37,15 @@
 <section>
 	<h2>Example</h2>
 	<p>
-		<tram-code
-			syntax="html"
-			code="<template is=&quot;component-definition&quot;>
-	<x-greeting>
-		<label>
-			Name: <input oninput=&quot;updateRootAttr('name', event)&quot; />
-		</label>
-		<p>Hello ${'name'}!</p>
-	</x-greeting>
-</template>"
-		></tram-code>
+		<code-template-html>
+			<template>
+				<template is="component-definition">
+					<x-greeting>
+						<label> Name: <input oninput="updateRootAttr('name', event)" /> </label>
+						<p>Hello ${'name'}!</p>
+					</x-greeting>
+				</template>
+			</template>
+		</code-template-html>
 	</p>
 </section>

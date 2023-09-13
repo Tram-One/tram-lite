@@ -2,11 +2,14 @@
 <section>
 	<p>
 		<code>html</code> is a template tag function to quickly create html dom with all their attributes and content.
-		<tram-code
-			syntax="javascript"
-			code="const pageHeader = html`<h1>Hello World</h1>`;
-document.body.appendChild(pageHeader);"
-		></tram-code>
+		<code-template-js>
+			<template>
+				<script>
+					const pageHeader = html`<h1>Hello World</h1>`;
+					document.body.appendChild(pageHeader);
+				</script>
+			</template>
+		</code-template-js>
 	</p>
 
 	<p>
@@ -18,7 +21,15 @@ document.body.appendChild(pageHeader);"
 </section>
 <section>
 	<h2>Syntax</h2>
-	<tram-code syntax="javascript" code="html`template`"></tram-code>
+	<p>
+		<code-template-js>
+			<template>
+				<script>
+					html`template`;
+				</script>
+			</template>
+		</code-template-js>
+	</p>
 	<h3>Parameters</h3>
 	<dt><code>template</code></dt>
 	<dd>

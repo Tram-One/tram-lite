@@ -5,14 +5,15 @@
 		It is exposed as a extension of the <code>template</code> tag. In browsers that do not support custom built-ins (the
 		<code>is=</code> syntax), it is triggered via a mutation observer automatically.
 
-		<tram-code
-			syntax="html"
-			code="<template is=&quot;component-definition&quot;>
-	<my-greeting>
-		<h1>Hello ${'name'}</h1>
-	</my-greeting>
-</template>"
-		></tram-code>
+		<code-template-html>
+			<template>
+				<template is="component-definition">
+					<my-greeting>
+						<h1>Hello ${'name'}</h1>
+					</my-greeting>
+				</template>
+			</template>
+		</code-template-html>
 	</p>
 	<p>
 		Under the hood, it is a wrapper for Tram-Lite's <code>define</code> function. See
@@ -24,14 +25,13 @@
 <section>
 	<h2>Syntax</h2>
 	<p>
-		<tram-code
-			syntax="html"
-			code='<template is="component-definition">
-	<tag-name default-attributes="default value">
-		<h1>Template</h1>
-		<p>${&apos;template-variables&apos;}</p>
-	</tag-name>
-</template>'
-		></tram-code>
+		<code-template-html>
+			<template is="component-definition">
+				<tag-name default-attributes="default value">
+					<h1>Template</h1>
+					<p>${'template-variables'}</p>
+				</tag-name>
+			</template>
+		</code-template-html>
 	</p>
 </section>

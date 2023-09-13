@@ -14,25 +14,34 @@
 <p>
 	If you created an <code>index.html</code> file, include the following content in the file, and open the html file
 	directly with your browser:
-	<tram-code syntax="html" code='<script src="https://unpkg.com/tram-lite@3"></script>'></tram-code>
+	<code-template-html>
+		<template>
+			<script src="https://unpkg.com/tram-lite@3"></script>
+		</template>
+	</code-template-html>
 </p>
 
 <h3>Building our first component</h3>
 <p>
 	Let's start with something super simple, a custom button. In the HTML section, write the following component
 	definition:
-	<tram-code
-		syntax="html"
-		code='<template is="component-definition">
-	<my-button>
-		<button>Click Me!</button>
-	</my-button>
-</template>'
-	></tram-code>
+	<code-template-html>
+		<template>
+			<template is="component-definition">
+				<my-button>
+					<button>Click Me!</button>
+				</my-button>
+			</template>
+		</template>
+	</code-template-html>
 </p>
 <p>
 	Then, add the following to put our new button on the page:
-	<tram-code syntax="html" code="<my-button></my-button>"></tram-code>
+	<code-template-html>
+		<template>
+			<my-button></my-button>
+		</template>
+	</code-template-html>
 </p>
 
 <h4>What's going on?</h4>
@@ -47,20 +56,25 @@
 	inside the component using an attribute. We can do this by replacing the <code>Click Me!</code> with
 	<code>${'label'}</code>
 
-	<tram-code
-		syntax="html"
-		code="<template is=&quot;component-definition&quot;>
-	<my-button>
-		<button>${'label'}</button>
-	</my-button>
-</template>"
-	></tram-code>
+	<code-template-html>
+		<template>
+			<template is="component-definition">
+				<my-button>
+					<button>${'label'}</button>
+				</my-button>
+			</template>
+		</template>
+	</code-template-html>
 </p>
 
 <p>
 	Now, let's update our HTML to include this new attribute.
 
-	<tram-code syntax="html" code='<my-button label="My Button"></my-button>'></tram-code>
+	<code-template-html>
+		<template>
+			<my-button label="My Button"></my-button>
+		</template>
+	</code-template-html>
 </p>
 
 <h4>What's going on?</h4>
@@ -76,20 +90,25 @@
 	one isn't provided. This is done by including the default value in the outer-most tag (next to
 	<code>my-button</code>).
 
-	<tram-code
-		syntax="html"
-		code='<template is="component-definition">
-	<my-button label="Clicks">
-		<button>${&apos;label&apos;}</button>
-	</my-button>
-</template>'
-	></tram-code>
+	<code-template-html>
+		<template>
+			<template is="component-definition">
+				<my-button label="Clicks">
+					<button>${'label'}</button>
+				</my-button>
+			</template>
+		</template>
+	</code-template-html>
 </p>
 
 <p>
 	Now, if we remove the label on our HTML component, we can see it falls back on our default value.
 
-	<tram-code syntax="html" code="<my-button></my-button>"></tram-code>
+	<code-template-html>
+		<template>
+			<my-button></my-button>
+		</template>
+	</code-template-html>
 </p>
 
 <h4>What's going on?</h4>
@@ -104,30 +123,30 @@
 	add another attribute <code>count</code>, and add an <code>onclick</code> handler for our button. For this attribute,
 	we'll set a default value of <code>"0"</code>.
 
-	<tram-code
-		syntax="html"
-		code='<template is="component-definition">
-	<my-button label="Clicks" count="0">
-		<button onclick="increment(event)">
-			${&apos;label&apos;}: ${&apos;count&apos;}
-		</button>
-	</my-button>
-</template>'
-	></tram-code>
+	<code-template-html>
+		<template>
+			<template is="component-definition">
+				<my-button label="Clicks" count="0">
+					<button onclick="increment(event)">${'label'}: ${'count'}</button>
+				</my-button>
+			</template>
+		</template>
+	</code-template-html>
 </p>
 <p>
 	After our template definition, add the following function definition (you can either do this in JS, or in your HTML in
 	a script tag, which we have below).
-	<tram-code
-		syntax="html"
-		code="<script>
-	function increment(event) {
-		const myButton = event.target.getRootNode().host;
-		const currentCount = parseInt(myButton.getAttribute('count'));
-		myButton.setAttribute('count', currentCount+1);
-	}
-</script>"
-	></tram-code>
+	<code-template-html>
+		<template>
+			<script>
+				function increment(event) {
+					const myButton = event.target.getRootNode().host;
+					const currentCount = parseInt(myButton.getAttribute('count'));
+					myButton.setAttribute('count', currentCount + 1);
+				}
+			</script>
+		</template>
+	</code-template-html>
 </p>
 
 <h4>What's going on?</h4>
@@ -142,19 +161,18 @@
 	When the component loads, let's focus it, so that users can immediately interact with it! To do this, we can include a
 	<tag-code tag="script"></tag-code> tag in the definition.
 
-	<tram-code
-		syntax="html"
-		code='<template is="component-definition">
-	<my-button label="Clicks" count="0">
-		<button onclick="increment(event)">
-			${&apos;label&apos;}: ${&apos;count&apos;}
-		</button>
-		<script>
-			this.shadowRoot.querySelector(&apos;button&apos;).focus()
-		</script>
-	</my-button>
-</template>'
-	></tram-code>
+	<code-template-html>
+		<template>
+			<template is="component-definition">
+				<my-button label="Clicks" count="0">
+					<button onclick="increment(event)">${'label'}: ${'count'}</button>
+					<script>
+						this.shadowRoot.querySelector('button').focus();
+					</script>
+				</my-button>
+			</template>
+		</template>
+	</code-template-html>
 </p>
 
 <h4>What's going on?</h4>

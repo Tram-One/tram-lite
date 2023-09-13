@@ -8,7 +8,13 @@
 <section>
 	<h2>Syntax</h2>
 	<p>
-		<tram-code syntax="javascript" code="addAttributeListener(element, attributeNames, callback)"></tram-code>
+		<code-template-js>
+			<template>
+				<script>
+					addAttributeListener(element, attributeNames, callback);
+				</script>
+			</template>
+		</code-template-js>
 	</p>
 	<h3>Parameters</h3>
 	<dl>
@@ -37,19 +43,20 @@
 <section>
 	<h2>Example</h2>
 	<p>
-		<tram-code
-			syntax="javascript"
-			code="const alertingCount = html`
-	<test-counter count=&quot;4&quot;></test-counter>
-`;
+		<code-template-js>
+			<template>
+				<script>
+					const alertingCount = html`<test-counter count="4"></test-counter>`;
 
-// setup observer
-addAttributeListener(alertingCount, ['count'], () => {
-	console.log(`Count: ${alertingCount.getAttribute('count')}`);
-});
+					// setup observer
+					addAttributeListener(alertingCount, ['count'], () => {
+						console.log(`Count: ${alertingCount.getAttribute('count')}`);
+					});
 
-// update count, which will trigger the alert
-alertingCount.setAttribute('count', '5');"
-		></tram-code>
+					// update count, which will trigger the alert
+					alertingCount.setAttribute('count', '5');
+				</script>
+			</template>
+		</code-template-js>
 	</p>
 </section>

@@ -41,6 +41,7 @@
 	"devDependencies": {
 		"cypress": "^12.14.0",
 		"html-import-element": "^1.1.0",
+		"prettier": "^3.0.3",
 		"serve": "^14.2.0",
 		"uglify-js": "^3.17.4"
 	}
