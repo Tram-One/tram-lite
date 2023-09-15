@@ -269,4 +269,4 @@ class ComponentDefinition {
 	}
 }
 
-TLupgradeNewNodes('[tl-definition]', ComponentDefinition);
+TramLite.setupMutationObserverForConnecting('[tl-definition]', ComponentDefinition);

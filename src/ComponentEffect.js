@@ -6,27 +6,6 @@
  */
 class ComponentEffect {
 	/**
-	 * a helper function to set up a callback for when an element's attribute changes
-	 * {@link https://tram-one.io/tram-lite/#addAttributeListener Read the full docs here.}
-	 * @param {Element} targetElement - The DOM element to observe.
-	 * @param {string[]} attributeNames - The name of the attribute (or list of attributes) to observe for changes.
-	 * @param {function(MutationRecord):void} callback - The function to call when the observed attribute changes.
-	 *    This function takes one argument: the MutationRecord representing the change.
-	 */
-	static addAttributeListener(targetElement, attributeNames, callback) {
-		const callbackWrapper = (mutationList) => {
-			mutationList.forEach((mutation) => {
-				// only call the mutation if an attribute changed
-				if (mutation.oldValue !== targetElement.getAttribute(mutation.attributeName)) {
-					callback(mutation);
-				}
-			});
-		};
-		const observer = new MutationObserver(callbackWrapper);
-		observer.observe(targetElement, { attributes: true, attributeFilter: attributeNames, attributeOldValue: true });
-	}
-
-	/**
 	 * function to trigger the javascript in a script tag.
 	 * This does not handle the src attribute, only inline javascript.
 	 * The `this` keyword will reference the host parent node of this script tag.
@@ -70,7 +49,7 @@ class ComponentEffect {
 			const dependencyString = newNode.getAttribute('tl-dependencies');
 			const dependencies = dependencyString.split(' ');
 
-			ComponentEffect.addAttributeListener(hostElement, dependencies, () => {
+			TramLite.addAttributeListener(hostElement, dependencies, () => {
 				// check if the inline script is being held
 				ComponentEffect.processScriptTag(newNode);
 			});
@@ -79,7 +58,7 @@ class ComponentEffect {
 
 		// if we ever set (or remove) the hold on this, trigger the inline script
 		// (this allows developers to delay triggering inline scripts)
-		ComponentEffect.addAttributeListener(newNode, ['tl-hold'], () => {
+		TramLite.addAttributeListener(newNode, ['tl-hold'], () => {
 			console.log('hold removed');
 			ComponentEffect.processScriptTag(newNode);
 		});

@@ -21,14 +21,21 @@ class ControlledInput {
 	 * @param {HTMLInputElement} newNode
 	 */
 	static connect(newNode) {
-		// const hostElement = newNode.getRootNode().host;
-
-		const hostAttributeName = newNode.getAttribute('tl-hostattr');
+		// attributes that control the behavior of the controlled input
+		const hostAttributeName = newNode.getAttribute('tl-hostattr') || 'value';
 		const triggerEvent = newNode.getAttribute('tl-trigger') || 'change';
 		const targetAttribute = newNode.getAttribute('tl-inputattr') || 'value';
 
-		ControlledInput.updateRootAttr(hostAttributeName, { target: newNode }, targetAttribute);
+		// set the value of this input based on the host element
+		const hostElement = newNode.getRootNode().host;
+		newNode[targetAttribute] = hostElement.getAttribute(hostAttributeName);
 
+		// update this input whenever the host attribute updates
+		TramLite.addAttributeListener(hostElement, [hostAttributeName], () => {
+			newNode[targetAttribute] = hostElement.getAttribute(hostAttributeName);
+		});
+
+		// update the root component attribute whenever the value changes for this node updates
 		newNode.addEventListener(triggerEvent, (event) => {
 			ControlledInput.updateRootAttr(hostAttributeName, event, targetAttribute);
 		});
