@@ -130,12 +130,6 @@ class ComponentDefinition {
 						}
 					});
 				});
-
-				// set all attributes to their default values now
-				// these will get updated as part of being attached to the document
-				Object.entries(defaultAttributeValues).forEach(([attributeName, defaultValue]) => {
-					this.setAttribute(attributeName, defaultValue);
-				});
 			}
 
 			connectedCallback() {
