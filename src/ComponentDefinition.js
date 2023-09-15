@@ -86,8 +86,7 @@ class ComponentDefinition {
 		//   (we don't want them triggering before the component has been completely defined)
 		// if there is already a hold, we won't touch these elements
 		//   (the developer may want to defer processing until later)
-		rootElement.querySelectorAll('script[is="component-effect"]:not([tl-hold])').forEach((componentEffect) => {
-			console.log('should attach hold');
+		rootElement.querySelectorAll('script[tl-effect]:not([tl-hold])').forEach((componentEffect) => {
 			componentEffect.setAttribute('tl-hold', 'component-mount');
 		});
 
@@ -148,12 +147,9 @@ class ComponentDefinition {
 				this.attributeChangedCallback();
 
 				// if there were any scripts that were waiting to be triggered on component mount, trigger them now
-				this.shadowRoot
-					.querySelectorAll('script[is="component-effect"][tl-hold="component-mount"]')
-					.forEach((componentEffect) => {
-						componentEffect.removeAttribute('tl-hold');
-						console.log('should trigger');
-					});
+				this.shadowRoot.querySelectorAll('script[tl-hold="component-mount"]').forEach((componentEffect) => {
+					componentEffect.removeAttribute('tl-hold');
+				});
 			}
 
 			attributeChangedCallback(name, oldValue, newValue) {
@@ -208,13 +204,6 @@ class ComponentDefinition {
 		// get all child elements (in case more than one was defined in this tag)
 		const allChildElements = templateTag.content.children;
 		[...allChildElements].forEach((elementToDefine) => {
-			// verify this element hasn't already been defined
-			const elementHasBeenDefined = customElements.get(elementToDefine.tagName.toLowerCase()) !== undefined;
-			if (elementHasBeenDefined) {
-				// it has been defined already, skip this
-				return;
-			}
-
 			const definitionString = elementToDefine.outerHTML;
 
 			// we expect template variables to be in the following pattern, matching "${'...'}"
@@ -230,37 +219,26 @@ class ComponentDefinition {
 		});
 	}
 
-	// processTemplateDefinition() {
-	// 	ComponentDefinition.processTemplateDefinition(this);
-
-	// 	// indicate that this component has been defined, and does not
-	// 	// (and more importantly, should not) be processed again.
-	// 	this.setAttribute('defined', '');
-	// }
-
-	/**
-	 *
-	 * @param {HTMLTemplateElement} newNode
-	 */
-	static connect(newNode) {
-		// if we already have some content, process that now
-		ComponentDefinition.processTemplateDefinition(newNode);
-
-		// if we don't already have a mutation observer, set one up now.
-		//   we need a mutation observer to catch new elements trying to be
-		//   defined in this template after initial processing.
-		if (newNode.observer === undefined) {
-			newNode.observer = new MutationObserver(() => {
-				newNode.processTemplateDefinition();
+	static setupMutationObserverForTemplates() {
+		/**
+		 * @param {MutationRecord[]} mutationRecords
+		 */
+		const upgradeNewNodes = (mutationRecords) => {
+			mutationRecords.forEach((mutationRecord) => {
+				mutationRecord.addedNodes.forEach((newNode) => {
+					// check if the previous element is a definition template
+					// we wait until we are in the next element (most likely a #text node)
+					// because that will confirm that the element has been completely parsed
+					if (newNode.previousSibling?.matches?.('[tl-definition]')) {
+						ComponentDefinition.processTemplateDefinition(newNode.previousSibling);
+					}
+				});
 			});
+		};
 
-			newNode.observer.observe(newNode.content, { childList: true });
-		}
-	}
-
-	static disconnect(nodeToRemove) {
-		nodeToRemove.observer.disconnect();
+		const observer = new MutationObserver(upgradeNewNodes);
+		observer.observe(document, { subtree: true, childList: true });
 	}
 }
 
-TramLite.setupMutationObserverForConnecting('[tl-definition]', ComponentDefinition);
+ComponentDefinition.setupMutationObserverForTemplates();

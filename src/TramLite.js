@@ -35,39 +35,4 @@ class TramLite {
 			});
 		};
 	}
-
-	/**
-	 * helper function to setup mutation observers that watch for tram-lite specific attributes, and
-	 * upgrades those components to have the new behavior.
-	 * @param {string} matcher
-	 * @param {{ connect: function, disconnect?: function }} componentClass
-	 */
-	static setupMutationObserverForConnecting(matcher, componentClass) {
-		/**
-		 * @param {MutationRecord[]} mutationRecords
-		 */
-		const upgradeNewNodes = (mutationRecords) => {
-			mutationRecords.forEach((mutationRecord) => {
-				// check if any new nodes that were added match, and then call connect
-				mutationRecord.addedNodes.forEach((newNode) => {
-					if (newNode.matches?.(matcher)) {
-						componentClass.connect(newNode);
-					}
-				});
-
-				// check if any nodes that were removed match, and then call disconnect (if we have one)
-				if (componentClass.disconnect) {
-					mutationRecord.removedNodes.forEach((removedNode) => {
-						if (removedNode.matches?.(matcher)) {
-							console.log('disconnect', removedNode);
-							componentClass.disconnect(removedNode);
-						}
-					});
-				}
-			});
-		};
-
-		const observer = new MutationObserver(upgradeNewNodes);
-		observer.observe(document, { subtree: true, childList: true });
-	}
 }

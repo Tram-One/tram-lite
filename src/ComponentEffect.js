@@ -59,7 +59,6 @@ class ComponentEffect {
 		// if we ever set (or remove) the hold on this, trigger the inline script
 		// (this allows developers to delay triggering inline scripts)
 		TramLite.addAttributeListener(newNode, ['tl-hold'], () => {
-			console.log('hold removed');
 			ComponentEffect.processScriptTag(newNode);
 		});
 	}

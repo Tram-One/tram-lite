@@ -65,3 +65,32 @@ To learn more check out the website at https://tram-one.io/tram-lite
 
 If you want to start contributing, need help, or would just like to say hi,
 [join our discord](https://discord.gg/dpBXAQC)!
+
+### Development
+
+If you would like to do development in this repo, the following are commands you can run after cloning this repo:
+
+#### ci
+
+By running `npm ci`, you can install all the development dependencies. This is required for building, testing, and
+running any of the other commands listed.
+
+#### start
+
+You can start a simple http server using `npm run start`. By clicking on the link that it prints out, you can go to the
+`examples/` folder, and see a set of components built with Tram-Lite.
+
+#### build
+
+You can build a single asset that is used for publishing to npm, as well as the minified result using `npm run build`.
+This is automatically triggered before `start` and `publish`. You can run this manually when making changes to validate
+against the example components.
+
+#### docs
+
+You can view the website by running `npm run docs`.
+
+#### tests
+
+You can run the test suite by running `npm test`. This launches cypress, and can run in any browser. You do not need to
+run any other commands (aside from an initial install) for this to work (we launch the file directly).

@@ -24,7 +24,7 @@ class ControlledInput {
 		// attributes that control the behavior of the controlled input
 		const hostAttributeName = newNode.getAttribute('tl-hostattr') || 'value';
 		const triggerEvent = newNode.getAttribute('tl-trigger') || 'change';
-		const targetAttribute = newNode.getAttribute('tl-inputattr') || 'value';
+		const targetAttribute = newNode.getAttribute('tl-targetattr') || 'value';
 
 		// set the value of this input based on the host element
 		const hostElement = newNode.getRootNode().host;
