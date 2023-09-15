@@ -43,8 +43,8 @@
 			</ex-counter>
 
 			<ex-mirror value="" is-mirrored="">
-				<input size="10" id="reflection" disabled tl-controlled />
-				<input size="10" id="source" tl-controlled tl-trigger="keyup" />
+				<input size="10" id="reflection" placeholder="Mirrored" disabled tl-controlled />
+				<input size="10" id="source" placeholder="Type in here!" tl-controlled tl-trigger="keyup" />
 			</ex-mirror>
 
 			<ex-todoitem>
@@ -91,7 +91,7 @@
 					}
 				</style>
 				<input id="hue-range-input" type="range" tl-controlled tl-hostattr="hue" tl-trigger="input" min="0" max="360" />
-				<input id="hue-text-input" type="text" tl-controlled tl-hostattr="hue" />
+				<input id="hue-text-input" type="text" placeholder="hue value" tl-controlled tl-hostattr="hue" />
 				<svg viewbox="0 0 100 100" width="${'width'}">
 					<rect width="100" height="100" />
 				</svg>
@@ -99,12 +99,12 @@
 
 			<ex-temperature celsius="" fahrenheit="">
 				<label>
-					<input tl-controlled unit="celsius" tl-hostattr="celsius" tl-trigger="input" />
+					<input tl-controlled placeholder="C" unit="celsius" tl-hostattr="celsius" tl-trigger="input" />
 					Celsius
 				</label>
 				=
 				<label>
-					<input tl-controlled unit="fahrenheit" tl-hostattr="fahrenheit" tl-trigger="input" />
+					<input tl-controlled placeholder="F" unit="fahrenheit" tl-hostattr="fahrenheit" tl-trigger="input" />
 					Fahrenheit
 				</label>
 
