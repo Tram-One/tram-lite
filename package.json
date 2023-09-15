@@ -10,7 +10,7 @@
 	"scripts": {
 		"start": "serve .",
 		"build": "npm run bundle && npm run minify",
-		"bundle": "uglifyjs src/*.js -o output/tram-lite.js -b --comments all",
+		"bundle": "uglifyjs src/TramLite.js src/ComponentDefinition.js src/ComponentEffect.js src/ControlledInput.js -o output/tram-lite.js -b --comments all",
 		"minify": "uglifyjs output/tram-lite.js -o output/tram-lite.min.js -c -m",
 		"prepublishOnly": "npm run build",
 		"test": "cypress open",

@@ -4,7 +4,28 @@
  *
  * {@link https://tram-one.io/tram-lite/#component-effect}
  */
-class ComponentEffect extends HTMLScriptElement {
+class ComponentEffect {
+	/**
+	 * a helper function to set up a callback for when an element's attribute changes
+	 * {@link https://tram-one.io/tram-lite/#addAttributeListener Read the full docs here.}
+	 * @param {Element} targetElement - The DOM element to observe.
+	 * @param {string[]} attributeNames - The name of the attribute (or list of attributes) to observe for changes.
+	 * @param {function(MutationRecord):void} callback - The function to call when the observed attribute changes.
+	 *    This function takes one argument: the MutationRecord representing the change.
+	 */
+	static addAttributeListener(targetElement, attributeNames, callback) {
+		const callbackWrapper = (mutationList) => {
+			mutationList.forEach((mutation) => {
+				// only call the mutation if an attribute changed
+				if (mutation.oldValue !== targetElement.getAttribute(mutation.attributeName)) {
+					callback(mutation);
+				}
+			});
+		};
+		const observer = new MutationObserver(callbackWrapper);
+		observer.observe(targetElement, { attributes: true, attributeFilter: attributeNames, attributeOldValue: true });
+	}
+
 	/**
 	 * function to trigger the javascript in a script tag.
 	 * This does not handle the src attribute, only inline javascript.
@@ -12,6 +33,11 @@ class ComponentEffect extends HTMLScriptElement {
 	 * @param {HTMLScriptElement} scriptTag
 	 */
 	static processScriptTag(scriptTag) {
+		// don't do this if we have a hold on the script tag
+		if (scriptTag.hasAttribute('tl-hold')) {
+			return;
+		}
+
 		const hostElement = scriptTag.getRootNode().host;
 
 		// provide a scoped evaluation of the script tags in this element
@@ -28,53 +54,36 @@ class ComponentEffect extends HTMLScriptElement {
 	 */
 	static processAllScriptTags(hostComponent) {}
 
-	constructor() {
-		super();
+	/**
+	 *
+	 * @param {HTMLScriptElement} newNode
+	 */
+	static connect(newNode) {
+		const hostElement = newNode.getRootNode().host;
 
-		// keep track if we've executed this task initially
-		this.hasInitiallyExecuted = false;
-	}
-
-	connectedCallback() {
-		const hostElement = this.getRootNode().host;
-
-		// if we haven't done an initial execution of this script, do so now
-		if (this.hasInitiallyExecuted === false) {
-			ComponentEffect.processScriptTag(this);
-			this.hasInitiallyExecuted = true;
-		}
+		// run an initial run of the script
+		// (this won't happen if there is a tl-hold on the script)
+		ComponentEffect.processScriptTag(newNode);
 
 		// if we have any dependencies, add a listener to trigger them
-		const dependencyString = this.getAttribute('dependencies') || '';
-		const dependencies = dependencyString.split(' ');
-		TramLite.addAttributeListener(hostElement, dependencies, () => {
-			ComponentEffect.processScriptTag(this);
+		if (newNode.hasAttribute('tl-dependencies') && newNode.hasSetupListener !== true) {
+			const dependencyString = newNode.getAttribute('tl-dependencies');
+			const dependencies = dependencyString.split(' ');
+
+			ComponentEffect.addAttributeListener(hostElement, dependencies, () => {
+				// check if the inline script is being held
+				ComponentEffect.processScriptTag(newNode);
+			});
+			newNode.hasSetupListener = true;
+		}
+
+		// if we ever set (or remove) the hold on this, trigger the inline script
+		// (this allows developers to delay triggering inline scripts)
+		ComponentEffect.addAttributeListener(newNode, ['tl-hold'], () => {
+			console.log('hold removed');
+			ComponentEffect.processScriptTag(newNode);
 		});
 	}
-
-	disconnectedCallback() {}
 }
 
-// associate this class as a custom built-in for the template tag
-// e.g. it can be created with a <script is="component-effect"> tag in HTML
-customElements.define('component-effect', ComponentEffect, { extends: 'script' });
-
-try {
-	// try to generate an instance of the class, if this fails, that means that
-	// custom built-ins are not supported, so we'll need to use a mutation observer
-	// (most likely because we are on a WebKit browser)
-	new ComponentEffect();
-} catch (error) {
-	const processNewNodes = (mutationRecords) => {
-		mutationRecords.forEach((mutationRecord) => {
-			mutationRecord.addedNodes.forEach((newNode) => {
-				if (newNode.matches?.('script[is=component-effect]')) {
-					ComponentEffect.processScriptTag(newNode);
-				}
-			});
-		});
-	};
-
-	const observer = new MutationObserver(processNewNodes);
-	observer.observe(document, { subtree: true, childList: true });
-}
+TramLite.appendShadowRootProcessor('[tl-effect]', ComponentEffect);

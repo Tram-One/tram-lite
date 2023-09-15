@@ -24,18 +24,12 @@
 
 # Tram-Lite
 
------
-  
-  **Note - v4 release coming very soon! Check out the details here: [#30](https://github.com/Tram-One/tram-lite/pull/30)**
-  
------
-
-Tram-Lite is a lite javascript and HTML library that helps developers build native web-components, and makes building
-simple native web-applications easier and more elegant!
+Tram-Lite is an HTML-first library that helps developers build native web-components, and makes building simple native
+web-applications easier and more elegant! It also exposes a small Javascript API.
 
 ```html
 <!-- include the tram-lite library -->
-<script src="https://unpkg.com/tram-lite@3"></script>
+<script src="https://unpkg.com/tram-lite@4"></script>
 
 <!-- define a new web-component -->
 <template is="component-definition">
@@ -49,7 +43,7 @@ simple native web-applications easier and more elegant!
 		<h1>${'page'}</h1>
 
 		<!-- run script as soon as the component mounts -->
-		<script>
+		<script is="component-effect">
 			document.title = this.getAttribute('page');
 		</script>
 	</custom-title>
@@ -62,7 +56,7 @@ simple native web-applications easier and more elegant!
 To install, you can simply include a script tag pointed to `unpkg.com` in your `index.html`:
 
 ```html
-<script src="https://unpkg.com/tram-lite@3"></script>
+<script src="https://unpkg.com/tram-lite@4"></script>
 ```
 
 To learn more check out the website at https://tram-one.io/tram-lite
