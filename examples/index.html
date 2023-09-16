@@ -99,12 +99,12 @@
 
 			<ex-temperature celsius="" fahrenheit="">
 				<label>
-					<input tl-controlled placeholder="C" unit="celsius" tl-hostattr="celsius" tl-trigger="input" />
+					<input id="c" tl-controlled placeholder="C" unit="celsius" tl-hostattr="celsius" tl-trigger="input" />
 					Celsius
 				</label>
 				=
 				<label>
-					<input tl-controlled placeholder="F" unit="fahrenheit" tl-hostattr="fahrenheit" tl-trigger="input" />
+					<input id="f" tl-controlled placeholder="F" unit="fahrenheit" tl-hostattr="fahrenheit" tl-trigger="input" />
 					Fahrenheit
 				</label>
 
@@ -126,8 +126,8 @@
 
 			<ex-progressbar value="3" max="10">
 				<div>
-					<input type="number" tl-controlled tl-trigger="input" />
-					<input type="number" tl-controlled tl-hostattr="max" tl-trigger="input" />
+					<input id="value" type="number" tl-controlled tl-trigger="input" />
+					<input id="max" type="number" tl-controlled tl-hostattr="max" tl-trigger="input" />
 				</div>
 				<progress value="${'value'}" max="${'max'}"></progress>
 				<div>${'warning'}</div>
@@ -188,9 +188,9 @@
 
 		<ex-title>Tram-Lite Components!</ex-title>
 		<example-container name="Counters">
-			<ex-counter id="temp-blue" label="Blue" color="#CECEFF"></ex-counter>
-			<ex-counter id="temp-red" label="Red" color="#FFCECE"></ex-counter>
-			<ex-counter id="temp-default"></ex-counter>
+			<ex-counter id="blue" label="Blue" color="#CECEFF"></ex-counter>
+			<ex-counter id="red" label="Red" color="#FFCECE"></ex-counter>
+			<ex-counter id="default"></ex-counter>
 		</example-container>
 		<example-container name="Mirror Input">
 			<ex-mirror></ex-mirror>
