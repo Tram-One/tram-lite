@@ -17,7 +17,8 @@ class ControlledInput {
 	}
 
 	/**
-	 *
+	 * connect function for ControlledInput - when this is run on an input (or other similar control),
+	 *   we set up a 2-way data binding from the input to the host element.
 	 * @param {HTMLInputElement} newNode
 	 */
 	static connect(newNode) {

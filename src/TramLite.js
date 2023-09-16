@@ -1,6 +1,6 @@
 class TramLite {
 	/**
-	 * a helper function to set up a callback for when an element's attribute changes
+	 * helper function to set up a callback for when an element's attribute changes
 	 * {@link https://tram-one.io/tram-lite/#addAttributeListener Read the full docs here.}
 	 * @param {Element} targetElement - The DOM element to observe.
 	 * @param {string[]} attributeNames - The name of the attribute (or list of attributes) to observe for changes.
@@ -21,15 +21,19 @@ class TramLite {
 	}
 
 	/**
-	 *
+	 * helper function to run functions on nodes added to a web-component
+	 *   (when an instance of that component is mounted)
 	 * @param {string} matcher
 	 * @param {{ connect: function }} componentClass
 	 */
 	static appendShadowRootProcessor(matcher, componentClass) {
+		// save the original version of shadowRoot.append
 		const shAppend = ShadowRoot.prototype.append;
 
 		ShadowRoot.prototype.append = function (...nodes) {
 			shAppend.call(this, ...nodes);
+			// if any element in this shadowRoot matches our matcher,
+			//   run the `connect` function from this class
 			this.querySelectorAll(matcher).forEach((matchingElement) => {
 				componentClass.connect(matchingElement);
 			});

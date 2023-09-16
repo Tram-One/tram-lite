@@ -219,6 +219,10 @@ class ComponentDefinition {
 		});
 	}
 
+	/**
+	 * function to set up an observer to watch for when new templates are added,
+	 *   and process all the definitions in them
+	 */
 	static setupMutationObserverForTemplates() {
 		/**
 		 * @param {MutationRecord[]} mutationRecords

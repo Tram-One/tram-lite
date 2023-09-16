@@ -28,13 +28,9 @@ class ComponentEffect {
 	}
 
 	/**
-	 *
-	 * @param {HTMLElement} hostComponent
-	 */
-	static processAllScriptTags(hostComponent) {}
-
-	/**
-	 *
+	 * connect function for ComponentEffect - when this is run on a script,
+	 *   we trigger that script with the host element as context, and set up an
+	 *   observer if a set of dependencies are defined and ever update
 	 * @param {HTMLScriptElement} newNode
 	 */
 	static connect(newNode) {
