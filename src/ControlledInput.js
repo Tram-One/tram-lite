@@ -1,30 +1,14 @@
 class ControlledInput {
 	/**
-	 * a helper function to update the root web-component when an input updates
-	 * {@link https://tram-one.io/tram-lite/#updateRootAttr Read the full docs here.}
-	 * @param {string} attributeName
-	 * @param {Event} event
-	 * @param {string} [targetAttribute="value"]
-	 */
-	static updateRootAttr(attributeName, event, targetAttribute = 'value') {
-		const rootNodeHost = event.target.getRootNode().host;
-		const targetValue = event.target[targetAttribute];
-		if (targetValue) {
-			rootNodeHost.setAttribute(attributeName, event.target[targetAttribute]);
-		} else {
-			rootNodeHost.removeAttribute(attributeName);
-		}
-	}
-
-	/**
 	 * connect function for ControlledInput - when this is run on an input (or other similar control),
 	 *   we set up a 2-way data binding from the input to the host element.
 	 * @param {HTMLInputElement} newNode
 	 */
 	static connect(newNode) {
 		// attributes that control the behavior of the controlled input
+		const triggerEventString = newNode.getAttribute('tl-trigger') || 'change';
+		const triggerEvents = triggerEventString.split(' ');
 		const hostAttributeName = newNode.getAttribute('tl-hostattr') || 'value';
-		const triggerEvent = newNode.getAttribute('tl-trigger') || 'change';
 		const targetAttribute = newNode.getAttribute('tl-targetattr') || 'value';
 
 		// set the value of this input based on the host element
@@ -37,8 +21,10 @@ class ControlledInput {
 		});
 
 		// update the root component attribute whenever the value changes for this node updates
-		newNode.addEventListener(triggerEvent, (event) => {
-			ControlledInput.updateRootAttr(hostAttributeName, event, targetAttribute);
+		triggerEvents.forEach((triggerEvent) => {
+			newNode.addEventListener(triggerEvent, (event) => {
+				TramLite.updateRootAttr(hostAttributeName, event, targetAttribute);
+			});
 		});
 	}
 }
