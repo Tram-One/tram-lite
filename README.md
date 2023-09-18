@@ -25,7 +25,7 @@
 # Tram-Lite
 
 Tram-Lite is an HTML-first library that helps developers build native web-components, and makes building simple native
-web-applications easier and more elegant! It also exposes a small Javascript API.
+web-applications easier and more elegant!
 
 ```html
 <!-- include the tram-lite library -->

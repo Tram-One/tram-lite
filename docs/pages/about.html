@@ -1,8 +1,8 @@
 <h1>Tram-Lite</h1>
 
 <p>
-	Tram-Lite is a lite javascript and HTML library that helps developers build native web-components, and makes building
-	simple native web-applications easier and more elegant!
+	Tram-Lite is an HTML-first library that helps developers build native web-components, and makes building simple native
+	web-applications easier and more elegant!
 
 	<code-template-html>
 		<template>
@@ -10,18 +10,19 @@
 			<script src="https://unpkg.com/tram-lite@4"></script>
 
 			<!-- define a new web-component, custom-title -->
-			<template is="component-definition">
+			<template tl-definition>
 				<custom-title color="blue">
-					<!-- web-components have encapsulated styles -->
+					<!-- embed attributes right in the template -->
 					<style>
 						h1 { color: ${'color'} }
 					</style>
-
-					<!-- embed attributes right in the template -->
 					<h1>${'page'}</h1>
 
-					<!-- scripts run as soon as the component mounts -->
-					<script>
+					<!-- use controlled elements to update the component attributes -->
+					<input tl-controlled placeholder="Title" tl-hostattr="page" />
+
+					<!-- effects run on mount, and when dependencies change -->
+					<script tl-effect tl-dependencies="page">
 						document.title = this.getAttribute('page');
 					</script>
 				</custom-title>
@@ -34,14 +35,17 @@
 </p>
 
 <h2>API</h2>
-<p>
-	Tram-Lite is a small library with a few functions all focused on building and interfacing with native web-components.
-</p>
-<p>
-	While Tram-Lite's <code>define</code> function is the most unique, all the functions provided in Tram-Lite work
-	independently, and can help interact with web components and other elements, regardless of whether they were built
-	with Tram-Lite or not.
-</p>
+<p>The Tram-Lite API offers the following as part of a small less than 2KB library:</p>
+
+<ul>
+	<li>A way to build new web-component definitions in HTML</li>
+	<li>
+		Attributes that enhance the behavior for elements made in web-components (regardless of whether those components
+		were defined with Tram-Lite or not)
+	</li>
+	<li>A small set of Javascript functions</li>
+	<li>A way to build your own attributes and enhance other elements consumed by web-components</li>
+</ul>
 
 <dl>
 	<dt>
@@ -52,14 +56,6 @@
 		<a href="#define"><code>define</code></a>
 	</dt>
 	<dd><p>Template tag function for building native web-components.</p></dd>
-	<dt>
-		<a href="#html"><code>html</code></a>
-	</dt>
-	<dd><p>Template tag function for building HTML elements in javascript</p></dd>
-	<dt>
-		<a href="#svg"><code>svg</code></a>
-	</dt>
-	<dd><p>Template tag function for building SVG elements in javascript</p></dd>
 	<dt>
 		<a href="#addAttributeListener"><code>addAttributeListener</code></a>
 	</dt>

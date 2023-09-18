@@ -17,23 +17,19 @@
 <!-- to use, right click on the node in the element explorer, and "capture node screenshot"-->
 <preview-section>
 	<img src="https://unpkg.com/@tram-one/tram-logo@5.0.1/dist/lite.svg" width="450px" />
-	<tram-code
-		syntax="html"
-		code="
-
-	<template is='component-definition'>
-		<custom-title color='blue'>
-			<style>
-				h1 { color: ${'color'} }
-			</style>
-			<h1>${'page'}</h1>
-			<script>
-				document.title = this.getAttribute('page')
-			</script>
-		</custom-title>
-	</template>
-
-
-	"
-	></tram-code>
+	<code-template-html>
+		<template>
+			<template tl-definition>
+				<custom-title color="blue">
+					<style>
+						h1 { color: ${'color'} }
+					</style>
+					<h1>${'page'}</h1>
+					<script tl-effect>
+						document.title = this.getAttribute('page');
+					</script>
+				</custom-title>
+			</template>
+		</template>
+	</code-template-html>
 </preview-section>

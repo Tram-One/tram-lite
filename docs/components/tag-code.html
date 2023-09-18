@@ -1,4 +1,4 @@
-<template is="component-definition">
+<template tl-definition>
 	<tag-code tag="" content="">
 		<link rel="stylesheet" type="text/css" href="./styles.css" />
 		<style>
@@ -9,19 +9,13 @@
 			}
 		</style>
 		<code>&lt;${'tag'}&gt;</code>
-		<script>
-			injectContent(this);
+		<script tl-effect>
+			if (this.getAttribute('content') !== null) {
+				const [codeTag] = this.shadowRoot.querySelectorAll('code');
+				const tag = this.getAttribute('tag');
+				const content = this.getAttribute('content');
+				codeTag.innerText = `<${tag}>${content}</${tag}>`;
+			}
 		</script>
 	</tag-code>
 </template>
-
-<script>
-	function injectContent(tagCode) {
-		if (tagCode.getAttribute('content') !== null) {
-			const [codeTag] = tagCode.shadowRoot.querySelectorAll('code');
-			const tag = tagCode.getAttribute('tag');
-			const content = tagCode.getAttribute('content');
-			codeTag.innerText = `<${tag}>${content}</${tag}>`;
-		}
-	}
-</script>
