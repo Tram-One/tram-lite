@@ -1,9 +1,13 @@
-<h2><code>addAttributeListener</code></h2>
+<h2><code>TramLite.addAttributeListener</code></h2>
 <section>
 	<p>
-		<code>addAttributeListener</code> is a helper function to set up a callback for when an element's attribute changes.
+		<code>TramLite.addAttributeListener</code> is a helper function to set up a callback for when an element's attribute
+		changes. This allows your component to react more dynamically to attribute changes (beyond simple templating).
 	</p>
-	<p>This allows your component to react more dynamically to attribute changes (beyond simple templating).</p>
+	<p>
+		It is the underlying function behind <tag-code tag="script" attribute="tl-effect"></tag-code>, and
+		<tag-code tag="input" attribute="tl-controlled"></tag-code>.
+	</p>
 </section>
 <section>
 	<h2>Syntax</h2>
@@ -11,7 +15,7 @@
 		<code-template-js>
 			<template>
 				<script>
-					addAttributeListener(element, attributeNames, callback);
+					TramLite.addAttributeListener(element, attributeNames, callback);
 				</script>
 			</template>
 		</code-template-js>
@@ -49,7 +53,7 @@
 					const alertingCount = html`<test-counter count="4"></test-counter>`;
 
 					// setup observer
-					addAttributeListener(alertingCount, ['count'], () => {
+					TramLite.addAttributeListener(alertingCount, ['count'], () => {
 						console.log(`Count: ${alertingCount.getAttribute('count')}`);
 					});
 

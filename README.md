@@ -31,19 +31,20 @@ web-applications easier and more elegant!
 <!-- include the tram-lite library -->
 <script src="https://unpkg.com/tram-lite@4"></script>
 
-<!-- define a new web-component -->
-<template is="component-definition">
+<!-- define a new web-component, custom-title -->
+<template tl-definition>
 	<custom-title color="blue">
-		<!-- components have encapsulated styles -->
+		<!-- embed attributes right in the template -->
 		<style>
 			h1 { color: ${'color'} }
 		</style>
-
-		<!-- embed attributes right in the template -->
 		<h1>${'page'}</h1>
 
-		<!-- run script as soon as the component mounts -->
-		<script is="component-effect">
+		<!-- use controlled elements to update the component attributes -->
+		<input tl-controlled placeholder="Title" tl-hostattr="page" />
+
+		<!-- effects run on mount, and when dependencies change -->
+		<script tl-effect tl-dependencies="page">
 			document.title = this.getAttribute('page');
 		</script>
 	</custom-title>

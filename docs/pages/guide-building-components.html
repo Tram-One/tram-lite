@@ -8,7 +8,7 @@
 <p>
 	To use Tram-Lite, you won't need to install anything on your computer! You do have two options when going through this
 	guide, you can either create an <code>index.html</code> using your favorite editor, or use
-	<a href="https://codepen.io/pen?template=yLGeadO">this codepen</a>.
+	<a href="https://codepen.io/pen?template=oNJojBV">this codepen</a>.
 </p>
 
 <p>
@@ -27,7 +27,7 @@
 	definition:
 	<code-template-html>
 		<template>
-			<template is="component-definition">
+			<template tl-definition>
 				<my-button>
 					<button>Click Me!</button>
 				</my-button>
@@ -58,7 +58,7 @@
 
 	<code-template-html>
 		<template>
-			<template is="component-definition">
+			<template tl-definition>
 				<my-button>
 					<button>${'label'}</button>
 				</my-button>
@@ -92,7 +92,7 @@
 
 	<code-template-html>
 		<template>
-			<template is="component-definition">
+			<template tl-definition>
 				<my-button label="Clicks">
 					<button>${'label'}</button>
 				</my-button>
@@ -125,7 +125,7 @@
 
 	<code-template-html>
 		<template>
-			<template is="component-definition">
+			<template tl-definition>
 				<my-button label="Clicks" count="0">
 					<button onclick="increment(event)">${'label'}: ${'count'}</button>
 				</my-button>
@@ -163,7 +163,7 @@
 
 	<code-template-html>
 		<template>
-			<template is="component-definition">
+			<template tl-definition>
 				<my-button label="Clicks" count="0">
 					<button onclick="increment(event)">${'label'}: ${'count'}</button>
 					<script>

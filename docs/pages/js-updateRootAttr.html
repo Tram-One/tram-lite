@@ -2,9 +2,10 @@
 <section>
 	<p>
 		<code>updateRootAttr</code> is a helper function to automatically update an attribute on a web-component when an
-		input value changes. This is a convenience utility that simplifies a common pattern in controlled components.
+		input value changes. This is a convenience utility that simplifies a common pattern in controlled components. This
+		is intended to be used in the <code>onchange</code> and <code>oninput</code> event handlers.
 	</p>
-	<p>This is intended to be used in the <code>onchange</code> and <code>oninput</code> event handlers.</p>
+	<p>It is the underlying function behind <tag-code tag="input" attribute="tl-controlled"></tag-code>.</p>
 </section>
 <section>
 	<h2>Syntax</h2>
@@ -39,7 +40,7 @@
 	<p>
 		<code-template-html>
 			<template>
-				<template is="component-definition">
+				<template tl-definition>
 					<x-greeting>
 						<label> Name: <input oninput="updateRootAttr('name', event)" /> </label>
 						<p>Hello ${'name'}!</p>
