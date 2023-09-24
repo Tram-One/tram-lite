@@ -2,7 +2,7 @@
 <section>
 	<p>
 		<code>tl-definition</code> is an attribute for <tag-code tag="template"></tag-code> tags, that lets you define new
-		web-components in your HTML template.
+		web-components in your HTML.
 
 		<code-template-html>
 			<template>
@@ -15,7 +15,10 @@
 		</code-template-html>
 	</p>
 
-	<p>You can define multiple web-components using a single <tag-code tag="template"></tag-code> tag.</p>
+	<p>
+		You can define multiple web-components using a single
+		<tag-code tag="template" attribute="tl-definition"></tag-code> tag.
+	</p>
 </section>
 <section>
 	<h2>Syntax</h2>
@@ -58,10 +61,6 @@
 				any string variables in the template will become attributes for the component. When these attributes are
 				updated, it will trigger specific updates in specific spots in the DOM
 			</p>
-		</dd>
-		<dt><code>scrript tags</code> <optional-badge>optional</optional-badge></dt>
-		<dd>
-			<p>any script tags in the template will be executed once, when the component is first mounted on the page</p>
 		</dd>
 	</dl>
 </section>

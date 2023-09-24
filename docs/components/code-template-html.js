@@ -16,6 +16,7 @@ class CodeTemplateHTML extends HTMLElement {
 		const inlineCorrectedCode = htmlCode
 			.split('\n')
 			.map((line) => line.replace(indents, ''))
+			.filter((line) => !line.includes('// prettier-ignore')) // remove any lines for prettier
 			.join('\n')
 			.trim();
 

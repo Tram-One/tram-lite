@@ -21,8 +21,6 @@ class CodeTemplateJS extends HTMLElement {
 			.join('\n')
 			.trim();
 
-		formattedCode = formattedCode;
-
 		const templateHTML = document.createElement('section');
 		templateHTML.innerHTML = `
 			<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.8.0/styles/night-owl.min.css" />

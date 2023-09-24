@@ -23,45 +23,46 @@
 
 <h3>Building our first component</h3>
 <p>
-	Let's start with something super simple, a custom button. In the HTML section, write the following component
+	Let's start with something super simple, a progress bar. In the HTML section, write the following component
 	definition:
 	<code-template-html>
 		<template>
 			<template tl-definition>
-				<my-button>
-					<button>Click Me!</button>
-				</my-button>
+				<x-progressbar>
+					<progress value="7" max="10"></progress>
+					<span>7/10</span>
+				</x-progressbar>
 			</template>
 		</template>
 	</code-template-html>
 </p>
 <p>
-	Then, add the following to put our new button on the page:
+	Then, add the following to put our new progress bar on the page:
 	<code-template-html>
 		<template>
-			<my-button></my-button>
+			<x-progressbar></x-progressbar>
 		</template>
 	</code-template-html>
 </p>
 
 <h4>What's going on?</h4>
 <p>
-	What we've done so far is defined a new web-component <tag-code tag="my-button"></tag-code>. Whenever this component
-	is placed on the page, it will have a <tag-code tag="button" content="Click Me!"></tag-code> inside of it.
+	What we've done so far is defined a new web-component <tag-code tag="x-progressbar"></tag-code>. Whenever this
+	component is placed on the page, it will have a <tag-code tag="progress"></tag-code> that is 70% filled.
 </p>
 
 <h3>Making our component dynamic</h3>
 <p>
-	Next, let's do some things to make our component a little more dynamic. First, let's make it so we can change the text
-	inside the component using an attribute. We can do this by replacing the <code>Click Me!</code> with
-	<code>${'label'}</code>
+	Next, let's do some things to make our component a little more dynamic. First, let's make it so that we can pass in a
+	specific value as an attribute.
 
 	<code-template-html>
 		<template>
 			<template tl-definition>
-				<my-button>
-					<button>${'label'}</button>
-				</my-button>
+				<x-progressbar>
+					<progress value="${'fill'}" max="10"></progress>
+					<span>${'fill'}/10</span>
+				</x-progressbar>
 			</template>
 		</template>
 	</code-template-html>
@@ -72,41 +73,43 @@
 
 	<code-template-html>
 		<template>
-			<my-button label="My Button"></my-button>
+			<x-progressbar fill="3"></x-progressbar>
 		</template>
 	</code-template-html>
 </p>
 
 <h4>What's going on?</h4>
 <p>
-	Attributes are directly tied to their contents using the <code>${'...'}</code> syntax. When we put
-	<code>${'label'}</code> in our component, Tram-Lite knows to place whatever the attribute <code>label</code> is inside
-	the button.
+	Attributes are directly tied to their contents using the <code>${'...'}</code> syntax. When we set the
+	<code>fill</code> attribute in our component, Tram-Lite knows to place whatever the value is in the
+	<tag-code tag="span"></tag-code> and as the <code>value</code> attribute for the
+	<tag-code tag="progress"></tag-code> element.
 </p>
 
 <h3>Default Attribute Values</h3>
 <p>
-	What if we want to provide a fallback value if no <code>label</code> is set? It's possible to set a default value if
+	What if we want to provide a fallback value if no <code>value</code> is set? It's possible to set a default value if
 	one isn't provided. This is done by including the default value in the outer-most tag (next to
-	<code>my-button</code>).
+	<code>x-progressbar</code>).
 
 	<code-template-html>
 		<template>
 			<template tl-definition>
-				<my-button label="Clicks">
-					<button>${'label'}</button>
-				</my-button>
+				<x-progressbar value="5">
+					<progress value="${'value'}" max="10"></progress>
+					<span>${'value'}/10</span>
+				</x-progressbar>
 			</template>
 		</template>
 	</code-template-html>
 </p>
 
 <p>
-	Now, if we remove the label on our HTML component, we can see it falls back on our default value.
+	Now, if we remove the attribute on our HTML component, we can see it falls back on our default value.
 
 	<code-template-html>
 		<template>
-			<my-button></my-button>
+			<x-progressbar></x-progressbar>
 		</template>
 	</code-template-html>
 </p>
@@ -119,16 +122,15 @@
 
 <h3>Adding interactivity</h3>
 <p>
-	Let's make it so that clicking our button does something! We'll start with an incrementing counter. To do this, we'll
-	add another attribute <code>count</code>, and add an <code>onclick</code> handler for our button. For this attribute,
-	we'll set a default value of <code>"0"</code>.
+	Let's make it so that clicking our button does something! We'll start with an incrementing counter.
 
 	<code-template-html>
 		<template>
 			<template tl-definition>
-				<my-button label="Clicks" count="0">
-					<button onclick="increment(event)">${'label'}: ${'count'}</button>
-				</my-button>
+				<x-progressbar value="5">
+					<progress value="${'value'}" max="10"></progress>
+					<span>${'value'}/10</span>
+				</x-progressbar>
 			</template>
 		</template>
 	</code-template-html>

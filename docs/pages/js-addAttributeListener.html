@@ -50,7 +50,9 @@
 		<code-template-js>
 			<template>
 				<script>
-					const alertingCount = html`<test-counter count="4"></test-counter>`;
+					const alertingCount = document.createELement('x-counter');
+					document.body.appendChild(alertingCount);
+					alertingCount.setAttribute('count', 4);
 
 					// setup observer
 					TramLite.addAttributeListener(alertingCount, ['count'], () => {

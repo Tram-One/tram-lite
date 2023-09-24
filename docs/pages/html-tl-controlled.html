@@ -1,0 +1,71 @@
+<h2><code>tl-controlled</code></h2>
+<section>
+	<p>
+		<code>tl-controlled</code> is an attribute for <tag-code tag="input"></tag-code> (and similar) tags, that lets you
+		set up 2-way data binding to a parent web-component.
+	</p>
+	<p>
+		Note, the following example uses Tram-Lite template definitions, but works with any web-component with shadow DOM.
+	</p>
+	<p>
+		<code-template-html>
+			<template>
+				<template tl-definition>
+					<x-greeting>
+						<h1>Hello ${'name'}</h1>
+						<input tl-controlled tl-hostattr="name" />
+					</x-greeting>
+				</template>
+			</template>
+		</code-template-html>
+	</p>
+</section>
+<section>
+	<h2>Syntax</h2>
+	<p>
+		<code-template-html>
+			<template>
+				<input tl-controlled tl-hostattr="value" tl-targetattr="value" tl-trigger="change" />
+			</template>
+		</code-template-html>
+	</p>
+	<h3>Parameters</h3>
+	<dl>
+		<dt><code>tl-hostattr</code> <optional-badge>optional</optional-badge></dt>
+		<dd>
+			<p>Attribute to set on the host web-component, default to <code>"value"</code>.</p>
+		</dd>
+		<dt><code>tl-targetattr</code> <optional-badge>optional</optional-badge></dt>
+		<dd>
+			<p>The attribute to read from the <code>input</code> element, defaults to <code>"value"</code>.</p>
+		</dd>
+		<dt><code>tl-trigger</code> <optional-badge>optional</optional-badge></dt>
+		<dd>
+			<p>
+				The event(s) which should trigger updates to the host component, defaults to <code>"change"</code>. Can be
+				multiple values (space delimited).
+			</p>
+		</dd>
+	</dl>
+</section>
+<section>
+	<h2>Example</h2>
+	<p>
+		Example from the 7GUI challenges. See the full code
+		<a
+			href="https://github.com/JRJurman/Tram-Lite-7GUIs/blob/a441aa00dc35671f81983d4f6771fcae004868bd/tasks/gui-flight-booker.html#L16-L24"
+			>here</a
+		>
+		<code-template-html>
+			<template>
+				<select id="flight-input" tl-controlled tl-hostattr="flight-option">
+					<option value="one-way">one-way flight</option>
+					<option value="return">return flight</option>
+				</select>
+				<input id="start-input" tl-controlled tl-hostattr="start-date" tl-trigger="input" />
+				<input id="return-input" tl-controlled tl-hostattr="return-date" tl-trigger="input" />
+				<button id="book-confirm" onclick="bookFlight(this)">Book</button>
+			</template>
+		</code-template-html>
+	</p>
+</section>
