@@ -24,6 +24,12 @@
 
 # Tram-Lite
 
+-----
+  
+  **Note - v4 release coming very soon! Check out the details here: [#30](https://github.com/Tram-One/tram-lite/pull/30)**
+  
+-----
+
 Tram-Lite is a lite javascript and HTML library that helps developers build native web-components, and makes building
 simple native web-applications easier and more elegant!
 
