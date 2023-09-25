@@ -53,8 +53,8 @@
 
 <h3>Making our component dynamic</h3>
 <p>
-	Next, let's do some things to make our component a little more dynamic. First, let's make it so that we can pass in a
-	specific value as an attribute.
+	Next, lets make our component a little more dynamic. Replace the hard-coded value of <code>7</code> to
+	<code>${'fill'}</code> in the component definition.
 
 	<code-template-html>
 		<template>
@@ -88,16 +88,16 @@
 
 <h3>Default Attribute Values</h3>
 <p>
-	What if we want to provide a fallback value if no <code>value</code> is set? It's possible to set a default value if
+	What if we want to provide a fallback value if no <code>fill</code> is set? It's possible to set a default value if
 	one isn't provided. This is done by including the default value in the outer-most tag (next to
 	<code>x-progressbar</code>).
 
 	<code-template-html>
 		<template>
 			<template tl-definition>
-				<x-progressbar value="5">
-					<progress value="${'value'}" max="10"></progress>
-					<span>${'value'}/10</span>
+				<x-progressbar fill="5">
+					<progress value="${'fill'}" max="10"></progress>
+					<span>${'fill'}/10</span>
 				</x-progressbar>
 			</template>
 		</template>
@@ -116,62 +116,57 @@
 
 <h4>What's going on?</h4>
 <p>
-	Any attributes set in the outer most definition are saved as fallback values. Even if you don't need fallback values,
-	you can use this to better advertise what attributes this component accepts.
+	Any attributes set in the outer most definition are saved as fallback values. If no fallback values is set, the
+	default value is an empty string when no attribute value is provided.
 </p>
 
 <h3>Adding interactivity</h3>
 <p>
-	Let's make it so that clicking our button does something! We'll start with an incrementing counter.
+	Lets make it so that we can increase the fill of the progress bar. We can do this by making a new
+	<tag-code tag="input"></tag-code> tag, with the <code>tl-controlled</code> attribute.
 
 	<code-template-html>
 		<template>
 			<template tl-definition>
 				<x-progressbar value="5">
-					<progress value="${'value'}" max="10"></progress>
-					<span>${'value'}/10</span>
+					<progress value="${'fill'}" max="10"></progress>
+					<span>${'fill'}/10</span>
+					<input type="number" tl-controlled tl-hostattr="fill" />
 				</x-progressbar>
 			</template>
 		</template>
 	</code-template-html>
 </p>
-<p>
-	After our template definition, add the following function definition (you can either do this in JS, or in your HTML in
-	a script tag, which we have below).
-	<code-template-html>
-		<template>
-			<script>
-				function increment(event) {
-					const myButton = event.target.getRootNode().host;
-					const currentCount = parseInt(myButton.getAttribute('count'));
-					myButton.setAttribute('count', currentCount + 1);
-				}
-			</script>
-		</template>
-	</code-template-html>
-</p>
 
 <h4>What's going on?</h4>
 <p>
-	In the <code>increment</code> function, we're able to get the instance of the component using
-	<code>.getRootNode().host</code>, and call methods like <code>getAttribute</code> and <code>setAttribute</code> like
-	any other native element.
+	Using the <code>tl-controlled</code> attribute, we're able to set up a 2-way data-binding between the input, and the
+	host web-component. In this case, we use <code>tl-hostattr</code> to bind the input to the
+	<code>fill</code> attribute.
 </p>
 
-<h3>Adding startup scripts</h3>
+<h3>Adding side-effects</h3>
 <p>
-	When the component loads, let's focus it, so that users can immediately interact with it! To do this, we can include a
-	<tag-code tag="script"></tag-code> tag in the definition.
+	When we've gone above our max value, lets change the presentation to alert the user. We can do this by adding a
+	<tag-code tag="script"></tag-code> tag, with the <code>tl-effect</code> attribute.
 
 	<code-template-html>
 		<template>
 			<template tl-definition>
-				<my-button label="Clicks" count="0">
-					<button onclick="increment(event)">${'label'}: ${'count'}</button>
-					<script>
-						this.shadowRoot.querySelector('button').focus();
+				<x-progressbar value="5">
+					<progress value="${'fill'}" max="10"></progress>
+					<span>${'fill'}/10</span>
+					<input type="number" tl-controlled tl-hostattr="fill" />
+					<span>${'warning'}</span>
+					<script tl-effect tl-dependencies="fill">
+						const fill = this.getAttribute('fill');
+						if (fill > 10) {
+							this.setAttribute('warning', `${fill} is over max value`);
+						} else {
+							this.removeAttribute('warning');
+						}
 					</script>
-				</my-button>
+				</x-progressbar>
 			</template>
 		</template>
 	</code-template-html>
@@ -179,14 +174,9 @@
 
 <h4>What's going on?</h4>
 <p>
-	<tag-code tag="script"></tag-code> tags are special in Tram-Lite. They will trigger when the component is placed on
-	the page, and only on that initial render. Additionally, they have a reference to the component with the
-	<code>this</code> variable.
-</p>
-<p>
-	The <code>.shadowRoot.querySelector('button')</code> is how we access the underlying button in the web-component. In a
-	future tutorial we'll go more into interacting with the shadow DOM, and other common tools for web-components in
-	general.
+	Using the <code>tl-effect</code> attribute, we make the script tag re-trigger whenever the <code>fill</code> attribute
+	changes. The inline javascript can reference the host web-component (<tag-code tag="x-progressbar"></tag-code>) as
+	<code>this</code>.
 </p>
 
 <h3>Congrats!</h3>
