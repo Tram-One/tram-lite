@@ -1,8 +1,8 @@
 /**
- * ComponentEffect is a custom element that extends the script element, that allows developers
+ * ComponentEffect is a class that can extend the script element, that allows developers
  * to build side-effects for web-components.
  *
- * {@link https://tram-one.io/tram-lite/#component-effect}
+ * {@link https://tram-one.io/tram-lite/#tl-effect}
  */
 class ComponentEffect {
 	/**

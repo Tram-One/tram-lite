@@ -171,8 +171,8 @@ class TramLite {
 	}
 
 	/**
-	 * helper function to run functions on nodes added to a web-component
-	 *   (when an instance of that component is mounted)
+	 * function to append new behaviors to elements that are attached to the shadowDOM.
+	 * {@link https://tram-one.io/tram-lite/#appendShadowRootProcessor Read the full docs here.}
 	 * @param {string} matcher
 	 * @param {{ connect: function }} componentClass
 	 */

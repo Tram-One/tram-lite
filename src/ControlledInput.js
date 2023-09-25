@@ -1,3 +1,9 @@
+/**
+ * ControlledInput is a class that can extend the input or script element, that allows developers
+ * to build 2-way data-binding for web-components.
+ *
+ * {@link https://tram-one.io/tram-lite/#tl-effect}
+ */
 class ControlledInput {
 	/**
 	 * connect function for ControlledInput - when this is run on an input (or other similar control),

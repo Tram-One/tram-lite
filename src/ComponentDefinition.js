@@ -2,7 +2,7 @@
  * ComponentDefinition is a custom element that extends the template element, that allows developers
  * to build new web-components, using Tram-Lite, all in their HTML templates!
  *
- * {@link https://tram-one.io/tram-lite/#component-definition}
+ * {@link https://tram-one.io/tram-lite/#tl-definition}
  */
 class ComponentDefinition {
 	// regex for finding attributes that have been templated in
