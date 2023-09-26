@@ -45,7 +45,7 @@ web-applications easier and more elegant!
 
 		<!-- effects run on mount, and when dependencies change -->
 		<script tl-effect tl-dependencies="page">
-			document.title = this.getAttribute('page');
+			this.ownerDocument.title = this.getAttribute('page');
 		</script>
 	</custom-title>
 </template>

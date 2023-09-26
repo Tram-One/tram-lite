@@ -41,24 +41,6 @@
 			</template>
 		</code-template-js>
 	</p>
-
-	<p>
-		Additionally, you can include script tags that reference <code>this</code>. When the component is mounted, the
-		script tag will run, and <code>this</code> will refer to the newly mounted instance.
-
-		<code-template-js>
-			<template>
-				<script>
-					define`
-						<my-greeting>
-							<h1>Hello ${'name'}</h1>
-							[script]document.title = "${'name'}'s Dashboard"[/script]
-						</my-greeting>
-					`;
-				</script>
-			</template>
-		</code-template-js>
-	</p>
 </section>
 <section>
 	<h2>Syntax</h2>
@@ -70,7 +52,6 @@
 						<tag-name default-attributes="default value">
 							<style>/* component scoped styles */</style>
 							<span>HTML content and ${'template-variables'}</span>
-							[script]startupScripts(this)[/script]
 						</tag-name>
 					`;
 				</script>
