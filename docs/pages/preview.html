@@ -3,7 +3,7 @@
 		display: inline-flex;
 		align-items: center;
 		/* border: yellow solid 1px; */
-		font-size: 2em;
+		font-size: 1.8em;
 
 		/* 1200x630 is the recommended meta image resolution */
 		width: 1200px;
@@ -26,10 +26,11 @@
 						h1 { color: ${'color'} }
 					</style>
 					<h1>${'page'}</h1>
-					<script tl-effect>
+					<input tl-controlled tl-hostattr="page" />
+					<script tl-effect tl-dependencies="page">
 						// prettier-ignore
 						this.ownerDocument.title =
-						         this.getAttribute('page');
+								this.getAttribute('page');
 					</script>
 				</custom-title>
 			</template>
