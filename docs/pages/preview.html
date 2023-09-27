@@ -3,7 +3,7 @@
 		display: inline-flex;
 		align-items: center;
 		/* border: yellow solid 1px; */
-		font-size: 1.8em;
+		font-size: 2em;
 
 		/* 1200x630 is the recommended meta image resolution */
 		width: 1200px;
@@ -11,29 +11,28 @@
 	}
 
 	preview-section img {
-		margin-right: -1em;
+		margin-right: 0em;
+		margin-left: 1em;
 	}
 </style>
 <!-- to use, right click on the node in the element explorer, and "capture node screenshot"-->
 <preview-section>
 	<img src="https://unpkg.com/@tram-one/tram-logo@5.0.1/dist/lite.svg" width="450px" />
-	<tram-code
-		syntax="html"
-		code="
-
-	<template is='component-definition'>
-		<custom-title color='blue'>
-			<style>
-				h1 { color: ${'color'} }
-			</style>
-			<h1>${'page'}</h1>
-			<script>
-				document.title = this.getAttribute('page')
-			</script>
-		</custom-title>
-	</template>
-
-
-	"
-	></tram-code>
+	<code-template-html>
+		<template>
+			<template tl-definition>
+				<custom-title color="blue">
+					<style>
+						h1 { color: ${'color'} }
+					</style>
+					<h1>${'page'}</h1>
+					<script tl-effect>
+						// prettier-ignore
+						this.ownerDocument.title =
+						         this.getAttribute('page');
+					</script>
+				</custom-title>
+			</template>
+		</template>
+	</code-template-html>
 </preview-section>

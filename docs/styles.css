@@ -123,16 +123,8 @@ h1,
 h2,
 h3,
 p {
-	margin-bottom: 1rem;
-}
-
-p + h2,
-p + h3 {
-	margin-top: 2.5rem;
-}
-
-p + h4 {
 	margin-top: 1.5rem;
+	margin-bottom: 1rem;
 }
 
 dd {

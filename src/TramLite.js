@@ -1,66 +1,7 @@
-/**
- * Tram-Lite is a frontend component library to help make native web-components!
- * The main utility function is `define`, which allows you to craft web-components
- * using simple template syntax.
- *
- * {@link https://tram-one.io/tram-lite/}
- */
 class TramLite {
-	// regex for finding attributes that have been templated in
-	static templateVariableRegex = /tl:(.+?):/;
-
-	/**
-	 * function to test if node has an attribute value with a template variable
-	 * e.g. <custom-element style="color: ${'color'}">
-	 */
-	static nodeHasTramLiteAttr = (node) =>
-		[...node.attributes].some((attr) => attr.value.match(TramLite.templateVariableRegex))
-			? NodeFilter.FILTER_ACCEPT
-			: NodeFilter.FILTER_SKIP;
-
-	/**
-	 * function to test if node has an TEXT node with a template variable
-	 * e.g. <custom-element>Hello ${'name'}</custom-element>
-	 */
-	static nodeHasTextElementWithTramLiteAttr = (node) =>
-		node.textContent.match(TramLite.templateVariableRegex) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
-
-	/**
-	 * generic function to build a tree walker, and use the filter + tram-lite matcher.
-	 * this should return all elements that match the criteria
-	 */
-	static buildTreeWalkerTramLiteMatcher(root, nodeFilter, nodeMatcher) {
-		const result = [];
-		// build a tree walker that goes through each element, and each attribute
-		const treeWalker = document.createTreeWalker(root, nodeFilter, {
-			acceptNode: nodeMatcher,
-		});
-
-		let currentNode;
-		while ((currentNode = treeWalker.nextNode())) {
-			result.push(currentNode);
-		}
-
-		return result;
-	}
-
-	// Returns elements with attributes containing tram-lite template variables.
-	static getElementsWithTramLiteValuesInAttributes(root) {
-		return TramLite.buildTreeWalkerTramLiteMatcher(root, NodeFilter.SHOW_ELEMENT, TramLite.nodeHasTramLiteAttr);
-	}
-
-	// Returns text nodes containing tram-lite template variables.
-	static getTextNodesWithTramLiteValues(root) {
-		return TramLite.buildTreeWalkerTramLiteMatcher(
-			root,
-			NodeFilter.SHOW_TEXT,
-			TramLite.nodeHasTextElementWithTramLiteAttr
-		);
-	}
-
 	/**
 	 * a template tag function used to create new web-components.
-	 * {@link https://tram-one.io/tram-lite/#html Read the full docs here.}
+	 * {@link https://tram-one.io/tram-lite/#define Read the full docs here.}
 	 */
 	static define(strings, ...templateVariables) {
 		const template = document.createElement('template');
@@ -77,6 +18,14 @@ class TramLite {
 			defaultAttributeValues[attrNode.name] = attrNode.value;
 		});
 
+		// if there are any component-effects that aren't already on hold, hold them now
+		//   (we don't want them triggering before the component has been completely defined)
+		// if there is already a hold, we won't touch these elements
+		//   (the developer may want to defer processing until later)
+		rootElement.querySelectorAll('script[tl-effect]:not([tl-hold])').forEach((componentEffect) => {
+			componentEffect.setAttribute('tl-hold', 'component-mount');
+		});
+
 		// Custom element class with tram-lite template support.
 		class CustomTramLiteElement extends HTMLElement {
 			static get observedAttributes() {
@@ -86,9 +35,6 @@ class TramLite {
 
 			constructor() {
 				super();
-
-				// keep track if our component script tags should be executed
-				this.shouldExecuteScripts = true;
 
 				// list of attribute and text nodes that have a template value
 				// these are scanned through when templated attributes are updated
@@ -102,7 +48,7 @@ class TramLite {
 
 				// scan for any text nodes that have tram-lite wrapped variables (e.g. "tl:label:"),
 				// these are nodes that need to be replaced on the attribute being changed
-				const templateTextNodes = TramLite.getTextNodesWithTramLiteValues(shadow);
+				const templateTextNodes = ComponentDefinition.getTextNodesWithTramLiteValues(shadow);
 				// save the original template in templateValuesTextNodes
 				templateTextNodes.forEach((textNode) => {
 					this.templateValuesTextNodes.push({ textNode, originalTemplate: textNode.textContent });
@@ -110,7 +56,7 @@ class TramLite {
 
 				// scan for any elements with attributes that have a tram-lite variable
 				// these are attributes that need to be updated on the attribute being changed
-				const templateAttrElements = TramLite.getElementsWithTramLiteValuesInAttributes(shadow);
+				const templateAttrElements = ComponentDefinition.getElementsWithTramLiteValuesInAttributes(shadow);
 				// save the original attribute in the templateValuesAttributes
 				templateAttrElements.forEach((element) => {
 					[...element.attributes].forEach((attrNode) => {
@@ -136,33 +82,10 @@ class TramLite {
 				// an initial call to set the default attributes
 				this.attributeChangedCallback();
 
-				// if we have scripts to run, execute them now
-				if (this.shouldExecuteScripts) {
-					// by default, we only do this once (otherwise it would re-trigger on appendChild or other moves)
-					// you can technically retrigger these by setting this.shouldExecuteScripts back to true
-					this.shouldExecuteScripts = false;
-
-					// provide a scoped evaluation of the script tags in this element
-					const scopedEval = (script) => {
-						return Function('document', 'window', script).bind(this)(this.shadowRoot, window);
-					};
-					const scripts = this.shadowRoot.querySelectorAll('script');
-					scripts.forEach((script) => {
-						// if we have a src attribute, we should just clone and replace the node
-						// otherwise, we call the inline javascript with `this` set to the current node
-						if (script.hasAttribute('src')) {
-							// Clone the script node
-							const clonedScript = document.createElement('script');
-							[...script.attributes].forEach((attr) => clonedScript.setAttribute(attr.name, attr.value));
-							clonedScript.textContent = script.textContent;
-
-							// replace the original script tag with this new one (which will cause it to trigger)
-							script.parentNode.replaceChild(clonedScript, script);
-						} else {
-							scopedEval(script.innerHTML);
-						}
-					});
-				}
+				// if there were any scripts that were waiting to be triggered on component mount, trigger them now
+				this.shadowRoot.querySelectorAll('script[tl-hold="component-mount"]').forEach((componentEffect) => {
+					componentEffect.removeAttribute('tl-hold');
+				});
 			}
 
 			attributeChangedCallback(name, oldValue, newValue) {
@@ -210,31 +133,24 @@ class TramLite {
 	}
 
 	/**
-	 * a helper function to quickly create html dom with all their attributes and content.
-	 * {@link https://tram-one.io/tram-lite/#html Read the full docs here.}
-	 * @returns {Element}
+	 * a helper function to update the root web-component when an input updates
+	 * {@link https://tram-one.io/tram-lite/#updateRootAttr Read the full docs here.}
+	 * @param {string} attributeName
+	 * @param {Event} event
+	 * @param {string} [targetAttribute="value"]
 	 */
-	static html(strings, ...values) {
-		const template = document.createElement('template');
-		template.innerHTML = String.raw({ raw: strings }, ...values);
-		const element = template.content.firstElementChild;
-		return element;
+	static updateRootAttr(attributeName, event, targetAttribute = 'value') {
+		const rootNodeHost = event.target.getRootNode().host;
+		const targetValue = event.target[targetAttribute];
+		if (targetValue) {
+			rootNodeHost.setAttribute(attributeName, event.target[targetAttribute]);
+		} else {
+			rootNodeHost.removeAttribute(attributeName);
+		}
 	}
 
 	/**
-	 * a helper function to quickly create svg dom with all their attributes and content.
-	 * {@link https://tram-one.io/tram-lite/#svg Read the full docs here.}
-	 * @returns {Element}
-	 */
-	static svg(strings, ...values) {
-		const svgContainer = document.createElementNS('http://www.w3.org/2000/svg', 'template');
-		svgContainer.innerHTML = String.raw({ raw: strings }, ...values);
-		const element = svgContainer.firstElementChild;
-		return element;
-	}
-
-	/**
-	 * a helper function to set up a callback for when an element's attribute changes
+	 * helper function to set up a callback for when an element's attribute changes
 	 * {@link https://tram-one.io/tram-lite/#addAttributeListener Read the full docs here.}
 	 * @param {Element} targetElement - The DOM element to observe.
 	 * @param {string[]} attributeNames - The name of the attribute (or list of attributes) to observe for changes.
@@ -255,22 +171,22 @@ class TramLite {
 	}
 
 	/**
-	 * a helper function to update the root web-component when an input updates
-	 * {@link https://tram-one.io/tram-lite/#updateRootAttr Read the full docs here.}
-	 * @param {string} attributeName
-	 * @param {Event} event
-	 * @param {string} [targetAttribute="value"]
+	 * function to append new behaviors to elements that are attached to the shadowDOM.
+	 * {@link https://tram-one.io/tram-lite/#appendShadowRootProcessor Read the full docs here.}
+	 * @param {string} matcher
+	 * @param {{ connect: function }} componentClass
 	 */
-	static updateRootAttr(attributeName, event, targetAttribute = 'value') {
-		const rootNodeHost = event.target.getRootNode().host;
-		const targetValue = event.target[targetAttribute];
-		if (targetValue) {
-			rootNodeHost.setAttribute(attributeName, event.target[targetAttribute]);
-		} else {
-			rootNodeHost.removeAttribute(attributeName);
-		}
+	static appendShadowRootProcessor(matcher, componentClass) {
+		// save the original version of shadowRoot.append
+		const shAppend = ShadowRoot.prototype.append;
+
+		ShadowRoot.prototype.append = function (...nodes) {
+			shAppend.call(this, ...nodes);
+			// if any element in this shadowRoot matches our matcher,
+			//   run the `connect` function from this class
+			this.querySelectorAll(matcher).forEach((matchingElement) => {
+				componentClass.connect(matchingElement);
+			});
+		};
 	}
 }
-
-// expose functions for external usage
-const { define, html, svg, addAttributeListener, updateRootAttr } = TramLite;

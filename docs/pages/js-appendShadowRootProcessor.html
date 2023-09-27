@@ -1,0 +1,73 @@
+<h2><code>TramLite.appendShadowRootProcessor</code></h2>
+<section>
+	<p>
+		<code>TramLite.appendShadowRootProcessor</code> is a utility function used to attach functionality to existing
+		elements that match a CSS selector. It is the underlying function that binds <code>tl-controlled</code> and
+		<code>tl-effect</code> to their elements.
+	</p>
+	<p>
+		Note, the following example uses Tram-Lite template definitions, but works with any web-component with shadow DOM.
+	</p>
+	<p>
+		<code-template-html>
+			<template>
+				<!-- new custom element behavior-->
+				<script>
+					class CustomBehavior {
+						static connect(newNode) {
+							const hostElement = newNode.getRootNode().host;
+							console.log(`${newNode.tagName} connected to ${hostElement.tagName}`);
+						}
+					}
+
+					TramLite.appendShadowRootProcessor('[tl-behavior]', CustomBehavior);
+				</script>
+
+				<!-- new component definition -->
+				<template tl-definition>
+					<x-greeting>
+						<span tl-behavior>Hello!</span>
+					</x-greeting>
+				</template>
+
+				<!-- use the new component -->
+				<x-greeting></x-greeting>
+			</template>
+		</code-template-html>
+	</p>
+	<p>
+		As the name implies, <code>appendShadowRootProcessor</code> works with any element attached to an element's
+		shadowDOM.
+	</p>
+</section>
+<section>
+	<h2>Syntax</h2>
+	<p>
+		<code-template-js>
+			<template>
+				<script>
+					TramLite.appendShadowRootProcessor(cssSelector, behaviorClass);
+				</script>
+			</template>
+		</code-template-js>
+	</p>
+	<h3>Parameters</h3>
+	<dl>
+		<dt><code>cssSelector</code></dt>
+		<dd>
+			<p>css selectors to match on new elements that are appended to shadowDOM.</p>
+		</dd>
+		<dt><code>behaviorClass</code></dt>
+		<dd>
+			<p>class with a <code>static connect</code> function, which are associated with newly attached nodes.</p>
+		</dd>
+	</dl>
+	<h3>Return Value</h3>
+	<p>None</p>
+	<h3>Exceptions</h3>
+	<p>To be added...</p>
+</section>
+<section>
+	<h2>Example</h2>
+	<p>To be added...</p>
+</section>

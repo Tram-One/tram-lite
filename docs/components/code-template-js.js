@@ -21,14 +21,11 @@ class CodeTemplateJS extends HTMLElement {
 			.join('\n')
 			.trim();
 
-		formattedCode = formattedCode;
-
-		const templateHTML = html`
-			<section>
-				<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.8.0/styles/night-owl.min.css" />
-				<link rel="stylesheet" type="text/css" href="./styles.css" />
-				<pre><code class='language-javascript'></code></pre>
-			</section>
+		const templateHTML = document.createElement('section');
+		templateHTML.innerHTML = `
+			<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.8.0/styles/night-owl.min.css" />
+			<link rel="stylesheet" type="text/css" href="./styles.css" />
+			<pre><code class='language-javascript'></code></pre>
 		`;
 
 		templateHTML.querySelector('code').textContent = formattedCode;

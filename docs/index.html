@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 	<head>
 		<meta name="viewport" content="initial-scale=1.0, maximum-scale=0.5, width=device-width" />
@@ -45,14 +45,13 @@
 		<script src="https://unpkg.com/@highlightjs/cdn-assets@11.8.0/highlight.min.js"></script>
 
 		<!-- Tram-Lite, HTML Import, and components -->
-		<script src="https://unpkg.com/tram-lite@3.0.0-beta.2"></script>
+		<script src="https://unpkg.com/tram-lite@4.0.0-beta.1"></script>
 		<script src="https://unpkg.com/html-import-element@1"></script>
 		<script src="./components/code-template-html.js"></script>
 		<script src="./components/code-template-js.js"></script>
 		<html-import src="./components/material-icon.html"></html-import>
 		<html-import src="./components/optional-badge.html"></html-import>
 		<html-import src="./components/tag-code.html"></html-import>
-		<html-import src="./components/tram-code.html"></html-import>
 
 		<script>
 			hljs.highlightAll();
@@ -66,7 +65,7 @@
 			<a href="https://tram-one.io/tram-lite/">Tram-Lite</a>
 			<a href="https://github.com/Tram-One/tram-lite">Github</a>
 			<a href="https://discord.gg/dpBXAQC">Discord</a>
-			<a href="https://codepen.io/pen?template=yLGeadO">CodePen</a>
+			<a href="https://codepen.io/pen?template=oNJojBV">CodePen</a>
 		</top-nav>
 		<side-nav>
 			<a href="#about">About</a>
@@ -75,17 +74,18 @@
 				<a href="#install">Install</a>
 				<a href="#building-components">Building Components</a>
 			</side-nav-section>
-			<a>Tags</a>
+			<a>HTML API</a>
 			<side-nav-section>
-				<a href="#component-definition"><code>ComponentDefinition</code></a>
+				<a href="#tl-definition"><code>tl-definition</code></a>
+				<a href="#tl-controlled"><code>tl-controlled</code></a>
+				<a href="#tl-effect"><code>tl-effect</code></a>
 			</side-nav-section>
-			<a>API</a>
+			<a>Javascript API</a>
 			<side-nav-section>
 				<a href="#define"><code>define</code></a>
-				<a href="#html"><code>html</code></a>
-				<a href="#svg"><code>svg</code></a>
 				<a href="#addAttributeListener"><code>addAttributeListener</code></a>
 				<a href="#updateRootAttr"><code>updateRootAttr</code></a>
+				<a href="#appendShadowRootProcessor"><code>appendShadowRootProcessor</code></a>
 			</side-nav-section>
 			<a href="#guiding-principles">Guiding Principles</a>
 			<!-- <a href="#cheat-sheet">Cheat Sheet</a> -->
@@ -93,12 +93,15 @@
 		<main>
 			<page id="about"><html-import src="./pages/about.html"></html-import></page>
 			<page id="install"><html-import src="./pages/install.html"></html-import></page>
-			<page id="component-definition"><html-import src="./pages/tag-component-definition.html"></html-import></page>
-			<page id="define"><html-import src="./pages/api-define.html"></html-import></page>
-			<page id="html"><html-import src="./pages/api-html.html"></html-import></page>
-			<page id="svg"><html-import src="./pages/api-svg.html"></html-import></page>
-			<page id="updateRootAttr"><html-import src="./pages/api-updateRootAttr.html"></html-import></page>
-			<page id="addAttributeListener"><html-import src="./pages/api-addAttributeListener.html"></html-import></page>
+			<page id="tl-definition"><html-import src="./pages/html-tl-definition.html"></html-import></page>
+			<page id="tl-controlled"><html-import src="./pages/html-tl-controlled.html"></html-import></page>
+			<page id="tl-effect"><html-import src="./pages/html-tl-effect.html"></html-import></page>
+			<page id="define"><html-import src="./pages/js-define.html"></html-import></page>
+			<page id="updateRootAttr"><html-import src="./pages/js-updateRootAttr.html"></html-import></page>
+			<page id="addAttributeListener"><html-import src="./pages/js-addAttributeListener.html"></html-import></page>
+			<page id="appendShadowRootProcessor"
+				><html-import src="./pages/js-appendShadowRootProcessor.html"></html-import
+			></page>
 			<page id="guiding-principles"><html-import src="./pages/guiding-principles.html"></html-import></page>
 			<page id="building-components"><html-import src="./pages/guide-building-components.html"></html-import></page>
 			<!-- <page id="cheat-sheet"><html-import src="./pages/cheat-sheet.html"></html-import></page> -->

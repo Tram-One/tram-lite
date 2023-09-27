@@ -1,0 +1,88 @@
+<h2><code>tl-effect</code></h2>
+<section>
+	<p>
+		<code>tl-effect</code> is an attribute for <tag-code tag="script"></tag-code> tags, that lets you define scoped
+		side-effects for when a component mounts, or when attributes update.
+	</p>
+	<p>
+		Note, the following example uses Tram-Lite template definitions, but works with any web-component with shadow DOM.
+	</p>
+	<p>
+		<code-template-html>
+			<template>
+				<template tl-definition>
+					<my-greeting>
+						<h1>Hello ${'name'}</h1>
+						<!-- define new side-effect when "name" is updated -->
+						<script tl-effect tl-dependencies="name">
+							console.log('name attribute updated:', this.getAttribute('name'));
+						</script>
+					</my-greeting>
+				</template>
+
+				<my-greeting></my-greeting>
+
+				<!-- update the name attribute -->
+				<script>
+					document.querySelector('my-greeting').setAttribute('name', 'World');
+				</script>
+			</template>
+		</code-template-html>
+	</p>
+</section>
+<section>
+	<h2>Syntax</h2>
+	<p>
+		<code-template-html>
+			<template>
+				<script tl-effect tl-dependencies="attributes" tl-hold>
+					// prettier-ignore
+					inline-javascript
+				</script>
+			</template>
+		</code-template-html>
+	</p>
+	<h3>Parameters</h3>
+	<dl>
+		<dt><code>inline-javascript</code></dt>
+		<dd>
+			<p>
+				<code>tl-effect</code> scripts will not execute external javascript (using the <code>src</code> tag). Instead,
+				you must include javascript in the content of the script tag. This javascript will have a reference to the host
+				web-component as <code>this</code>.
+			</p>
+		</dd>
+		<dt><code>tl-dependencies</code> <optional-badge>optional</optional-badge></dt>
+		<dd>
+			<p>
+				A list (space delimited) of attributes that will re-trigger the inline javascript when updated on the host
+				web-component.
+			</p>
+		</dd>
+		<dt><code>tl-hold</code> <optional-badge>optional</optional-badge></dt>
+		<dd>
+			<p>
+				Attribute, when present, prevents the execution of the inline javascript. When detected in Tram-Lite component
+				definitions, this will automatically be set to <code>"component-mount"</code>, to prevent execution before the
+				element is available in the DOM.
+			</p>
+		</dd>
+	</dl>
+</section>
+<section>
+	<h2>Example</h2>
+	<p>
+		Example from the 7GUI challenges. See the full code
+		<a
+			href="https://github.com/JRJurman/Tram-Lite-7GUIs/blob/a441aa00dc35671f81983d4f6771fcae004868bd/tasks/gui-flight-booker.html#L26-L28"
+			>here</a
+		>
+		<code-template-html>
+			<template>
+				<script tl-effect tl-dependencies="flight-option start-date return-date">
+					decorateFlightBookerControls(this);
+				</script>
+			</template>
+		</code-template-html>
+	</p>
+</section>

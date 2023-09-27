@@ -1,18 +1,22 @@
 {
 	"name": "tram-lite",
-	"version": "3.1.2",
-	"description": "💡 Lite Web-Component Library for HTML and vanilla Javascript",
+	"version": "4.0.0",
+	"description": "💡 HTML library for building and enhancing web-components",
+	"homepage": "https://tram-one.io/tram-lite/",
+	"repository": "https://github.com/Tram-One/tram-lite",
 	"main": "output/tram-lite.js",
 	"types": "output/tram-lite.js",
 	"files": [
 		"output"
 	],
 	"scripts": {
+		"prestart": "npm run build",
 		"start": "serve .",
 		"build": "npm run bundle && npm run minify",
-		"bundle": "uglifyjs src/TramLite.js src/ComponentDefinition.js -o output/tram-lite.js -b --comments all",
+		"bundle": "uglifyjs src/TramLite.js src/*.js -o output/tram-lite.js -b --comments all",
 		"minify": "uglifyjs output/tram-lite.js -o output/tram-lite.min.js -c -m",
 		"prepublishOnly": "npm run build",
+		"pretest": "npm run build",
 		"test": "cypress open",
 		"docs": "serve ./docs"
 	},
@@ -34,9 +38,10 @@
 		"tram",
 		"one",
 		"lite",
-		"web-components"
+		"web-components",
+		"html-first",
+		"html"
 	],
-	"repository": "https://github.com/Tram-One/tram-lite",
 	"license": "MIT",
 	"devDependencies": {
 		"cypress": "^12.14.0",

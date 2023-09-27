@@ -1,0 +1,66 @@
+<h2><code>tl-definition</code></h2>
+<section>
+	<p>
+		<code>tl-definition</code> is an attribute for <tag-code tag="template"></tag-code> tags, that lets you define new
+		web-components in your HTML.
+
+		<code-template-html>
+			<template>
+				<template tl-definition>
+					<my-greeting>
+						<h1>Hello ${'name'}</h1>
+					</my-greeting>
+				</template>
+			</template>
+		</code-template-html>
+	</p>
+
+	<p>
+		You can define multiple web-components using a single
+		<tag-code tag="template" attribute="tl-definition"></tag-code> tag.
+	</p>
+</section>
+<section>
+	<h2>Syntax</h2>
+	<p>
+		<code-template-html>
+			<template>
+				<template tl-definition>
+					<tag-name default-attributes="default value">
+						<h1>Template</h1>
+						<p>${'template-variables'}</p>
+					</tag-name>
+				</template>
+			</template>
+		</code-template-html>
+	</p>
+	<h3>Parameters</h3>
+	<dl>
+		<dt><code>tag name</code></dt>
+		<dd>
+			<p>
+				the name of the new custom component. this is defined in the outer most tag, and must be a hyphenated string
+			</p>
+		</dd>
+		<dt><code>default attributes</code> <optional-badge>optional</optional-badge></dt>
+		<dd>
+			<p>
+				attributes defined in the outer-most tag, these are the default values when the component is mounted without
+				supplied values
+			</p>
+		</dd>
+		<dt><code>template</code></dt>
+		<dd>
+			<p>
+				any DOM inside the outer most tag, this template that will be injected as shadow DOM on mounting the component
+			</p>
+		</dd>
+		<dt><code>template variables</code> <optional-badge>optional</optional-badge></dt>
+		<dd>
+			<p>
+				any string variables in the template will become attributes for the component. When these attributes are
+				updated, it will trigger specific updates in specific spots in the DOM
+			</p>
+		</dd>
+	</dl>
+</section>

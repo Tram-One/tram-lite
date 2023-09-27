@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 	<head>
 		<title>Tram-Lite Example Components</title>
@@ -15,107 +15,197 @@
 			}
 		</style>
 
-		<script src="../node_modules/html-import-element/html-import-element.js"></script>
-		<script src="../src/TramLite.js"></script>
-		<script src="../src/ComponentDefinition.js"></script>
+		<script src="../output/tram-lite.js"></script>
 	</head>
 	<body>
-		<!-- component definitions -->
-		<html-import src="./title.html"></html-import>
-
-		<!-- build counter 3 different ways, just to make sure they all work as expected! -->
-		<!-- <counter-definitions> is just a block to organize all the imports -->
-		<counter-definitions>
-			<!-- via external template -->
-			<html-import src="./template-counter.html"></html-import>
-			<!-- via javascript -->
-			<script src="./js-counter.js"></script>
-			<!-- via inline-template -->
-			<template is="component-definition">
-				<inline-counter count="0" label="Green" color="#CEFFCE">
-					<button style="color: ${'color'}" onclick="increment(this)">${'label'}: ${'count'}</button>
-				</inline-counter>
-			</template>
-			<script>
-				function increment(button) {
-					const counter = button.getRootNode().host;
-					const newCount = parseInt(counter.getAttribute('count')) + 1;
-					counter.setAttribute('count', newCount);
-				}
-			</script>
-		</counter-definitions>
-
-		<!-- inline component definitions (to validate multiple inline definitions) -->
-		<template is="component-definition">
-			<hover-tooltip>
+		<template tl-definition>
+			<example-container>
 				<style>
-					span {
-						display: none;
-						position: relative;
-						top: -1.4em;
-						left: -3.5em;
-						background: black;
-						padding: 0.2em;
-						border: grey 1px solid;
-						border-radius: 0.2em;
+					fieldset {
+						border: yellow 1px solid;
+					}
+					legend {
+						color: yellow;
 					}
 				</style>
-				<slot></slot>
-				<span>${'content'}</span>
-				<script>
-					/* Script interrupts HTML Parser */
-					this.shadowRoot.querySelector('span').style.display = 'inherit';
+				<fieldset>
+					<legend>${'name'}</legend>
+					<slot></slot>
+				</fieldset>
+			</example-container>
+
+			<ex-title>
+				<h1 style="font-size: 1em">Title: <slot></slot></h1>
+			</ex-title>
+
+			<ex-counter count="0" label="Green" color="#CEFFCE">
+				<button style="color: ${'color'}" onclick="increment(this)">${'label'}: ${'count'}</button>
+			</ex-counter>
+
+			<ex-mirror value="" is-mirrored="">
+				<input size="10" id="reflection" placeholder="Mirrored" disabled tl-controlled />
+				<input size="10" id="source" placeholder="Type in here!" tl-controlled tl-trigger="keyup" />
+			</ex-mirror>
+
+			<ex-todoitem>
+				<label style="display: block">
+					<input type="checkbox" tl-controlled tl-hostattr="checked" tl-targetattr="checked" />
+					<slot></slot>
+				</label>
+				<script tl-effect tl-dependencies="checked">
+					const todoList = this.getRootNode().host;
+
+					// query all list items to determine new completed and total
+					const todoItems = todoList.shadowRoot.querySelectorAll('ex-todoitem');
+					todoList.setAttribute('total', todoItems.length);
+					const completedItems = todoList.shadowRoot.querySelectorAll('ex-todoitem[checked]');
+					todoList.setAttribute('completed', completedItems.length);
 				</script>
-			</hover-tooltip>
-			<tooltip-example>
-				<hover-tooltip content="Hello!">
-					<button>Tooltips!</button>
-				</hover-tooltip>
-			</tooltip-example>
+			</ex-todoitem>
+
+			<ex-todolist completed="0" total="0">
+				<style>
+					todo-section {
+						padding-inline-start: 5px;
+						margin-block-start: 5px;
+					}
+				</style>
+				<span>To Do List (${'completed'}/${'total'})</span>
+				<form onsubmit="submitNewTodoItem(this, event)">
+					<input name="input" placeholder="New Item" autofill="false" />
+				</form>
+				<todo-section></todo-section>
+				<script tl-effect>
+					addNewTodoItem(this, 'Example Initial Item');
+					addNewTodoItem(this, 'Learning Tram-Lite');
+				</script>
+			</ex-todolist>
+
+			<ex-colorpicker width="100px">
+				<style>
+					svg {
+						display: block;
+					}
+					rect {
+						fill: oklch(70% 0.1 ${'hue'});
+					}
+				</style>
+				<input id="hue-range-input" type="range" tl-controlled tl-hostattr="hue" tl-trigger="input" min="0" max="360" />
+				<input id="hue-text-input" type="text" placeholder="hue value" tl-controlled tl-hostattr="hue" />
+				<svg viewbox="0 0 100 100" width="${'width'}">
+					<rect width="100" height="100" />
+				</svg>
+			</ex-colorpicker>
+
+			<ex-temperature celsius="" fahrenheit="">
+				<label>
+					<input id="c" tl-controlled placeholder="C" unit="celsius" tl-hostattr="celsius" tl-trigger="input" />
+					Celsius
+				</label>
+				=
+				<label>
+					<input id="f" tl-controlled placeholder="F" unit="fahrenheit" tl-hostattr="fahrenheit" tl-trigger="input" />
+					Fahrenheit
+				</label>
+
+				<script tl-effect tl-dependencies="celsius">
+					const c = this.getAttribute('celsius');
+					const newF = calcFahrenheit(c);
+					if (c && !isNaN(newF) && !isReflectiveUpdate(this)) {
+						this.setAttribute('fahrenheit', newF);
+					}
+				</script>
+				<script tl-effect tl-dependencies="fahrenheit">
+					const f = this.getAttribute('fahrenheit');
+					const newC = calcCelsius(f);
+					if (f && !isNaN(newC)) {
+						this.setAttribute('celsius', newC);
+					}
+				</script>
+			</ex-temperature>
+
+			<ex-progressbar value="3" max="10">
+				<div>
+					<input id="value" type="number" tl-controlled tl-trigger="input" />
+					<input id="max" type="number" tl-controlled tl-hostattr="max" tl-trigger="input" />
+				</div>
+				<progress value="${'value'}" max="${'max'}"></progress>
+				<div>${'warning'}</div>
+				<script tl-effect tl-dependencies="value max">
+					const value = parseInt(this.getAttribute('value'));
+					const max = parseInt(this.getAttribute('max'));
+					if (value > max) {
+						this.setAttribute('warning', `WARNING: ${value} is greater than ${max}`);
+					} else {
+						this.removeAttribute('warning');
+					}
+				</script>
+			</ex-progressbar>
 		</template>
 
-		<html-import src="./mirror.html"></html-import>
-		<html-import src="./todo-list.html"></html-import>
-		<html-import src="./color-picker.html"></html-import>
-		<html-import src="./example-container.html"></html-import>
-		<html-import src="./line-drawer.html"></html-import>
-		<html-import src="./temperature-converter.html"></html-import>
+		<script>
+			// for ex-counter
+			function increment(button) {
+				const counter = button.getRootNode().host;
+				const newCount = parseInt(counter.getAttribute('count')) + 1;
+				counter.setAttribute('count', newCount);
+			}
 
-		<tram-title>Tram-Lite Components!</tram-title>
+			// for todo list
+			function addNewTodoItem(todoList, todoText) {
+				const list = todoList.shadowRoot.querySelector('todo-section');
+				const newItem = document.createElement('ex-todoitem');
+				newItem.innerText = todoText;
+				list.appendChild(newItem);
+			}
+
+			function submitNewTodoItem(form, event) {
+				event.preventDefault();
+				const todoList = form.getRootNode().host;
+				addNewTodoItem(todoList, form.input.value);
+				form.reset();
+			}
+
+			// for temperature converter
+			function calcCelsius(f) {
+				return ((f - 32) * (5 / 9)).toFixed(0);
+			}
+
+			function calcFahrenheit(c) {
+				return (c * (9 / 5) + 32).toFixed(0);
+			}
+
+			function isReflectiveUpdate(temperatureConverter) {
+				const f = temperatureConverter.getAttribute('fahrenheit');
+				const c = temperatureConverter.getAttribute('celsius');
+				// if this celsius or fahrenheit value would generate the other, don't update
+				// this is indicative of an update triggered by another update!
+				// this can happen because multiple Fahrenheit values map to the same (truncated) celsius value
+				// e.g. 19F and 20F both map to -7C
+				return calcFahrenheit(calcCelsius(f)) === calcFahrenheit(c);
+			}
+		</script>
+
+		<ex-title>Tram-Lite Components!</ex-title>
 		<example-container name="Counters">
-			<div>
-				External Template:
-				<template-counter id="temp-blue" label="Blue" color="#CECEFF"></template-counter>
-				<template-counter id="temp-red" label="Red" color="#FFCECE"></template-counter>
-				<template-counter id="temp-default"></template-counter>
-			</div>
-			<div>
-				Javascript Define Template Tag:
-				<js-counter id="js-blue" label="Blue" color="#CECEFF"></js-counter>
-				<js-counter id="js-red" label="Red" color="#FFCECE"></js-counter>
-				<js-counter id="js-default"></js-counter>
-			</div>
-			<div>
-				Inline Template
-				<inline-counter id="inline-blue" label="Blue" color="#CECEFF"></inline-counter>
-				<inline-counter id="inline-red" label="Red" color="#FFCECE"></inline-counter>
-				<inline-counter id="inline-default"></inline-counter>
-			</div>
+			<ex-counter id="blue" label="Blue" color="#CECEFF"></ex-counter>
+			<ex-counter id="red" label="Red" color="#FFCECE"></ex-counter>
+			<ex-counter id="default"></ex-counter>
 		</example-container>
 		<example-container name="Mirror Input">
-			<tram-mirror></tram-mirror>
+			<ex-mirror></ex-mirror>
 		</example-container>
 		<example-container name="To Do List">
-			<todo-list></todo-list>
+			<ex-todolist></ex-todolist>
 		</example-container>
 		<example-container name="Color Picker">
-			<color-picker hue="200"></color-picker>
+			<ex-colorpicker hue="200"></ex-colorpicker>
 		</example-container>
-		<example-container name="Line Drawer">
-			<line-drawer></line-drawer>
+		<example-container name="Temperature Converter">
+			<ex-temperature></ex-temperature>
 		</example-container>
-		<example-container name="Tooltip">
-			<tooltip-example></tooltip-example>
+		<example-container name="Progress Bar">
+			<ex-progressbar></ex-progressbar>
 		</example-container>
 	</body>
 </html>
