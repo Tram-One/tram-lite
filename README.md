@@ -5,16 +5,16 @@
 </p>
 
 <div align="center">
-  <a href="https://www.npmjs.com/package/tram-lite">
+  <a href="https://tram-one.io/tram-lite/#install">
     <img src="https://img.shields.io/npm/dm/tram-lite.svg" alt="Downloads">
   </a>
-  <a href="https://www.npmjs.com/package/tram-lite">
+  <a href="https://tram-one.io/tram-lite/">
     <img src="https://img.shields.io/npm/v/tram-lite.svg" alt="Version">
   </a>
-  <a href="https://bundlephobia.com/package/tram-lite">
-    <img src="https://badgen.net/bundlephobia/minzip/tram-lite" alt="Gzipped Size">
+  <a href="https://unpkg.com/tram-lite@4.0.0/output/tram-lite.min.js">
+    <img src="https://img.shields.io/badge/gzip-1.7kB-006369.svg?style=flat" alt="Gzipped Size">
   </a>
-  <a href="https://www.npmjs.com/package/tram-lite">
+  <a href="https://github.com/Tram-One/tram-lite/blob/main/LICENSE">
     <img src="https://img.shields.io/npm/l/tram-lite.svg" alt="License">
   </a>
   <a href="https://discord.gg/dpBXAQC">
