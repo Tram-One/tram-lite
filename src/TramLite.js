@@ -1,4 +1,7 @@
 class TramLite {
+	static version = 'APP_VERSION';
+	static installed = false;
+
 	/**
 	 * a template tag function used to create new web-components.
 	 * {@link https://tram-one.io/tram-lite/#define Read the full docs here.}
@@ -28,6 +31,7 @@ class TramLite {
 
 		// Custom element class with tram-lite template support.
 		class CustomTramLiteElement extends HTMLElement {
+			static tramLiteVersion = 'APP_VERSION';
 			static get observedAttributes() {
 				// all of the template variables are attributes that we'll update on
 				return templateVariables;
@@ -175,8 +179,9 @@ class TramLite {
 	 * {@link https://tram-one.io/tram-lite/#appendShadowRootProcessor Read the full docs here.}
 	 * @param {string} matcher
 	 * @param {{ connect: function }} componentClass
+	 * @param {(node: Node) => boolean} [rootNodeTest=() => true]
 	 */
-	static appendShadowRootProcessor(matcher, componentClass) {
+	static appendShadowRootProcessor(matcher, componentClass, rootNodeTest = () => true) {
 		// save the original version of shadowRoot.append
 		const shAppend = ShadowRoot.prototype.append;
 
@@ -185,7 +190,9 @@ class TramLite {
 			// if any element in this shadowRoot matches our matcher,
 			//   run the `connect` function from this class
 			this.querySelectorAll(matcher).forEach((matchingElement) => {
-				componentClass.connect(matchingElement);
+				if (rootNodeTest(matchingElement.getRootNode().host)) {
+					componentClass.connect(matchingElement);
+				}
 			});
 		};
 	}

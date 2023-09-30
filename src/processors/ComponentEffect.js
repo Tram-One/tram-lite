@@ -59,5 +59,3 @@ class ComponentEffect {
 		});
 	}
 }
-
-TramLite.appendShadowRootProcessor('[tl-effect]', ComponentEffect);

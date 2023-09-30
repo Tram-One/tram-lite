@@ -34,5 +34,3 @@ class ControlledInput {
 		});
 	}
 }
-
-TramLite.appendShadowRootProcessor('[tl-controlled]', ControlledInput);

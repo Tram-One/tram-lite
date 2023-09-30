@@ -89,8 +89,9 @@ class ComponentDefinition {
 	/**
 	 * function to set up an observer to watch for when new templates are added,
 	 *   and process all the definitions in them
+	 * @param {Document} [targetRoot=document]
 	 */
-	static setupMutationObserverForTemplates() {
+	static setupMutationObserverForTemplates(targetRoot = document) {
 		/**
 		 * @param {MutationRecord[]} mutationRecords
 		 */
@@ -111,5 +112,3 @@ class ComponentDefinition {
 		observer.observe(document, { subtree: true, childList: true });
 	}
 }
-
-ComponentDefinition.setupMutationObserverForTemplates();
