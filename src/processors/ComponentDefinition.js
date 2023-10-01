@@ -112,3 +112,13 @@ class ComponentDefinition {
 		observer.observe(document, { subtree: true, childList: true });
 	}
 }
+
+if (MODULE === true) {
+	// if module is available, export this class
+	if (typeof module !== 'undefined') {
+		module.exports.ComponentDefinition = ComponentDefinition;
+	}
+} else {
+	// setup mutation observer so that template elements created will automatically be defined
+	ComponentDefinition.setupMutationObserverForTemplates();
+}

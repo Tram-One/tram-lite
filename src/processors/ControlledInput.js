@@ -34,3 +34,13 @@ class ControlledInput {
 		});
 	}
 }
+
+if (MODULE === true) {
+	// if module is available, export this class
+	if (typeof module !== 'undefined') {
+		module.exports.ControlledInput = ControlledInput;
+	}
+} else {
+	// setup shadow root processor so that tl-controlled that are added are processed correctly
+	TramLite.appendShadowRootProcessor('[tl-controlled]', ControlledInput);
+}

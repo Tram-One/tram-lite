@@ -1,12 +1,12 @@
 class TramLite {
-	static version = 'APP_VERSION';
+	static version = APP_VERSION;
 	static installed = false;
 
 	/**
-	 * a template tag function used to create new web-components.
-	 * {@link https://tram-one.io/tram-lite/#define Read the full docs here.}
+	 * utility function to build the component class from the template string
+	 * (this is an underlying utility for the define function)
 	 */
-	static define(strings, ...templateVariables) {
+	static makeComponentClass(strings, ...templateVariables) {
 		const template = document.createElement('template');
 
 		// tag our templateVariables, so we know how to look for them in the dom
@@ -31,7 +31,9 @@ class TramLite {
 
 		// Custom element class with tram-lite template support.
 		class CustomTramLiteElement extends HTMLElement {
-			static tramLiteVersion = 'APP_VERSION';
+			static tramLiteVersion = APP_VERSION;
+			static tagName = rootElement.tagName.toLowerCase();
+
 			static get observedAttributes() {
 				// all of the template variables are attributes that we'll update on
 				return templateVariables;
@@ -132,8 +134,21 @@ class TramLite {
 			}
 		}
 
+		return CustomTramLiteElement;
+	}
+
+	/**
+	 * a template tag function used to create new web-components.
+	 * {@link https://tram-one.io/tram-lite/#define Read the full docs here.}
+	 */
+	static define(strings, ...templateVariables) {
+		// build the new component class from the template
+		const NewComponentClass = TramLite.makeComponentClass(strings, ...templateVariables);
+
 		// register this as a new element as a native web-component
-		customElements.define(rootElement.tagName.toLowerCase(), CustomTramLiteElement);
+		customElements.define(NewComponentClass.tagName, NewComponentClass);
+
+		return NewComponentClass;
 	}
 
 	/**
@@ -196,4 +211,14 @@ class TramLite {
 			});
 		};
 	}
+}
+
+if (MODULE === true) {
+	// if module is available, export this class
+	if (typeof module !== 'undefined') {
+		module.exports = TramLite;
+	}
+} else {
+	// if this is a script tag, note that we've installed Tram-Lite listeners
+	TramLite.installed = true;
 }
