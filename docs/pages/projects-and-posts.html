@@ -1,0 +1,60 @@
+<h2>Projects & Posts</h2>
+
+<p>
+	Below is a list of projects and posts that use or reference Tram-Lite! If you want to add your own here, feel free to
+	make a PR against the <a href="https://github.com/Tram-One/tram-lite">Tram-Lite repository</a>.
+</p>
+
+<!-- defining a component just for this page -->
+<template tl-definition>
+	<project-item>
+		<style>
+			section {
+				border-left: 3px solid #faf496;
+				padding: 1em;
+				margin: 1em;
+				background: #292e33;
+			}
+		</style>
+		<section>
+			<slot name="project"></slot><br />
+			Source: <slot name="source"></slot><br />
+			Created by: <slot name="author"></slot><br />
+			Tram-Lite Version: <slot name="version"></slot>
+		</section>
+	</project-item>
+</template>
+
+<!-- Note - these should be sorted by Tram-Lite version! Newer on top -->
+
+<project-item>
+	<a slot="project" href="https://jrjurman.com/Tram-Lite-7GUIs/">Tram-Lite 7GUIs</a>
+	<a slot="author" href="https://jrjurman.com">Jesse Jurman</a>
+	<a slot="source" href="https://github.com/JRJurman/Tram-Lite-7GUIs">Github</a>
+	<span slot="version">4.1.0</span>
+</project-item>
+
+<project-item>
+	<a
+		slot="project"
+		href="https://chriscoyier.net/2023/09/25/a-web-component-for-swapping-text-between-text-html-and-markdown/"
+		>A Web Component for Swapping Text between Text, HTML, and Markdown</a
+	>
+	<a slot="author" href="https://chriscoyier.net/">Chris Coyier</a>
+	<a slot="source" href="https://codepen.io/chriscoyier/pen/bGOagNG">Codepen</a>
+	<span slot="version">4.0.0-beta.1</span>
+</project-item>
+
+<project-item>
+	<a slot="project" href="https://jrjurman.com/lite-calculator/">Lite Calculator</a>
+	<a slot="author" href="https://jrjurman.com">Jesse Jurman</a>
+	<a slot="source" href="https://github.com/JRJurman/lite-calculator">Github</a>
+	<span slot="version">2.4.0</span>
+</project-item>
+
+<project-item>
+	<a slot="project" href="https://jrjurman.com/lite-lists/">Lite Lists</a>
+	<a slot="author" href="https://jrjurman.com">Jesse Jurman</a>
+	<a slot="source" href="https://github.com/JRJurman/lite-lists">Github</a>
+	<span slot="version">2.2.1</span>
+</project-item>
