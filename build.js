@@ -43,10 +43,10 @@ setConfigs.forEach((config) => {
 				...config.defines,
 			},
 		},
+		enclose: config.enclose,
 		output: {
 			comments: 'all',
 			beautify: true,
-			wrap_iife: config.enclose,
 		},
 	};
 	const result = UglifyJS.minify(config.files, options);
