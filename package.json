@@ -9,6 +9,9 @@
 	"files": [
 		"output"
 	],
+	"bin": {
+		"export-component": "./output/export-component.js"
+	},
 	"scripts": {
 		"prestart": "npm run build",
 		"start": "serve .",
