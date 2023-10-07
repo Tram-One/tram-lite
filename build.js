@@ -12,7 +12,17 @@ const loadedClassFiles = Object.fromEntries(
 );
 
 console.log('loading', 'src/import-component.js');
-const importComponent = { 'src/import-component.js': fs.readFileSync('src/import-component.js').toString() };
+const importComponentClass = {
+	'src/ImportComponent.js': fs.readFileSync('src/ImportComponent.js').toString(),
+};
+console.log('loading', 'src/import-script.js');
+const importScript = {
+	'src/scripts/import-script.js': fs.readFileSync('src/scripts/import-script.js').toString(),
+};
+console.log('loading', 'src/export-script.js');
+const exportScript = {
+	'src/scripts/export-script.js': fs.readFileSync('src/scripts/export-script.js').toString(),
+};
 
 // Set configurations
 const setConfigs = [
@@ -28,9 +38,19 @@ const setConfigs = [
 	},
 	{
 		outputFile: 'output/import-component.js',
-		files: { ...loadedClassFiles, ...importComponent },
+		files: { ...loadedClassFiles, ...importComponentClass, ...importScript },
 		defines: { MODULE: false, INSTALL: false },
 		enclose: true,
+	},
+	{
+		outputFile: 'output/export-dependencies.js',
+		files: { ...loadedClassFiles, ...importComponentClass },
+		defines: { MODULE: false, INSTALL: false },
+	},
+	{
+		outputFile: 'output/export-script.js',
+		files: { ...exportScript },
+		defines: { MODULE: false, INSTALL: false },
 	},
 ];
 
@@ -58,6 +78,7 @@ const minifyConfigs = [
 	{ inputFile: 'output/api.js', outputFile: 'output/api.min.js' },
 	{ inputFile: 'output/tram-lite.js', outputFile: 'output/tram-lite.min.js' },
 	{ inputFile: 'output/import-component.js', outputFile: 'output/import-component.min.js' },
+	{ inputFile: 'output/export-dependencies.js', outputFile: 'output/export-dependencies.min.js' },
 ];
 
 minifyConfigs.forEach((config) => {

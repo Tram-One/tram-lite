@@ -19,7 +19,7 @@
 	</head>
 	<body>
 		<template tl-definition>
-			<example-container>
+			<in-container>
 				<style>
 					fieldset {
 						border: yellow 1px solid;
@@ -32,7 +32,7 @@
 					<legend>${'name'}</legend>
 					<slot></slot>
 				</fieldset>
-			</example-container>
+			</in-container>
 
 			<in-title>
 				<h1 style="font-size: 1em">Title: <slot></slot></h1>
@@ -187,25 +187,25 @@
 		</template>
 
 		<in-title>Tram-Lite Components!</in-title>
-		<example-container name="Counters">
+		<in-container name="Counters">
 			<in-counter id="blue" label="Blue" color="#CECEFF"></in-counter>
 			<in-counter id="red" label="Red" color="#FFCECE"></in-counter>
 			<in-counter id="default"></in-counter>
-		</example-container>
-		<example-container name="Mirror Input">
+		</in-container>
+		<in-container name="Mirror Input">
 			<in-mirror></in-mirror>
-		</example-container>
-		<example-container name="To Do List">
+		</in-container>
+		<in-container name="To Do List">
 			<in-todolist></in-todolist>
-		</example-container>
-		<example-container name="Color Picker">
+		</in-container>
+		<in-container name="Color Picker">
 			<in-colorpicker hue="200"></in-colorpicker>
-		</example-container>
-		<example-container name="Temperature Converter">
+		</in-container>
+		<in-container name="Temperature Converter">
 			<in-temperature></in-temperature>
-		</example-container>
-		<example-container name="Progress Bar">
+		</in-container>
+		<in-container name="Progress Bar">
 			<in-progressbar></in-progressbar>
-		</example-container>
+		</in-container>
 	</body>
 </html>

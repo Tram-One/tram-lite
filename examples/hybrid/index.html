@@ -18,8 +18,9 @@
 		<script src="../../output/tram-lite.js"></script>
 		<script
 			src="../../output/import-component.js"
-			tl-components="/examples/import/example-container.html /examples/import/im-progressbar.html"
+			tl-components="/examples/components/ex-container.html /examples/components/ex-progressbar.html"
 		></script>
+		<script src="/examples/components/ex-colorpicker.js"></script>
 
 		<template tl-definition>
 			<in-temperature celsius="" fahrenheit="">
@@ -71,11 +72,14 @@
 		</template>
 	</head>
 	<body>
-		<example-container name="Temperature Converter">
+		<ex-container name="Temperature Converter">
 			<in-temperature></in-temperature>
-		</example-container>
-		<example-container name="Progress Bar">
-			<im-progressbar></im-progressbar>
-		</example-container>
+		</ex-container>
+		<ex-container name="Progress Bar">
+			<ex-progressbar></ex-progressbar>
+		</ex-container>
+		<ex-container name="Color Picker">
+			<ex-colorpicker hue="200"></ex-colorpicker>
+		</ex-container>
 	</body>
 </html>

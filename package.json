@@ -14,7 +14,8 @@
 		"start": "serve .",
 		"build": "node build.js",
 		"prepublishOnly": "npm run build",
-		"pretest": "npm run build",
+		"build-test-components": "bash ./examples/components/build-test-components.sh",
+		"pretest": "npm run build && npm run build-test-components",
 		"test": "cypress open",
 		"docs": "serve ./docs"
 	},
