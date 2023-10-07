@@ -10,7 +10,7 @@
 		"output"
 	],
 	"bin": {
-		"export-component": "./output/export-component.js"
+		"export-components": "./output/export-components.js"
 	},
 	"scripts": {
 		"prestart": "npm run build",
