@@ -1,0 +1,71 @@
+<h2>Importing And Exporting Components</h2>
+<p>
+	If you are building a library, there are a few different options when it comes to sharing your components with other
+	developers. On this page, we document a few different options, and the reasons why you may choose one.
+</p>
+<p>
+	Regardless of how you choose to share your components, doing so is a great way to make components easily consumable
+	among other developers, without requiring Tram-Lite as a core dependency. All methods also allow you to have different
+	versions of Tram-Lite components in the same project.
+</p>
+
+<h3>Using import-components script</h3>
+<p>
+	The <code>import-components</code> script is a great way to share raw HTML templates without requiring a build step as
+	part of your project. It also allows developers to selectively choose which elements they would like to import.
+
+	<code-template-html>
+		<template>
+			<script src="https://unpkg.com/tram-lite@4/output/import-components.js" tl-components="..."></script>
+		</template>
+	</code-template-html>
+
+	The script depends on an attribute <code>tl-components</code>, which is a space separated list of paths to the
+	components you'd like to import.
+</p>
+<p>
+	For example, we might have the following <code>x-button.html</code>.
+	<code-template-html>
+		<x-button>
+			<button>Hello World</button>
+		</x-button>
+	</code-template-html>
+
+	We could then import and immediately use this component in our HTML page using the
+	<code>import-components.js</code> script.
+
+	<code-template-html>
+		<template>
+			<script src="https://unpkg.com/tram-lite@4/output/import-components.js" tl-components="./x-button.html"></script>
+			<x-button></x-button>
+		</template>
+	</code-template-html>
+</p>
+<p>This script is also available as a minified script - simply point to <code>import-components.min.js</code>.</p>
+
+<h3>Using export-components command</h3>
+<p>
+	The <code>export-components</code> CLI tool is a great way to build native javascript if consumers of the library are
+	using tools to bundle their code, and if you (or your consumers) have a build step.
+
+	<code-template-js>
+		<template>
+			<script>
+				npx tram-lite
+				<script src="https://unpkg.com/tram-lite@4/output/import-components.js" tl-components="..."></script>
+			</script>
+		</template>
+	</code-template-js>
+
+	The script depends on an attribute <code>tl-components</code>, which is a space separated list of paths to the
+	components you'd like to import.
+</p>
+<p>
+	Similar to the example above, we start with a component definition in an <code>x-button.html</code> For example, we
+	might have the following <code>x-button.html</code>.
+	<code-template-html>
+		<x-button>
+			<button>Hello World</button>
+		</x-button>
+	</code-template-html>
+</p>
