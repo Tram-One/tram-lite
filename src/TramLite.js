@@ -218,7 +218,8 @@ if (MODULE === true) {
 	if (typeof module !== 'undefined') {
 		module.exports = TramLite;
 	}
-} else {
+}
+if (INSTALL === true) {
 	// if this is a script tag, note that we've installed Tram-Lite listeners
 	TramLite.installed = true;
 }

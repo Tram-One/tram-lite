@@ -134,7 +134,8 @@ if (MODULE === true) {
 	if (typeof module !== 'undefined') {
 		module.exports.ComponentDefinition = ComponentDefinition;
 	}
-} else {
+}
+if (INSTALL === true) {
 	// setup mutation observer so that template elements created will automatically be defined
 	ComponentDefinition.setupMutationObserverForTemplates();
 }

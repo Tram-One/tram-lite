@@ -65,7 +65,8 @@ if (MODULE === true) {
 	if (typeof module !== 'undefined') {
 		module.exports.ComponentEffect = ComponentEffect;
 	}
-} else {
+}
+if (INSTALL === true) {
 	// setup shadow root processor so that tl-effects that are added are processed correctly
 	TramLite.appendShadowRootProcessor('[tl-effect]', ComponentEffect);
 }

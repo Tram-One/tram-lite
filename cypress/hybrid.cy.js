@@ -1,12 +1,12 @@
-describe('Tram-Lite Example Components (via import)', () => {
-	it('should validate Tram-Lite APIs and Use Cases when importing components', () => {
+describe('Tram-Lite Example Components (via import and inline)', () => {
+	it('should validate Tram-Lite APIs and Use Cases when importing and inline defining components', () => {
 		// visit index.html
-		cy.visit('../examples/import/index.html');
+		cy.visit('../examples/hybrid/index.html');
 
 		/* verify that component effects trigger on dependency updates */
-		cy.get('im-temperature').get('input#f').type('19');
-		cy.get('im-temperature').get('input#c').should('have.value', '-7');
-		cy.get('im-temperature').get('input#f').should('have.value', '19');
+		cy.get('in-temperature').get('input#f').type('19');
+		cy.get('in-temperature').get('input#c').should('have.value', '-7');
+		cy.get('in-temperature').get('input#f').should('have.value', '19');
 
 		/* verify that an element with multiple dependencies triggers on either dependency */
 		cy.get('im-progressbar').should('not.have.attr', 'warning');
