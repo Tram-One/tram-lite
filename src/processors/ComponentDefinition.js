@@ -87,6 +87,22 @@ class ComponentDefinition {
 	}
 
 	/**
+	 * utility function to extract js template strings, so that they can be passed into a template tag function
+	 */
+	static extractTemplateVariables(templateString) {
+		// we expect template variables to be in the following pattern, matching "${'...'}"
+		const variablePattern = /\$\{\'(.*?)\'\}/;
+		// Split the string by the above pattern, which lets us get an alternating list of strings and variables
+		const parts = templateString.split(variablePattern);
+
+		// Extract the strings and the variables
+		const rawStrings = parts.filter((_, index) => index % 2 === 0);
+		const templateVaraibles = parts.filter((_, index) => index % 2 !== 0);
+
+		return [rawStrings, templateVaraibles];
+	}
+
+	/**
 	 * function to set up an observer to watch for when new templates are added,
 	 *   and process all the definitions in them
 	 * @param {Document} [targetRoot=document]

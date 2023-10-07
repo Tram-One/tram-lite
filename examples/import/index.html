@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>Tram-Lite Example Components</title>
+		<link rel="icon" type="image/png" href="https://unpkg.com/@tram-one/tram-logo@5.0.1/dist/lite_32.png" />
+
+		<meta charset="utf-8" />
+		<style>
+			:root {
+				color-scheme: dark light;
+			}
+			body {
+				margin: auto;
+				max-width: 800px;
+			}
+		</style>
+
+		<script
+			src="../../output/import-component.js"
+			tl-components="/examples/import/example-container.html /examples/import/im-progressbar.html /examples/import/im-temperature.html"
+		></script>
+	</head>
+	<body>
+		<example-container name="Temperature Converter">
+			<im-temperature></im-temperature>
+		</example-container>
+		<example-container name="Progress Bar">
+			<im-progressbar></im-progressbar>
+		</example-container>
+	</body>
+</html>

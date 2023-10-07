@@ -194,18 +194,18 @@ class TramLite {
 	 * {@link https://tram-one.io/tram-lite/#appendShadowRootProcessor Read the full docs here.}
 	 * @param {string} matcher
 	 * @param {{ connect: function }} componentClass
-	 * @param {(node: Node) => boolean} [rootNodeTest=() => true]
+	 * @param {ShadowRoot} [shadowRoot=ShadowRoot.prototype]
 	 */
-	static appendShadowRootProcessor(matcher, componentClass, rootNodeTest = () => true) {
+	static appendShadowRootProcessor(matcher, componentClass, shadowRoot = ShadowRoot.prototype) {
 		// save the original version of shadowRoot.append
-		const shAppend = ShadowRoot.prototype.append;
+		const shAppend = shadowRoot.append;
 
-		ShadowRoot.prototype.append = function (...nodes) {
+		shadowRoot.append = function (...nodes) {
 			shAppend.call(this, ...nodes);
 			// if any element in this shadowRoot matches our matcher,
 			//   run the `connect` function from this class
 			this.querySelectorAll(matcher).forEach((matchingElement) => {
-				if (rootNodeTest(matchingElement.getRootNode().host)) {
+				if (matchingElement.getRootNode().host) {
 					componentClass.connect(matchingElement);
 				}
 			});
