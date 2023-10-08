@@ -12,12 +12,6 @@
 			rel="stylesheet"
 		/>
 
-		<!-- icon font -->
-		<link
-			rel="stylesheet"
-			href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
-		/>
-
 		<!-- open props -->
 		<link rel="stylesheet" href="https://unpkg.com/open-props" />
 		<link rel="stylesheet" href="https://unpkg.com/open-props/normalize.min.css" />
@@ -57,13 +51,14 @@
 		<script src="https://unpkg.com/@highlightjs/cdn-assets@11.8.0/highlight.min.js"></script>
 
 		<!-- Tram-Lite, HTML Import, and components -->
-		<script src="https://unpkg.com/tram-lite@4.0.0-beta.1"></script>
+		<script src="https://unpkg.com/tram-lite@4"></script>
 		<script src="https://unpkg.com/html-import-element@1"></script>
 		<script src="./components/code-template-html.js"></script>
 		<script src="./components/code-template-js.js"></script>
-		<html-import src="./components/material-icon.html"></html-import>
-		<html-import src="./components/optional-badge.html"></html-import>
-		<html-import src="./components/tag-code.html"></html-import>
+		<script
+			src="https://unpkg.com/tram-lite@4/output/import-components.js"
+			tl-components="/components/optional-badge.html /components/tag-code.html"
+		></script>
 
 		<script>
 			hljs.highlightAll();
@@ -122,5 +117,15 @@
 			<page id="projects-and-posts"><html-import src="./pages/projects-and-posts.html"></html-import></page>
 			<!-- <page id="cheat-sheet"><html-import src="./pages/cheat-sheet.html"></html-import></page> -->
 		</main>
+
+		<script>
+			// because of a lack of :has pseudo-selector support, sometimes we can end up with the main page having no content!
+			// for now, we'll always redirect to the about page, but once we have that :has support, we can remove this
+			document.addEventListener('DOMContentLoaded', function (event) {
+				if (!window.location.hash) {
+					window.location.hash = 'about';
+				}
+			});
+		</script>
 	</body>
 </html>

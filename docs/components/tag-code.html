@@ -1,28 +1,26 @@
-<template tl-definition>
-	<tag-code tag="">
-		<link rel="stylesheet" type="text/css" href="./styles.css" />
-		<style>
-			code {
-				background: var(--surface-2);
-				border-radius: var(--radius-2);
-				padding: var(--size-1) var(--size-2);
-				white-space: nowrap;
-			}
-		</style>
-		<code>&lt;${'tag'}&gt;</code>
-		<script tl-effect>
-			if (this.getAttribute('content') !== null) {
-				const [codeTag] = this.shadowRoot.querySelectorAll('code');
-				const tag = this.getAttribute('tag');
-				const content = this.getAttribute('content');
-				codeTag.innerText = `<${tag}>${content}</${tag}>`;
-			}
-			if (this.getAttribute('attribute') !== null) {
-				const [codeTag] = this.shadowRoot.querySelectorAll('code');
-				const tag = this.getAttribute('tag');
-				const attribute = this.getAttribute('attribute');
-				codeTag.innerText = `<${tag} ${attribute}>`;
-			}
-		</script>
-	</tag-code>
-</template>
+<tag-code tag="">
+	<link rel="stylesheet" type="text/css" href="./styles.css" />
+	<style>
+		code {
+			background: var(--surface-2);
+			border-radius: var(--radius-2);
+			padding: var(--size-1) var(--size-2);
+			white-space: nowrap;
+		}
+	</style>
+	<code>&lt;${'tag'}&gt;</code>
+	<script tl-effect>
+		if (this.getAttribute('content') !== null) {
+			const [codeTag] = this.shadowRoot.querySelectorAll('code');
+			const tag = this.getAttribute('tag');
+			const content = this.getAttribute('content');
+			codeTag.innerText = `<${tag}>${content}</${tag}>`;
+		}
+		if (this.getAttribute('attribute') !== null) {
+			const [codeTag] = this.shadowRoot.querySelectorAll('code');
+			const tag = this.getAttribute('tag');
+			const attribute = this.getAttribute('attribute');
+			codeTag.innerText = `<${tag} ${attribute}>`;
+		}
+	</script>
+</tag-code>

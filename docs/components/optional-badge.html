@@ -1,15 +1,13 @@
 <!-- custom element for the parameter optional badge -->
-<template tl-definition>
-	<optional-badge>
-		<style>
-			span {
-				font-weight: normal;
-				border: 1px solid var(--text-2);
-				border-radius: 10px;
-				padding: 2px;
-				font-size: 0.8rem;
-			}
-		</style>
-		<span><slot></slot></span>
-	</optional-badge>
-</template>
+<optional-badge>
+	<style>
+		span {
+			font-weight: normal;
+			border: 1px solid var(--text-2);
+			border-radius: 10px;
+			padding: 2px;
+			font-size: 0.8rem;
+		}
+	</style>
+	<span><slot></slot></span>
+</optional-badge>
