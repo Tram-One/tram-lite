@@ -10,13 +10,8 @@ const useMinified = process.argv.includes('-m') || process.argv.includes('--mini
 const outputFlagIndex = process.argv.findIndex((arg) => arg === '-o' || arg === '--output');
 const customOutputFile = outputFlagIndex !== -1 ? process.argv[outputFlagIndex + 1] : null;
 
-const filePaths = process.argv.slice(2).filter((arg, index) => {
-	const originalIndex = index + 2;
-	// do not include any flags
-	const isNotAFlag = !arg.startsWith('-');
-	// do not include the path after the output flag
-	const isNotOutput = originalIndex !== outputFlagIndex + 1;
-	return isNotAFlag && isNotOutput;
+const filePaths = process.argv.filter((arg) => {
+	return arg.match(/\.html$/);
 });
 
 if (filePaths.length === 0) {
