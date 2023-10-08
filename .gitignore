@@ -3,3 +3,7 @@ output
 
 # Dependency directory
 node_modules
+
+# components that are generated as part of build-test-components.sh
+examples/components/ex-colorpicker.js
+examples/components/example-components.js
