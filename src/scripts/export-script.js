@@ -1,5 +1,9 @@
 #!/usr/bin/env node
 
+// usage - use this script to create a javascript version of a component definition
+// e.g. npx tram-lite export-components your-component-definition.html
+// see more usage details here: https://tram-one.io/tram-lite/#importing-and-exporting
+
 const fs = require('fs');
 const path = require('path');
 

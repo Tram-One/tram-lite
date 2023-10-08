@@ -1,5 +1,6 @@
 // usage - this script is intended to be used as part of a script tag
 // e.g. <script src=".../import-components.js" tl-components=".../my-component.html">
+// see more usage details here: https://tram-one.io/tram-lite/#importing-and-exporting
 
 // tl-components can have a space separated list of import paths
 const componentPaths = document.currentScript.getAttribute('tl-components').split(/\s+/);
