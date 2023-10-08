@@ -1,6 +1,6 @@
 {
 class TramLite {
-    static version = "4.2.0";
+    static version = "4.2.0-beta.2";
     static installed = !1;
     /**
 	 * utility function to build the component class from the template string
@@ -26,7 +26,7 @@ class TramLite {
         });
         // Custom element class with tram-lite template support.
         class n extends HTMLElement {
-            static tramLiteVersion = "4.2.0";
+            static tramLiteVersion = "4.2.0-beta.2";
             static tagName = i.tagName.toLowerCase();
             static get observedAttributes() {
                 // all of the template variables are attributes that we'll update on
