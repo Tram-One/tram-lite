@@ -38,7 +38,7 @@ const templateAndLoadCode = componentDefinitions
 		return `
 {
 	const componentTemplate = \`${formattedComponentCode}\`;
-	ImportComponent.importNewComponent(componentTemplate)
+	ImportComponent.processDefinitionTemplate(componentTemplate);
 }
 `;
 	})

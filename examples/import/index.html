@@ -17,8 +17,10 @@
 
 		<script
 			src="../../output/import-components.js"
-			tl-components="/examples/components/ex-container.html /examples/components/ex-progressbar.html /examples/components/ex-temperature.html /examples/components/ex-colorpicker.html"
+			tl-components="/examples/components/ex-container.html /examples/components/ex-progressbar.html /examples/components/ex-temperature.html"
 		></script>
+		<script src="../../output/import-components.js" tl-components="/examples/components/ex-colorpicker.html"></script>
+		<script src="../../output/import-components.js" tl-components="/examples/components/ex-todolist.html"></script>
 	</head>
 	<body>
 		<ex-container name="Temperature Converter">
@@ -29,6 +31,9 @@
 		</ex-container>
 		<ex-container name="Color Picker">
 			<ex-colorpicker hue="200"></ex-colorpicker>
+		</ex-container>
+		<ex-container name="To Do List">
+			<ex-todolist></ex-todolist>
 		</ex-container>
 	</body>
 </html>

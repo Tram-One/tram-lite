@@ -20,7 +20,7 @@ componentPaths.forEach(async (componentPath, index) => {
 		return;
 	}
 
-	// load the content as text, and then build the template tag pieces
+	// load the content as text, and process it as a definition template string
 	const componentContent = await componentResult.text();
-	ImportComponent.importNewComponent(componentContent);
+	ImportComponent.processDefinitionTemplate(componentContent);
 });

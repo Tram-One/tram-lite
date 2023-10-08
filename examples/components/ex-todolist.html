@@ -1,0 +1,49 @@
+<ex-todoitem>
+	<label style="display: block">
+		<input type="checkbox" tl-controlled tl-hostattr="checked" tl-targetattr="checked" />
+		<slot></slot>
+	</label>
+	<script tl-effect tl-dependencies="checked">
+		const todoItemList = this.getRootNode().host;
+
+		// query all list items to determine new completed and total
+		const todoItems = todoItemList.shadowRoot.querySelectorAll('ex-todoitem');
+		todoItemList.setAttribute('total', todoItems.length);
+		const completedItems = todoItemList.shadowRoot.querySelectorAll('ex-todoitem[checked]');
+		todoItemList.setAttribute('completed', completedItems.length);
+	</script>
+</ex-todoitem>
+
+<ex-todolist completed="0" total="0">
+	<style>
+		todo-section {
+			padding-inline-start: 5px;
+			margex-block-start: 5px;
+		}
+	</style>
+	<span>To Do List (${'completed'}/${'total'})</span>
+	<form>
+		<input name="input" placeholder="New Item" autofill="false" />
+	</form>
+	<todo-section></todo-section>
+	<script tl-effect>
+		const todoList = this;
+
+		function addNewTodoItem(todoText) {
+			const list = todoList.shadowRoot.querySelector('todo-section');
+			const newItem = this.document.createElement('ex-todoitem');
+			newItem.innerText = todoText;
+			list.appendChild(newItem);
+		}
+
+		function submitNewTodoItem(event) {
+			event.preventDefault();
+			addNewTodoItem(event.target.input.value);
+			event.target.reset();
+		}
+		todoList.shadowRoot.querySelector('form').addEventListener('submit', submitNewTodoItem);
+
+		addNewTodoItem('Example Initial Item');
+		addNewTodoItem('Learning Tram-Lite');
+	</script>
+</ex-todolist>

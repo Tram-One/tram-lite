@@ -73,16 +73,9 @@ class ComponentDefinition {
 		[...allChildElements].forEach((elementToDefine) => {
 			const definitionString = elementToDefine.outerHTML;
 
-			// we expect template variables to be in the following pattern, matching "${'...'}"
-			const variablePattern = /\$\{\'(.*?)\'\}/;
-			// Split the string by the above pattern, which lets us get an alternating list of strings and variables
-			const parts = definitionString.split(variablePattern);
+			const [rawStrings, templateVariables] = ComponentDefinition.extractTemplateVariables(definitionString);
 
-			// Extract the strings and the variables
-			const rawStrings = parts.filter((_, index) => index % 2 === 0);
-			const templateVaraibles = parts.filter((_, index) => index % 2 !== 0);
-
-			TramLite.define(rawStrings, ...templateVaraibles);
+			TramLite.define(rawStrings, ...templateVariables);
 		});
 	}
 
@@ -97,9 +90,9 @@ class ComponentDefinition {
 
 		// Extract the strings and the variables
 		const rawStrings = parts.filter((_, index) => index % 2 === 0);
-		const templateVaraibles = parts.filter((_, index) => index % 2 !== 0);
+		const templateVariables = parts.filter((_, index) => index % 2 !== 0);
 
-		return [rawStrings, templateVaraibles];
+		return [rawStrings, templateVariables];
 	}
 
 	/**

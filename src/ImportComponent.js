@@ -1,11 +1,28 @@
 class ImportComponent {
 	/**
-	 * utility function for importing and defining new components (outside of Tram-Lite being installed)
-	 * @param {string} componentContent
+	 * utility function for processing a list of component definitions.
+	 * @param {string} definitionTemplate
 	 */
-	static importNewComponent(componentContent) {
+	static processDefinitionTemplate(definitionTemplate) {
+		// container for all our component definitions
+		const templateContainer = document.createElement('template');
+
+		templateContainer.innerHTML = definitionTemplate;
+
+		// for each child element, process the new definition (this is similar to processTemplateDefinition)
+		const allChildElements = templateContainer.content.children;
+		[...allChildElements].forEach((elementToDefine) => {
+			ImportComponent.importNewComponent(elementToDefine.outerHTML);
+		});
+	}
+
+	/**
+	 * utility function for importing and defining new components (outside of Tram-Lite being installed)
+	 * @param {string} componentTemplate
+	 */
+	static importNewComponent(componentTemplate) {
 		const [componentRawStrings, componentTemplateVariables] =
-			ComponentDefinition.extractTemplateVariables(componentContent);
+			ComponentDefinition.extractTemplateVariables(componentTemplate);
 
 		// make a component class based on the template tag pieces
 		// (this is done, over define, so we can attach shadow root processors)

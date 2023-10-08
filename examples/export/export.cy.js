@@ -25,5 +25,20 @@ describe('Tram-Lite Example Components (via export)', () => {
 				const rawColor = window.getComputedStyle($element[0])['fill'];
 				expect(rawColor).to.equal('oklch(0.7 0.1 120)');
 			});
+
+		/* copied from inline tests - specifically verifies multi component definition in export */
+		cy.get('ex-todoitem').contains('Example Initial Item');
+		cy.get('ex-todoitem').contains('Learning Tram-Lite');
+
+		cy.get('ex-todolist').get('form input').type('Cypress Test'); // create new todo item
+		cy.get('ex-todolist').get('form').submit();
+
+		cy.get('ex-todoitem').contains('Cypress Test'); // verify it exists
+
+		cy.get('ex-todoitem').contains('Cypress Test').click(); // click it, and verify that the top label updates
+		cy.get('ex-todolist').get('span').contains('(1/3)');
+
+		cy.get('ex-todoitem').contains('Cypress Test').click();
+		cy.get('ex-todolist').get('span').contains('(0/3)');
 	});
 });
