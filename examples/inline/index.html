@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>Tram-Lite Inline Components</title>
+		<link rel="icon" type="image/png" href="https://unpkg.com/@tram-one/tram-logo@5.0.1/dist/lite_32.png" />
+
+		<meta charset="utf-8" />
+		<style>
+			:root {
+				color-scheme: dark light;
+			}
+			body {
+				margin: auto;
+				max-width: 800px;
+			}
+		</style>
+
+		<script src="../../output/tram-lite.js"></script>
+	</head>
+	<body>
+		<template tl-definition>
+			<in-container>
+				<style>
+					fieldset {
+						border: yellow 1px solid;
+					}
+					legend {
+						color: yellow;
+					}
+				</style>
+				<fieldset>
+					<legend>${'name'}</legend>
+					<slot></slot>
+				</fieldset>
+			</in-container>
+
+			<in-title>
+				<h1 style="font-size: 1em">Title: <slot></slot></h1>
+			</in-title>
+
+			<in-counter count="0" label="Green" color="#CEFFCE">
+				<button style="color: ${'color'}">${'label'}: ${'count'}</button>
+				<script tl-effect>
+					const inCounter = this;
+					inCounter.shadowRoot.querySelector('button').addEventListener('click', () => {
+						const newCount = parseInt(inCounter.getAttribute('count')) + 1;
+						inCounter.setAttribute('count', newCount);
+					});
+				</script>
+			</in-counter>
+
+			<in-mirror value="" is-mirrored="">
+				<input size="10" id="reflection" placeholder="Mirrored" disabled tl-controlled />
+				<input size="10" id="source" placeholder="Type in here!" tl-controlled tl-trigger="keyup" />
+			</in-mirror>
+
+			<in-todoitem>
+				<label style="display: block">
+					<input type="checkbox" tl-controlled tl-hostattr="checked" tl-targetattr="checked" />
+					<slot></slot>
+				</label>
+				<script tl-effect tl-dependencies="checked">
+					const todoItemList = this.getRootNode().host;
+
+					// query all list items to determine new completed and total
+					const todoItems = todoItemList.shadowRoot.querySelectorAll('in-todoitem');
+					todoItemList.setAttribute('total', todoItems.length);
+					const completedItems = todoItemList.shadowRoot.querySelectorAll('in-todoitem[checked]');
+					todoItemList.setAttribute('completed', completedItems.length);
+				</script>
+			</in-todoitem>
+
+			<in-todolist completed="0" total="0">
+				<style>
+					todo-section {
+						padding-inline-start: 5px;
+						margin-block-start: 5px;
+					}
+				</style>
+				<span>To Do List (${'completed'}/${'total'})</span>
+				<form>
+					<input name="input" placeholder="New Item" autofill="false" />
+				</form>
+				<todo-section></todo-section>
+				<script tl-effect>
+					const todoList = this;
+
+					function addNewTodoItem(todoText) {
+						const list = todoList.shadowRoot.querySelector('todo-section');
+						const newItem = this.document.createElement('in-todoitem');
+						newItem.innerText = todoText;
+						list.appendChild(newItem);
+					}
+
+					function submitNewTodoItem(event) {
+						event.preventDefault();
+						addNewTodoItem(event.target.input.value);
+						event.target.reset();
+					}
+					todoList.shadowRoot.querySelector('form').addEventListener('submit', submitNewTodoItem);
+
+					addNewTodoItem('Example Initial Item');
+					addNewTodoItem('Learning Tram-Lite');
+				</script>
+			</in-todolist>
+
+			<in-colorpicker width="100px">
+				<style>
+					svg {
+						display: block;
+					}
+					rect {
+						fill: oklch(70% 0.1 ${'hue'});
+					}
+				</style>
+				<input id="hue-range-input" type="range" tl-controlled tl-hostattr="hue" tl-trigger="input" min="0" max="360" />
+				<input id="hue-text-input" type="text" placeholder="hue value" tl-controlled tl-hostattr="hue" />
+				<svg viewbox="0 0 100 100" width="${'width'}">
+					<rect width="100" height="100" />
+				</svg>
+			</in-colorpicker>
+
+			<in-temperature celsius="" fahrenheit="">
+				<label>
+					<input id="c" tl-controlled placeholder="C" unit="celsius" tl-hostattr="celsius" tl-trigger="input" />
+					Celsius
+				</label>
+				=
+				<label>
+					<input id="f" tl-controlled placeholder="F" unit="fahrenheit" tl-hostattr="fahrenheit" tl-trigger="input" />
+					Fahrenheit
+				</label>
+
+				<script tl-effect>
+					// functions to define for the rest of the component
+					this.calcCelsius = (f) => {
+						return ((f - 32) * (5 / 9)).toFixed(0);
+					};
+
+					this.calcFahrenheit = (c) => {
+						return (c * (9 / 5) + 32).toFixed(0);
+					};
+
+					this.isReflectiveUpdate = (temperatureConverter) => {
+						const f = temperatureConverter.getAttribute('fahrenheit');
+						const c = temperatureConverter.getAttribute('celsius');
+						// if this celsius or fahrenheit value would generate the other, don't update
+						// this is indicative of an update triggered by another update!
+						// this can happen because multiple Fahrenheit values map to the same (truncated) celsius value
+						// e.g. 19F and 20F both map to -7C
+						return this.calcFahrenheit(this.calcCelsius(f)) === this.calcFahrenheit(c);
+					};
+				</script>
+				<script tl-effect tl-dependencies="celsius">
+					const c = this.getAttribute('celsius');
+					const newF = this.calcFahrenheit(c);
+					if (c && !isNaN(newF) && !this.isReflectiveUpdate(this)) {
+						this.setAttribute('fahrenheit', newF);
+					}
+				</script>
+				<script tl-effect tl-dependencies="fahrenheit">
+					const f = this.getAttribute('fahrenheit');
+					const newC = this.calcCelsius(f);
+					if (f && !isNaN(newC)) {
+						this.setAttribute('celsius', newC);
+					}
+				</script>
+			</in-temperature>
+
+			<in-progressbar value="3" max="10">
+				<div>
+					<input id="value" type="number" tl-controlled tl-trigger="input" />
+					<input id="max" type="number" tl-controlled tl-hostattr="max" tl-trigger="input" />
+				</div>
+				<progress value="${'value'}" max="${'max'}"></progress>
+				<div>${'warning'}</div>
+				<script tl-effect tl-dependencies="value max">
+					const value = parseInt(this.getAttribute('value'));
+					const max = parseInt(this.getAttribute('max'));
+					if (value > max) {
+						this.setAttribute('warning', `WARNING: ${value} is greater than ${max}`);
+					} else {
+						this.removeAttribute('warning');
+					}
+				</script>
+			</in-progressbar>
+		</template>
+
+		<in-title>Tram-Lite Components!</in-title>
+		<in-container name="Counters">
+			<in-counter id="blue" label="Blue" color="#CECEFF"></in-counter>
+			<in-counter id="red" label="Red" color="#FFCECE"></in-counter>
+			<in-counter id="default"></in-counter>
+		</in-container>
+		<in-container name="Mirror Input">
+			<in-mirror></in-mirror>
+		</in-container>
+		<in-container name="To Do List">
+			<in-todolist></in-todolist>
+		</in-container>
+		<in-container name="Color Picker">
+			<in-colorpicker hue="200"></in-colorpicker>
+		</in-container>
+		<in-container name="Temperature Converter">
+			<in-temperature></in-temperature>
+		</in-container>
+		<in-container name="Progress Bar">
+			<in-progressbar></in-progressbar>
+		</in-container>
+	</body>
+</html>

@@ -1,0 +1,120 @@
+<h2>Importing And Exporting Components</h2>
+<p>
+	If you are building a library, there are a few different options when it comes to sharing your components with other
+	developers. On this page, we document a few different options, and the reasons why you may choose one.
+</p>
+<p>
+	Regardless of how you choose to share your components, doing so is a great way to make components easily consumable
+	among other developers, without requiring Tram-Lite as a core dependency. All methods also allow you to have different
+	versions of Tram-Lite components in the same project.
+</p>
+
+<h3>Using import-components script</h3>
+<p>
+	The <code>import-components</code> script is a great way to share raw HTML templates without requiring a build step as
+	part of your project. It also allows developers to selectively choose which elements they would like to import.
+
+	<code-template-html>
+		<template>
+			<script src="https://unpkg.com/tram-lite@4/output/import-components.js" tl-components="..."></script>
+		</template>
+	</code-template-html>
+
+	The script depends on an attribute <code>tl-components</code>, which is a space separated list of paths to the
+	components you'd like to import.
+</p>
+<h4>Parameters</h4>
+<p>
+	The only parameter for <code>import-components.js</code> is the <code>tl-components</code> attribute. It is a space
+	delimited list of component definition paths. The components should be HTML, and just the definition of the
+	components, the same as the content inside of a <a href="#tl-definition">tl-definition template tag</a>.
+</p>
+<h4>Example Importing an HTML Template</h4>
+<p>
+	For example, we might have the following <code>x-button.html</code>.
+	<code-template-html>
+		<template>
+			<x-button>
+				<button>Hello World</button>
+			</x-button>
+		</template>
+	</code-template-html>
+
+	We could then import and immediately use this component in our HTML page using the
+	<code>import-components.js</code> script.
+
+	<code-template-html>
+		<template>
+			<script src="https://unpkg.com/tram-lite@4/output/import-components.js" tl-components="./x-button.html"></script>
+			<x-button></x-button>
+		</template>
+	</code-template-html>
+</p>
+<p>This script is also available as a minified script - simply point to <code>import-components.min.js</code>.</p>
+
+<h3>Using export-components command</h3>
+<p>
+	The <code>export-components</code> CLI tool is a great way to build native javascript if consumers of the library are
+	using tools to bundle their code, or if you (or your consumers) have a build step. It's also great because it works
+	with the native script import on the consumer's side.
+
+	<code-template-js>
+		<template>
+			<script>
+				npx tram-lite@4 export-components ...
+			</script>
+		</template>
+	</code-template-js>
+
+	You can pass in any html files you'd like to be bundled, and it will create a javascript file that people can natively
+	import with a script tag.
+</p>
+<h4>Parameters</h4>
+<p>
+	<code-template-js>
+		<template>
+			<script>
+				npx tram-lite@4 export-components <components> [--output output-file.js] [--minified]
+			</script>
+		</template>
+	</code-template-js>
+	Aside from the required components, the command has two optional flags, <code>--output</code> and
+	<code>--minified</code>.
+</p>
+<p>
+	<code>--output</code> (or <code>-o</code>) can be used to set the file name and directory of the resulting javascript.
+	If this flag is missing, the command will place the file in the current directory, named based on the component files
+	passed in.
+</p>
+<p>
+	<code>--minified</code> (or <code>-m</code>) can be used to import the minified Tram-Lite code as part of your export.
+	This should reduce the total size of the exported components.
+</p>
+<h4>Example Exporting an HTML Template to Javascript</h4>
+<p>
+	Similar to the example above, we start with a component definition in an <code>x-button.html</code>.
+	<code-template-html>
+		<template>
+			<x-button>
+				<button>Hello World</button>
+			</x-button>
+		</template>
+	</code-template-html>
+
+	Then we can run the command to export this component to javascript.
+	<code-template-js>
+		<template>
+			<script>
+				npx tram-lite@4 export-components x-button.html
+			</script>
+		</template>
+	</code-template-js>
+
+	This will create an <code>x-button.js</code> file locally. We can then import that file using a normal script tag.
+	<code-template-html>
+		<template>
+			<script src="x-button.js"></script>
+			<x-button></x-button>
+		</template>
+	</code-template-html>
+</p>

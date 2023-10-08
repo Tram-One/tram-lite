@@ -1,0 +1,46 @@
+<ex-temperature celsius="" fahrenheit="">
+	<label>
+		<input id="c" tl-controlled placeholder="C" unit="celsius" tl-hostattr="celsius" tl-trigger="input" />
+		Celsius
+	</label>
+	=
+	<label>
+		<input id="f" tl-controlled placeholder="F" unit="fahrenheit" tl-hostattr="fahrenheit" tl-trigger="input" />
+		Fahrenheit
+	</label>
+
+	<script tl-effect>
+		// functions to define for the rest of the component
+		this.calcCelsius = (f) => {
+			return ((f - 32) * (5 / 9)).toFixed(0);
+		};
+
+		this.calcFahrenheit = (c) => {
+			return (c * (9 / 5) + 32).toFixed(0);
+		};
+
+		this.isReflectiveUpdate = (temperatureConverter) => {
+			const f = temperatureConverter.getAttribute('fahrenheit');
+			const c = temperatureConverter.getAttribute('celsius');
+			// if this celsius or fahrenheit value would generate the other, don't update
+			// this is indicative of an update triggered by another update!
+			// this can happen because multiple Fahrenheit values map to the same (truncated) celsius value
+			// e.g. 19F and 20F both map to -7C
+			return this.calcFahrenheit(this.calcCelsius(f)) === this.calcFahrenheit(c);
+		};
+	</script>
+	<script tl-effect tl-dependencies="celsius">
+		const c = this.getAttribute('celsius');
+		const newF = this.calcFahrenheit(c);
+		if (c && !isNaN(newF) && !this.isReflectiveUpdate(this)) {
+			this.setAttribute('fahrenheit', newF);
+		}
+	</script>
+	<script tl-effect tl-dependencies="fahrenheit">
+		const f = this.getAttribute('fahrenheit');
+		const newC = this.calcCelsius(f);
+		if (f && !isNaN(newC)) {
+			this.setAttribute('celsius', newC);
+		}
+	</script>
+</ex-temperature>

@@ -1,6 +1,6 @@
 {
 	"name": "tram-lite",
-	"version": "4.1.1",
+	"version": "4.2.0",
 	"description": "💡 HTML library for building and enhancing web-components",
 	"homepage": "https://tram-one.io/tram-lite/",
 	"repository": "https://github.com/Tram-One/tram-lite",
@@ -9,17 +9,16 @@
 	"files": [
 		"output"
 	],
+	"bin": {
+		"export-components": "./output/export-components.js"
+	},
 	"scripts": {
 		"prestart": "npm run build",
 		"start": "serve .",
-		"build": "npm run bundle && npm run build:api && npm run build:tram-lite",
-		"bundle": "uglifyjs src/TramLite.js src/processors/*.js -o output/bundle-step.js --define APP_VERSION=\"'4.1.1'\" -b --comments all",
-		"build:api": "uglifyjs output/bundle-step.js -o output/api.js --define MODULE=\"true\" -b --comments all ",
-		"build:tram-lite": "uglifyjs output/bundle-step.js -o output/tram-lite.js --define MODULE=\"false\" -b --comments all ",
-		"minify:api": "uglifyjs output/api.js -o output/api.min.js -c -m",
-		"minify:tram-lite": "uglifyjs output/tram-lite.js -o output/tram-lite.min.js -c -m",
+		"build": "node build.js",
 		"prepublishOnly": "npm run build",
-		"pretest": "npm run build",
+		"build-test-components": "bash ./examples/components/build-test-components.sh",
+		"pretest": "npm run build && npm run build-test-components",
 		"test": "cypress open",
 		"docs": "serve ./docs"
 	},

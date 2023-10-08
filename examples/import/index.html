@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>Tram-Lite Imported Components</title>
+		<link rel="icon" type="image/png" href="https://unpkg.com/@tram-one/tram-logo@5.0.1/dist/lite_32.png" />
+
+		<meta charset="utf-8" />
+		<style>
+			:root {
+				color-scheme: dark light;
+			}
+			body {
+				margin: auto;
+				max-width: 800px;
+			}
+		</style>
+
+		<script
+			src="../../output/import-components.js"
+			tl-components="/examples/components/ex-container.html /examples/components/ex-progressbar.html /examples/components/ex-temperature.html"
+		></script>
+		<script src="../../output/import-components.js" tl-components="/examples/components/ex-colorpicker.html"></script>
+		<script src="../../output/import-components.js" tl-components="/examples/components/ex-todolist.html"></script>
+	</head>
+	<body>
+		<ex-container name="Temperature Converter">
+			<ex-temperature></ex-temperature>
+		</ex-container>
+		<ex-container name="Progress Bar">
+			<ex-progressbar></ex-progressbar>
+		</ex-container>
+		<ex-container name="Color Picker">
+			<ex-colorpicker hue="200"></ex-colorpicker>
+		</ex-container>
+		<ex-container name="To Do List">
+			<ex-todolist></ex-todolist>
+		</ex-container>
+	</body>
+</html>
