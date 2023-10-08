@@ -22,7 +22,9 @@ if (filePaths.length === 0) {
 console.log('processing', filePaths, 'for export');
 const componentDefinitions = filePaths.map((filePath) => fs.readFileSync(filePath, 'utf8'));
 
-const tramLiteExportDependenciesPath = useMinified ? './export-dependencies.min.js' : './export-dependencies.js';
+const tramLiteExportDependenciesPath = useMinified
+	? path.join(__dirname, './export-dependencies.min.js')
+	: path.join(__dirname, './export-dependencies.js');
 
 const tramLiteExportDepenedencies = fs.readFileSync(tramLiteExportDependenciesPath).toString();
 const templateAndLoadCode = componentDefinitions
