@@ -11,21 +11,19 @@
 		<code-template-html>
 			<template>
 				<template tl-definition>
-					<my-greeting>
-						<h1>Hello ${'name'}</h1>
-						<!-- define new side-effect when "name" is updated -->
-						<script tl-effect tl-dependencies="name">
-							console.log('name attribute updated:', this.getAttribute('name'));
+					<sum-machine>
+						<span>${'a'} + ${'b'} = ${'result'}</span>
+
+						<!-- script to run on initial mount, and any time a or b update -->
+						<script tl-effect tl-dependencies="a b">
+							const a = parseInt(this.getAttribute('a'));
+							const b = parseInt(this.getAttribute('b'));
+							this.setAttribute('result', a + b);
 						</script>
-					</my-greeting>
+					</sum-machine>
 				</template>
 
-				<my-greeting></my-greeting>
-
-				<!-- update the name attribute -->
-				<script>
-					document.querySelector('my-greeting').setAttribute('name', 'World');
-				</script>
+				<sum-machine a="2" b="2"></sum-machine>
 			</template>
 		</code-template-html>
 	</p>
@@ -70,19 +68,33 @@
 	</dl>
 </section>
 <section>
-	<h2>Example</h2>
-	<p>
-		Example from the 7GUI challenges. See the full code
-		<a
-			href="https://github.com/JRJurman/Tram-Lite-7GUIs/blob/a441aa00dc35671f81983d4f6771fcae004868bd/tasks/gui-flight-booker.html#L26-L28"
-			>here</a
+	<h2>Live Example</h2>
+	<div
+		class="codepen"
+		data-height="300"
+		data-theme-id="dark"
+		data-default-tab="html,result"
+		data-editable="true"
+		data-prefill="{}"
+	>
+		<pre data-lang="html">
+&lt;script src="https://unpkg.com/tram-lite@4">&lt;/script>
+
+		&lt;template tl-definition>
+			&lt;sum-machine>
+				&lt;span>${'a'} + ${'b'} = ${'result'}&lt;/span>
+
+				&lt;!-- script to run on initial mount, and any time a or b update -->
+				&lt;script tl-effect tl-dependencies="a b">
+					const a = parseInt(this.getAttribute('a'));
+					const b = parseInt(this.getAttribute('b'));
+					this.setAttribute('result', a + b)
+				&lt;/script>
+			&lt;/sum-machine>
+		&lt;/template>
+
+		&lt;sum-machine a="2" b="2">&lt;/sum-machine></pre
 		>
-		<code-template-html>
-			<template>
-				<script tl-effect tl-dependencies="flight-option start-date return-date">
-					decorateFlightBookerControls(this);
-				</script>
-			</template>
-		</code-template-html>
-	</p>
+	</div>
+	<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
 </section>

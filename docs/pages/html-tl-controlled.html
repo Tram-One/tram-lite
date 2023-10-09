@@ -49,23 +49,28 @@
 	</dl>
 </section>
 <section>
-	<h2>Example</h2>
-	<p>
-		Example from the 7GUI challenges. See the full code
-		<a
-			href="https://github.com/JRJurman/Tram-Lite-7GUIs/blob/a441aa00dc35671f81983d4f6771fcae004868bd/tasks/gui-flight-booker.html#L16-L24"
-			>here</a
+	<h2>Live Example</h2>
+	<div
+		class="codepen"
+		data-height="300"
+		data-theme-id="dark"
+		data-default-tab="html,result"
+		data-editable="true"
+		data-prefill="{}"
+	>
+		<pre data-lang="html">
+&lt;script src="https://unpkg.com/tram-lite@4">&lt;/script>
+
+		&lt;template tl-definition>
+			&lt;x-greeting>
+				&lt;h1>Hello ${'name'}&lt;/h1>
+			&lt;input tl-controlled tl-hostattr="name" tl-trigger="input" />
+			&lt;/x-greeting>
+		&lt;/template>
+
+		&lt;x-greeting name="World">&lt;/x-greeting></pre
 		>
-		<code-template-html>
-			<template>
-				<select id="flight-input" tl-controlled tl-hostattr="flight-option">
-					<option value="one-way">one-way flight</option>
-					<option value="return">return flight</option>
-				</select>
-				<input id="start-input" tl-controlled tl-hostattr="start-date" tl-trigger="input" />
-				<input id="return-input" tl-controlled tl-hostattr="return-date" tl-trigger="input" />
-				<button id="book-confirm" onclick="bookFlight(this)">Book</button>
-			</template>
-		</code-template-html>
-	</p>
+	</div>
+
+	<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
 </section>

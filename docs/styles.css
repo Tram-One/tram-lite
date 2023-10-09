@@ -175,3 +175,8 @@ p code,
 tag-code {
 	color: var(--accent-color);
 }
+
+/* codepen embeds should have a limited width */
+.cp_embed_wrapper {
+	max-inline-size: 700px;
+}
