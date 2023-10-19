@@ -96,11 +96,19 @@ class ComponentDefinition {
 	}
 
 	/**
+	 * function to query and process any templates that already exist in the root document
+	 */
+	static processExistingTemplates() {
+		[...document.querySelectorAll('template[tl-definition]')].forEach((template) => {
+			ComponentDefinition.processTemplateDefinition(template);
+		});
+	}
+
+	/**
 	 * function to set up an observer to watch for when new templates are added,
 	 *   and process all the definitions in them
-	 * @param {Document} [targetRoot=document]
 	 */
-	static setupMutationObserverForTemplates(targetRoot = document) {
+	static setupMutationObserverForTemplates() {
 		/**
 		 * @param {MutationRecord[]} mutationRecords
 		 */
@@ -129,6 +137,8 @@ if (MODULE === true) {
 	}
 }
 if (INSTALL === true) {
+	// process any existing template definitions (if this was added after-the-fact)
+	ComponentDefinition.processExistingTemplates();
 	// setup mutation observer so that template elements created will automatically be defined
 	ComponentDefinition.setupMutationObserverForTemplates();
 }

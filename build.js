@@ -23,7 +23,14 @@ if (!fs.existsSync('output')) {
 }
 
 // load all source class files (these will be included in all builds)
-const classFiles = ['src/TramLite.js', ...fs.readdirSync('src/processors').map((file) => `src/processors/${file}`)];
+// ORDER IS IMPORTANT! We need ComponentDefinition to be last, so that
+//   shadow root processors exist by the time we start processing templates
+const classFiles = [
+	'src/TramLite.js',
+	'src/processors/ComponentEffect.js',
+	'src/processors/ControlledInput.js',
+	'src/processors/ComponentDefinition.js',
+];
 const loadedClassFiles = Object.fromEntries(
 	classFiles.map((filePath) => {
 		console.log('loading', filePath);
