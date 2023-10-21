@@ -42,7 +42,6 @@
 			<in-counter count="0" label="Green" color="#CEFFCE">
 				<button style="color: ${'color'}">${'label'}: ${'count'}</button>
 				<script tl-effect>
-					console.log('counter effect');
 					const inCounter = this;
 					inCounter.shadowRoot.querySelector('button').addEventListener('click', () => {
 						const newCount = parseInt(inCounter.getAttribute('count')) + 1;

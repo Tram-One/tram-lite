@@ -49,7 +49,7 @@ class TramLite {
 
 				// Create a shadow root
 				// and append our HTML to it
-				const shadow = this.attachShadow({ mode: 'open' });
+				const shadow = this.attachShadow({ mode: 'open', delegatesFocus: true });
 				shadow.append(...rootElement.cloneNode(true).childNodes);
 
 				// scan for any text nodes that have tram-lite wrapped variables (e.g. "tl:label:"),
