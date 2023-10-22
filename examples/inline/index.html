@@ -57,7 +57,7 @@
 
 			<in-todoitem>
 				<label style="display: block">
-					<input type="checkbox" tl-controlled tl-hostattr="checked" tl-targetattr="checked" />
+					<input type="checkbox" tl-controlled tl-attrmap="checked:checked" />
 					<slot></slot>
 				</label>
 				<script tl-effect tl-dependencies="checked">
@@ -123,8 +123,16 @@
 						fill: oklch(70% 0.1 ${'hue'});
 					}
 				</style>
-				<input id="hue-range-input" type="range" tl-controlled tl-hostattr="hue" tl-trigger="input" min="0" max="360" />
-				<input id="hue-text-input" type="text" placeholder="hue value" tl-controlled tl-hostattr="hue" />
+				<input
+					id="hue-range-input"
+					type="range"
+					tl-controlled
+					tl-attrmap="hue:value"
+					tl-trigger="input"
+					min="0"
+					max="360"
+				/>
+				<input id="hue-text-input" type="text" placeholder="hue value" tl-controlled tl-attrmap="hue:value" />
 				<svg viewbox="0 0 100 100" width="${'width'}">
 					<rect width="100" height="100" />
 				</svg>
@@ -132,12 +140,19 @@
 
 			<in-temperature celsius="" fahrenheit="">
 				<label>
-					<input id="c" tl-controlled placeholder="C" unit="celsius" tl-hostattr="celsius" tl-trigger="input" />
+					<input id="c" tl-controlled placeholder="C" unit="celsius" tl-attrmap="celsius:value" tl-trigger="input" />
 					Celsius
 				</label>
 				=
 				<label>
-					<input id="f" tl-controlled placeholder="F" unit="fahrenheit" tl-hostattr="fahrenheit" tl-trigger="input" />
+					<input
+						id="f"
+						tl-controlled
+						placeholder="F"
+						unit="fahrenheit"
+						tl-attrmap="fahrenheit:value"
+						tl-trigger="input"
+					/>
 					Fahrenheit
 				</label>
 
@@ -180,7 +195,7 @@
 			<in-progressbar value="3" max="10">
 				<div>
 					<input id="value" type="number" tl-controlled tl-trigger="input" />
-					<input id="max" type="number" tl-controlled tl-hostattr="max" tl-trigger="input" />
+					<input id="max" type="number" tl-controlled tl-attrmap="max:value" tl-trigger="input" />
 				</div>
 				<progress value="${'value'}" max="${'max'}"></progress>
 				<div>${'warning'}</div>

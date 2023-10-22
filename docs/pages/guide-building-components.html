@@ -131,7 +131,7 @@
 				<x-progressbar fill="5">
 					<progress value="${'fill'}" max="10"></progress>
 					<span>${'fill'}/10</span>
-					<input type="number" tl-controlled tl-hostattr="fill" />
+					<input type="number" tl-controlled tl-attrmap="fill:value" />
 				</x-progressbar>
 			</template>
 		</template>
@@ -141,8 +141,8 @@
 <h4>What's going on?</h4>
 <p>
 	Using the <code>tl-controlled</code> attribute, we're able to set up a 2-way data-binding between the input, and the
-	host web-component. In this case, we use <code>tl-hostattr</code> to bind the input to the
-	<code>fill</code> attribute.
+	host web-component. In this case, we use <code>tl-attrmap</code> to bind the input's <code>value</code> attribute to
+	the <code>fill</code> attribute on the host web-component.
 </p>
 
 <h3>Adding side-effects</h3>
@@ -156,7 +156,7 @@
 				<x-progressbar fill="5">
 					<progress value="${'fill'}" max="10"></progress>
 					<span>${'fill'}/10</span>
-					<input type="number" tl-controlled tl-hostattr="fill" />
+					<input type="number" tl-controlled tl-attrmap="fill:value" />
 					<span>${'warning'}</span>
 					<script tl-effect tl-dependencies="fill">
 						const fill = this.getAttribute('fill');

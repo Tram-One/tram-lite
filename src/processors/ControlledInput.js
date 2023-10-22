@@ -14,37 +14,48 @@ class ControlledInput {
 		// attributes that control the behavior of the controlled input
 		const triggerEventString = newNode.getAttribute('tl-trigger') || 'change';
 		const triggerEvents = triggerEventString.split(' ');
+
+		// original API attributes (will most likely be deprecated in v5)
 		const hostAttributeName = newNode.getAttribute('tl-hostattr') || 'value';
-		const targetAttribute = newNode.getAttribute('tl-targetattr') || 'value';
+		const targetAttributeName = newNode.getAttribute('tl-targetattr') || 'value';
 
-		// note the type of the attribute we are tracking
-		// (if it is a boolean, we'll just check if this has an attribute)
-		const attributeType = typeof newNode[targetAttribute];
-		const isBooleanAttr = attributeType === 'boolean';
+		// throw the original API in our new experimental attrmap.
+		// if set directly, use "host:target"
+		const attributeMapString = newNode.getAttribute('tl-attrmap') || `${hostAttributeName}:${targetAttributeName}`;
+		const attributeMaps = attributeMapString.split(' ');
 
-		// set the value of this input based on the host element
-		const hostElement = newNode.getRootNode().host;
-		newNode[targetAttribute] = isBooleanAttr
-			? hostElement.hasAttribute(hostAttributeName)
-			: hostElement.getAttribute(hostAttributeName);
+		attributeMaps.forEach((attributeMap) => {
+			const [hostAttrName, targetAttrName] = attributeMap.split(':');
 
-		// update this input whenever the host attribute updates
-		TramLite.addAttributeListener(hostElement, [hostAttributeName], () => {
-			newNode[targetAttribute] = isBooleanAttr
-				? hostElement.hasAttribute(hostAttributeName)
-				: hostElement.getAttribute(hostAttributeName);
-		});
+			// note the type of the attribute we are tracking
+			// (if it is a boolean, we'll just check if this has an attribute)
+			const attributeType = typeof newNode[targetAttrName];
+			const isBooleanAttr = attributeType === 'boolean';
 
-		// update the root component attribute whenever the value changes for this node updates
-		triggerEvents.forEach((triggerEvent) => {
-			newNode.addEventListener(triggerEvent, (event) => {
-				const rootNodeHost = event.target.getRootNode().host;
-				const targetValue = event.target[targetAttribute];
-				if (targetValue) {
-					rootNodeHost.setAttribute(hostAttributeName, isBooleanAttr ? '' : event.target[targetAttribute]);
-				} else {
-					rootNodeHost.removeAttribute(hostAttributeName);
-				}
+			// set the value of this input based on the host element
+			const hostElement = newNode.getRootNode().host;
+			newNode[targetAttrName] = isBooleanAttr
+				? hostElement.hasAttribute(hostAttrName)
+				: hostElement.getAttribute(hostAttrName);
+
+			// update this input whenever the host attribute updates
+			TramLite.addAttributeListener(hostElement, [hostAttrName], () => {
+				newNode[targetAttrName] = isBooleanAttr
+					? hostElement.hasAttribute(hostAttrName)
+					: hostElement.getAttribute(hostAttrName);
+			});
+
+			// update the root component attribute whenever the value changes for this node updates
+			triggerEvents.forEach((triggerEvent) => {
+				newNode.addEventListener(triggerEvent, (event) => {
+					const rootNodeHost = event.target.getRootNode().host;
+					const targetValue = event.target[targetAttrName];
+					if (targetValue) {
+						rootNodeHost.setAttribute(hostAttrName, isBooleanAttr ? '' : event.target[targetAttrName]);
+					} else {
+						rootNodeHost.removeAttribute(hostAttrName);
+					}
+				});
 			});
 		});
 	}

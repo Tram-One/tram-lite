@@ -7,8 +7,8 @@
 			fill: oklch(70% 0.1 ${'hue'});
 		}
 	</style>
-	<input id="hue-range-input" type="range" tl-controlled tl-hostattr="hue" tl-trigger="input" min="0" max="360" />
-	<input id="hue-text-input" type="text" placeholder="hue value" tl-controlled tl-hostattr="hue" />
+	<input id="hue-range-input" type="range" tl-controlled tl-attrmap="hue:value" tl-trigger="input" min="0" max="360" />
+	<input id="hue-text-input" type="text" placeholder="hue value" tl-controlled tl-attrmap="hue:value" />
 	<svg viewbox="0 0 100 100" width="${'width'}">
 		<rect width="100" height="100" />
 	</svg>
