@@ -56,18 +56,24 @@
 			</in-mirror>
 
 			<in-todoitem>
-				<label style="display: block">
+				<style>
+					label {
+						display: block;
+					}
+				</style>
+				<label>
 					<input type="checkbox" tl-controlled tl-attrmap="checked:checked" />
 					<slot></slot>
 				</label>
-				<script tl-effect tl-dependencies="checked">
-					const todoItemList = this.getRootNode().host;
-
-					// query all list items to determine new completed and total
-					const todoItems = todoItemList.shadowRoot.querySelectorAll('in-todoitem');
-					todoItemList.setAttribute('total', todoItems.length);
-					const completedItems = todoItemList.shadowRoot.querySelectorAll('in-todoitem[checked]');
-					todoItemList.setAttribute('completed', completedItems.length);
+				<e-emitter tl-emitter tl-dependencies="checked" tl-eventname="todoitem-checked"></e-emitter>
+				<script tl-effect>
+					this.addEventListener('select-all-updated', (event) => {
+						if (event.detail.originalElement.hasAttribute('all_checked')) {
+							this.setAttribute('checked', '');
+						} else {
+							this.removeAttribute('checked');
+						}
+					});
 				</script>
 			</in-todoitem>
 
@@ -75,41 +81,83 @@
 				<style>
 					todo-section {
 						padding-inline-start: 5px;
-						margin-block-start: 5px;
+						margex-block-start: 5px;
+					}
+					label {
+						display: block;
 					}
 				</style>
 				<span>To Do List (${'completed'}/${'total'})</span>
 				<form>
 					<input name="input" placeholder="New Item" autofill="false" />
 				</form>
-				<button id="select-all">Select All</button>
-				<todo-section></todo-section>
+				<todo-section>
+					<label>
+						<input
+							id="select-all"
+							type="checkbox"
+							tl-controlled
+							tl-attrmap="all_checked:checked all_indeteriminate:indeterminate"
+						/>
+						Select All
+					</label>
+					<hr />
+				</todo-section>
+				<e-emitter
+					tl-emitter
+					tl-dependencies="all_checked all_indeteriminate"
+					tl-eventname="select-all-updated"
+					tl-eventdirection="down"
+				></e-emitter>
 				<script tl-effect>
-					const todoList = this;
+					/* set up functions for this component */
 
-					function addNewTodoItem(todoText) {
-						const list = todoList.shadowRoot.querySelector('todo-section');
-						const newItem = this.document.createElement('in-todoitem');
+					this.updateTotals = () => {
+						const totalChecked = this.shadowRoot.querySelectorAll('[checked]').length;
+						this.setAttribute('completed', totalChecked);
+						const totalItems = this.shadowRoot.querySelectorAll('in-todoitem').length;
+						this.setAttribute('total', totalItems);
+
+						/* update the select all control */
+						if (totalChecked === totalItems) {
+							// if we have all selected, make the checkbox checked
+							this.shadowRoot.querySelector('input[type="checkbox"]').indeterminate = false;
+							this.shadowRoot.querySelector('input[type="checkbox"]').checked = true;
+						} else if (totalChecked > 0) {
+							// if we have some selected, but not all, make the checkbox indeterminate
+							this.shadowRoot.querySelector('input[type="checkbox"]').indeterminate = true;
+						} else if (totalChecked === 0) {
+							// if we have none selected, uncheck the checkbox
+							this.shadowRoot.querySelector('input[type="checkbox"]').indeterminate = false;
+							this.shadowRoot.querySelector('input[type="checkbox"]').checked = false;
+						}
+					};
+
+					this.addNewTodoItem = (todoText) => {
+						const list = this.shadowRoot.querySelector('todo-section');
+						const newItem = this.ownerDocument.createElement('in-todoitem');
 						newItem.innerText = todoText;
 						list.appendChild(newItem);
-					}
+						this.updateTotals();
+					};
 
-					function submitNewTodoItem(event) {
+					this.submitNewTodoItem = (event) => {
 						event.preventDefault();
-						addNewTodoItem(event.target.input.value);
+						this.addNewTodoItem(event.target.input.value);
 						event.target.reset();
-					}
-					todoList.shadowRoot.querySelector('form').addEventListener('submit', submitNewTodoItem);
-
-					addNewTodoItem('Example Initial Item');
-					addNewTodoItem('Learning Tram-Lite');
+					};
 				</script>
 				<script tl-effect>
-					// add event listener for selecting all checkboxes
-					const selectAllButton = this.shadowRoot.querySelector('button');
-					selectAllButton.addEventListener('click', () => {
-						const todoItems = this.shadowRoot.querySelectorAll('in-todoitem');
-						todoItems.forEach((todoItem) => todoItem.setAttribute('checked', ''));
+					/* create an initial 2 todo items */
+					this.addNewTodoItem('Example Initial Item');
+					this.addNewTodoItem('Learning Tram-Lite');
+				</script>
+				<script tl-effect>
+					/* initial event listeners */
+					this.shadowRoot.querySelector('form').addEventListener('submit', this.submitNewTodoItem);
+
+					this.addEventListener('todoitem-checked', () => {
+						this.updateTotals();
 					});
 				</script>
 			</in-todolist>

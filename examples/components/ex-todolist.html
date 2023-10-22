@@ -11,12 +11,9 @@
 	<e-emitter tl-emitter tl-dependencies="checked" tl-eventname="todoitem-checked"></e-emitter>
 	<script tl-effect>
 		this.addEventListener('select-all-updated', (event) => {
-			if (event.detail.originalElement.hasAttribute('select-all')) {
-				// select this element
+			if (event.detail.originalElement.hasAttribute('all_checked')) {
 				this.setAttribute('checked', '');
-			}
-			if (!event.detail.originalElement.hasAttribute('select-all')) {
-				// uncheck this element
+			} else {
 				this.removeAttribute('checked');
 			}
 		});
