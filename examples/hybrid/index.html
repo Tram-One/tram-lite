@@ -15,12 +15,12 @@
 			}
 		</style>
 
-		<script src="../../output/tram-lite.js"></script>
 		<script
 			src="../../output/import-components.js"
-			tl-components="/examples/components/ex-container.html /examples/components/ex-progressbar.html"
+			tl-components="/examples/components/ex-container.html /examples/components/ex-progressbar.html /examples/components/ex-todolist.html"
 		></script>
 		<script src="/examples/components/ex-colorpicker.js"></script>
+		<script src="../../output/tram-lite.js"></script>
 
 		<template tl-definition>
 			<in-temperature celsius="" fahrenheit="">
@@ -80,6 +80,9 @@
 		</ex-container>
 		<ex-container name="Color Picker">
 			<ex-colorpicker hue="200"></ex-colorpicker>
+		</ex-container>
+		<ex-container name="To Do List">
+			<ex-todolist></ex-todolist>
 		</ex-container>
 	</body>
 </html>

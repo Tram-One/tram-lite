@@ -29,7 +29,7 @@ const classFiles = [
 	'src/TramLite.js',
 	'src/processors/ComponentEffect.js',
 	'src/processors/ControlledInput.js',
-	'src/processors/ComponentDefinition.js',
+	'src/ComponentDefinition.js',
 ];
 const loadedClassFiles = Object.fromEntries(
 	classFiles.map((filePath) => {
@@ -49,31 +49,24 @@ const importScript = {
 };
 
 // uglify parameters to change the result of each bundle.
-// `MODULE` and `INSTALL` are variables that can be found in the class files and
-//   determine if we should attach listeners for a window or export the class for a JS API.
 // `enclose` determines if the code should be wrapped in an IIFE (which prevents
-//   prevents class definitions from colliding).
+//   class definitions from colliding).
 const buildConfigs = [
-	{
-		outputFile: 'output/api.js',
-		files: loadedClassFiles,
-		defines: { MODULE: true, INSTALL: false },
-	},
 	{
 		outputFile: 'output/tram-lite.js',
 		files: loadedClassFiles,
-		defines: { MODULE: false, INSTALL: true },
+		defines: { INSTALL: true },
 	},
 	{
 		outputFile: 'output/import-components.js',
 		files: { ...loadedClassFiles, ...importComponentClass, ...importScript },
-		defines: { MODULE: false, INSTALL: false },
+		defines: { INSTALL: false },
 		enclose: true,
 	},
 	{
 		outputFile: 'output/export-dependencies.js',
 		files: { ...loadedClassFiles, ...importComponentClass },
-		defines: { MODULE: false, INSTALL: false },
+		defines: { INSTALL: false },
 	},
 ];
 
@@ -98,7 +91,6 @@ buildConfigs.forEach((config) => {
 
 // for each of these, create a minified version
 const minifyConfigs = [
-	{ inputFile: 'output/api.js', outputFile: 'output/api.min.js' },
 	{ inputFile: 'output/tram-lite.js', outputFile: 'output/tram-lite.min.js' },
 	{ inputFile: 'output/import-components.js', outputFile: 'output/import-components.min.js' },
 	{ inputFile: 'output/export-dependencies.js', outputFile: 'output/export-dependencies.min.js' },

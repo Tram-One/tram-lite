@@ -2,6 +2,11 @@ class TramLite {
 	static version = APP_VERSION;
 	static installed = false;
 
+	// extending HTMLElement so that we can attach shadow root processors
+	//   without interfering with the global HTMLElement prototype
+	//   (this is most important in the import/export case)
+	static ComponentInterface = class extends HTMLElement {};
+
 	/**
 	 * utility function to build the component class from the template string
 	 * (this is an underlying utility for the define function)
@@ -30,7 +35,7 @@ class TramLite {
 		});
 
 		// Custom element class with tram-lite template support.
-		class CustomTramLiteElement extends HTMLElement {
+		class CustomTramLiteElement extends TramLite.ComponentInterface {
 			static tramLiteVersion = APP_VERSION;
 			static tagName = rootElement.tagName.toLowerCase();
 
@@ -193,32 +198,35 @@ class TramLite {
 	 * function to append new behaviors to elements that are attached to the shadowDOM.
 	 * {@link https://tram-one.io/tram-lite/#appendShadowRootProcessor Read the full docs here.}
 	 * @param {string} matcher
-	 * @param {{ connect: function }} componentClass
-	 * @param {ShadowRoot} [shadowRoot=ShadowRoot.prototype]
+	 * @param {{ connect: function }} processorClass
+	 * @param {typeof HTMLElement} [componentInterface=HTMLElement]
 	 */
-	static appendShadowRootProcessor(matcher, componentClass, shadowRoot = ShadowRoot.prototype) {
-		// save the original version of shadowRoot.append
-		const shAppend = shadowRoot.append;
+	static appendShadowRootProcessor(matcher, processorClass, componentInterface = HTMLElement) {
+		// override attachShadow so that we can add shadowRootProcessors
+		const attachShadow = componentInterface.prototype.attachShadow;
 
-		shadowRoot.append = function (...nodes) {
-			shAppend.call(this, ...nodes);
-			// if any element in this shadowRoot matches our matcher,
-			//   run the `connect` function from this class
-			this.querySelectorAll(matcher).forEach((matchingElement) => {
-				if (matchingElement.getRootNode().host) {
-					componentClass.connect(matchingElement);
-				}
-			});
+		componentInterface.prototype.attachShadow = function (...options) {
+			const shadowRoot = attachShadow.call(this, ...options);
+
+			// save the original version of shadowRoot.append
+			const shAppend = shadowRoot.append;
+
+			shadowRoot.append = function (...nodes) {
+				shAppend.call(this, ...nodes);
+				// if any element in this shadowRoot matches our matcher,
+				//   run the `connect` function from this class
+				this.querySelectorAll(matcher).forEach((matchingElement) => {
+					if (matchingElement.getRootNode().host) {
+						processorClass.connect(matchingElement);
+					}
+				});
+			};
+
+			return shadowRoot;
 		};
 	}
 }
 
-if (MODULE === true) {
-	// if module is available, export this class
-	if (typeof module !== 'undefined') {
-		module.exports = TramLite;
-	}
-}
 if (INSTALL === true) {
 	// if this is a script tag, note that we've installed Tram-Lite listeners
 	TramLite.installed = true;

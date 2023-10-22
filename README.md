@@ -12,7 +12,7 @@
     <img src="https://img.shields.io/npm/v/tram-lite.svg" alt="Version">
   </a>
   <a href="https://unpkg.com/tram-lite@4.0.0/output/tram-lite.min.js">
-    <img src="https://img.shields.io/badge/gzip-1.7kB-006369.svg?style=flat" alt="Gzipped Size">
+    <img src="https://img.shields.io/badge/gzip-2.2kB-006369.svg?style=flat" alt="Gzipped Size">
   </a>
   <a href="https://github.com/Tram-One/tram-lite/blob/main/LICENSE">
     <img src="https://img.shields.io/npm/l/tram-lite.svg" alt="License">
