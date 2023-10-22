@@ -82,6 +82,7 @@
 				<form>
 					<input name="input" placeholder="New Item" autofill="false" />
 				</form>
+				<button id="select-all">Select All</button>
 				<todo-section></todo-section>
 				<script tl-effect>
 					const todoList = this;
@@ -102,6 +103,14 @@
 
 					addNewTodoItem('Example Initial Item');
 					addNewTodoItem('Learning Tram-Lite');
+				</script>
+				<script tl-effect>
+					// add event listener for selecting all checkboxes
+					const selectAllButton = this.shadowRoot.querySelector('button');
+					selectAllButton.addEventListener('click', () => {
+						const todoItems = this.shadowRoot.querySelectorAll('in-todoitem');
+						todoItems.forEach((todoItem) => todoItem.setAttribute('checked', ''));
+					});
 				</script>
 			</in-todolist>
 

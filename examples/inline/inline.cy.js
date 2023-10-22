@@ -50,6 +50,10 @@ describe('Tram-Lite Example Components', () => {
 		cy.get('in-todoitem').contains('Cypress Test').click();
 		cy.get('in-todolist').get('span').contains('(0/3)');
 
+		/* verify that boolean attributes on controlled elements update when host attributes update */
+		cy.get('in-todolist').get('button#select-all').click();
+		cy.get('in-todoitem').get('input').should('be.checked');
+
 		/* verify that component effects trigger on dependency updates */
 		cy.get('in-temperature').get('input#f').type('19');
 		cy.get('in-temperature').get('input#c').should('have.value', '-7');
