@@ -29,6 +29,7 @@ const classFiles = [
 	'src/TramLite.js',
 	'src/processors/ComponentEffect.js',
 	'src/processors/ControlledInput.js',
+	'src/processors/AttrEmitter.js',
 	'src/ComponentDefinition.js',
 ];
 const loadedClassFiles = Object.fromEntries(
