@@ -14,14 +14,7 @@ class ControlledInput {
 		// attributes that control the behavior of the controlled input
 		const triggerEventString = newNode.getAttribute('tl-trigger') || 'change';
 		const triggerEvents = triggerEventString.split(' ');
-
-		// original API attributes (will most likely be deprecated in v5)
-		const hostAttributeName = newNode.getAttribute('tl-hostattr') || 'value';
-		const targetAttributeName = newNode.getAttribute('tl-targetattr') || 'value';
-
-		// throw the original API in our new experimental attrmap.
-		// if set directly, use "host:target"
-		const attributeMapString = newNode.getAttribute('tl-attrmap') || `${hostAttributeName}:${targetAttributeName}`;
+		const attributeMapString = newNode.getAttribute('tl-attrmap') || 'value:value';
 		const attributeMaps = attributeMapString.split(' ');
 
 		attributeMaps.forEach((attributeMap) => {

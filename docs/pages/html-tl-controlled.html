@@ -40,16 +40,6 @@
 				<code>"value:value"</code>. Can be multiple values (space delimited).
 			</p>
 		</dd>
-		<dt><code>tl-hostattr</code> <optional-badge>optional</optional-badge> <optional-badge>legacy</optional-badge></dt>
-		<dd>
-			<p>Attribute to set on the host web-component, default to <code>"value"</code>.</p>
-		</dd>
-		<dt>
-			<code>tl-targetattr</code> <optional-badge>optional</optional-badge> <optional-badge>legacy</optional-badge>
-		</dt>
-		<dd>
-			<p>The attribute to read from the <code>input</code> element, defaults to <code>"value"</code>.</p>
-		</dd>
 		<dt><code>tl-trigger</code> <optional-badge>optional</optional-badge></dt>
 		<dd>
 			<p>
@@ -70,12 +60,12 @@
 		data-prefill="{}"
 	>
 		<pre data-lang="html">
-&lt;script src="https://unpkg.com/tram-lite@4">&lt;/script>
+&lt;script src="https://unpkg.com/tram-lite@5">&lt;/script>
 
 		&lt;template tl-definition>
 			&lt;x-greeting>
 				&lt;h1>Hello ${'name'}&lt;/h1>
-			&lt;input tl-controlled tl-hostattr="name" tl-trigger="input" />
+			&lt;input tl-controlled tl-attrmap="name:value" tl-trigger="input" />
 			&lt;/x-greeting>
 		&lt;/template>
 

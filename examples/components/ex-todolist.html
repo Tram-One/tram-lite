@@ -39,14 +39,14 @@
 	</form>
 	<todo-section>
 		<label>
-			<input type="checkbox" tl-controlled tl-hostattr="select-all" tl-targetattr="checked" />
+			<input type="checkbox" tl-controlled tl-attrmap="all_checked:checked all_indeteriminate:indeterminate" />
 			Select All
 		</label>
 		<hr />
 	</todo-section>
 	<e-emitter
 		tl-emitter
-		tl-dependencies="select-all"
+		tl-dependencies="all_checked all_indeteriminate"
 		tl-eventname="select-all-updated"
 		tl-eventdirection="down"
 	></e-emitter>
