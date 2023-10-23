@@ -51,17 +51,18 @@ describe('Tram-Lite Example Components', () => {
 		cy.get('in-todolist').find('span').contains('(0/3)');
 
 		/* verify that boolean attributes on controlled elements update when host attributes update */
-		cy.get('in-todolist').get('input#select-all').click();
-		cy.get('in-todolist').get('span').contains('(3/3)');
-		cy.get('in-todoitem').get('input').should('be.checked');
+		cy.get('in-todolist').find('input#select-all').click();
+		cy.get('in-todolist').find('span').contains('(3/3)');
+		cy.get('in-todoitem').find('input').should('be.checked');
 
 		/* verify that attribute removal also emits events */
-		cy.get('in-todolist').get('input#select-all').click(); // deselect all elements
-		cy.get('in-todolist').get('span').contains('(0/3)');
-		cy.get('in-todoitem').get('input:not([checked])').first().click();
-		cy.get('in-todoitem').get('input:not([checked])').click();
-		cy.get('in-todoitem').get('input:not([checked])').click();
-		cy.get('in-todolist').get('span').contains('(3/3)');
+		cy.get('in-todolist').find('input#select-all').click(); // deselect all elements
+		cy.get('in-todolist').find('span').contains('(0/3)');
+		cy.get('in-todoitem').click({ multiple: true }); // manually select all elements
+		cy.get('in-todolist').find('span').contains('(3/3)');
+		cy.get('in-todolist').find('input#select-all').should('be.checked'); // it should be checked (since all items are selected)
+		cy.get('in-todolist').find('input#select-all').click(); // should deselect all elements
+		cy.get('in-todolist').find('span').contains('(0/3)');
 
 		/* verify that component effects trigger on dependency updates */
 		cy.get('in-temperature').find('input#f').type('19');

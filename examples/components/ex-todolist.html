@@ -36,7 +36,12 @@
 	</form>
 	<todo-section>
 		<label>
-			<input type="checkbox" tl-controlled tl-attrmap="all_checked:checked all_indeteriminate:indeterminate" />
+			<input
+				id="select-all"
+				type="checkbox"
+				tl-controlled
+				tl-attrmap="all_checked:checked all_indeteriminate:indeterminate"
+			/>
 			Select All
 		</label>
 		<hr />
@@ -59,15 +64,15 @@
 			/* update the select all control */
 			if (totalChecked === totalItems) {
 				// if we have all selected, make the checkbox checked
-				this.shadowRoot.querySelector('input[type="checkbox"]').indeterminate = false;
-				this.shadowRoot.querySelector('input[type="checkbox"]').checked = true;
+				this.removeAttribute('all_indeterminate');
+				this.setAttribute('all_checked', '');
 			} else if (totalChecked > 0) {
 				// if we have some selected, but not all, make the checkbox indeterminate
-				this.shadowRoot.querySelector('input[type="checkbox"]').indeterminate = true;
+				this.setAttribute('all_indeterminate', '');
 			} else if (totalChecked === 0) {
 				// if we have none selected, uncheck the checkbox
-				this.shadowRoot.querySelector('input[type="checkbox"]').indeterminate = false;
-				this.shadowRoot.querySelector('input[type="checkbox"]').checked = false;
+				this.removeAttribute('all_indeterminate');
+				this.removeAttribute('all_checked');
 			}
 		};
 
