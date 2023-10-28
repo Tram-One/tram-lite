@@ -68,9 +68,11 @@
 				<span tl-emitter tl-dependencies="checked" tl-eventname="todoitem-checked"></span>
 				<script tl-effect>
 					this.addEventListener('select-all-updated', (event) => {
-						if (event.detail.originalElement.hasAttribute('all_checked')) {
+						const all_checked = event.detail.originalElement.hasAttribute('all_checked');
+						const all_indeterminate = event.detail.originalElement.hasAttribute('all_indeterminate');
+						if (all_checked) {
 							this.setAttribute('checked', '');
-						} else {
+						} else if (!all_checked && !all_indeterminate) {
 							this.removeAttribute('checked');
 						}
 					});
@@ -126,6 +128,7 @@
 						} else if (totalChecked > 0) {
 							// if we have some selected, but not all, make the checkbox indeterminate
 							this.setAttribute('all_indeterminate', '');
+							this.removeAttribute('all_checked');
 						} else if (totalChecked === 0) {
 							// if we have none selected, uncheck the checkbox
 							this.removeAttribute('all_indeterminate');
