@@ -1,7 +1,7 @@
 <ex-progressbar value="3" max="10">
 	<div>
 		<input id="value" type="number" tl-controlled tl-trigger="input" />
-		<input id="max" type="number" tl-controlled tl-attrmap="max:value" tl-trigger="input" />
+		<input id="max" type="number" tl-controlled tl-attrmap="value:max" tl-trigger="input" />
 	</div>
 	<progress value="${'value'}" max="${'max'}"></progress>
 	<div>${'warning'}</div>

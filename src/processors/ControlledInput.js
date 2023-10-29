@@ -18,7 +18,7 @@ class ControlledInput {
 		const attributeMaps = attributeMapString.split(' ');
 
 		attributeMaps.forEach((attributeMap) => {
-			const [hostAttrName, targetAttrName] = attributeMap.split(':');
+			const [targetAttrName, hostAttrName] = attributeMap.split(':');
 
 			// note the type of the attribute we are tracking
 			// (if it is a boolean, we'll just check if this has an attribute)

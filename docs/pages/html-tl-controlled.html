@@ -13,7 +13,7 @@
 				<template tl-definition>
 					<x-greeting>
 						<h1>Hello ${'name'}</h1>
-						<input tl-controlled tl-attrmap="name:value" />
+						<input tl-controlled tl-attrmap="value:name" />
 					</x-greeting>
 				</template>
 			</template>
@@ -25,18 +25,16 @@
 	<p>
 		<code-template-html>
 			<template>
-				<input tl-controlled tl-attrmap="host-name:target-name" tl-trigger="change" />
+				<input tl-controlled tl-attrmap="target-name:host-name" tl-trigger="change" />
 			</template>
 		</code-template-html>
 	</p>
 	<h3>Parameters</h3>
 	<dl>
-		<dt>
-			<code>tl-attrmap</code> <optional-badge>optional</optional-badge> <optional-badge>experimental</optional-badge>
-		</dt>
+		<dt><code>tl-attrmap</code> <optional-badge>optional</optional-badge></dt>
 		<dd>
 			<p>
-				Mapping of host attribute names to attribute names of the target element, defaults to
+				Mapping of target element's attributes to attribute names that will be on the host, defaults to
 				<code>"value:value"</code>. Can be multiple values (space delimited).
 			</p>
 		</dd>
@@ -65,7 +63,7 @@
 		&lt;template tl-definition>
 			&lt;x-greeting>
 				&lt;h1>Hello ${'name'}&lt;/h1>
-			&lt;input tl-controlled tl-attrmap="name:value" tl-trigger="input" />
+			&lt;input tl-controlled tl-attrmap="value:name" tl-trigger="input" />
 			&lt;/x-greeting>
 		&lt;/template>
 

@@ -131,7 +131,7 @@
 				<x-progressbar fill="5">
 					<progress value="${'fill'}" max="10"></progress>
 					<span>${'fill'}/10</span>
-					<input type="number" tl-controlled tl-attrmap="fill:value" />
+					<input type="number" tl-controlled tl-attrmap="value:fill" />
 				</x-progressbar>
 			</template>
 		</template>
@@ -156,7 +156,7 @@
 				<x-progressbar fill="5">
 					<progress value="${'fill'}" max="10"></progress>
 					<span>${'fill'}/10</span>
-					<input type="number" tl-controlled tl-attrmap="fill:value" />
+					<input type="number" tl-controlled tl-attrmap="value:fill" />
 					<span>${'warning'}</span>
 					<script tl-effect tl-dependencies="fill">
 						const fill = this.getAttribute('fill');

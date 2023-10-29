@@ -41,7 +41,7 @@ web-applications easier and more elegant!
 		<h1>${'page'}</h1>
 
 		<!-- use controlled elements to update the component attributes -->
-		<input tl-controlled placeholder="Title" tl-attrmap="page:value" />
+		<input tl-controlled placeholder="Title" tl-attrmap="value:page" />
 
 		<!-- effects run on mount, and when dependencies change -->
 		<script tl-effect tl-dependencies="page">

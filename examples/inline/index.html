@@ -65,7 +65,7 @@
 					<input type="checkbox" tl-controlled tl-attrmap="checked:checked" />
 					<slot></slot>
 				</label>
-				<span tl-emitter tl-dependencies="checked" tl-eventname="todoitem-checked"></span>
+				<span tl-emit tl-dependencies="checked" tl-eventname="todoitem-checked"></span>
 				<script tl-effect>
 					this.addEventListener('select-all-updated', (event) => {
 						const all_checked = event.detail.originalElement.hasAttribute('all_checked');
@@ -99,14 +99,14 @@
 							id="select-all"
 							type="checkbox"
 							tl-controlled
-							tl-attrmap="all_checked:checked all_indeterminate:indeterminate"
+							tl-attrmap="checked:all_checked indeterminate:all_indeterminate"
 						/>
 						Select All
 					</label>
 					<hr />
 				</todo-section>
 				<span
-					tl-emitter
+					tl-emit
 					tl-dependencies="all_checked all_indeterminate"
 					tl-eventname="select-all-updated"
 					tl-eventdirection="down"
@@ -178,12 +178,12 @@
 					id="hue-range-input"
 					type="range"
 					tl-controlled
-					tl-attrmap="hue:value"
+					tl-attrmap="value:hue"
 					tl-trigger="input"
 					min="0"
 					max="360"
 				/>
-				<input id="hue-text-input" type="text" placeholder="hue value" tl-controlled tl-attrmap="hue:value" />
+				<input id="hue-text-input" type="text" placeholder="hue value" tl-controlled tl-attrmap="value:hue" />
 				<svg viewbox="0 0 100 100" width="${'width'}">
 					<rect width="100" height="100" />
 				</svg>
@@ -191,7 +191,7 @@
 
 			<in-temperature celsius="" fahrenheit="">
 				<label>
-					<input id="c" tl-controlled placeholder="C" unit="celsius" tl-attrmap="celsius:value" tl-trigger="input" />
+					<input id="c" tl-controlled placeholder="C" unit="celsius" tl-attrmap="value:celsius" tl-trigger="input" />
 					Celsius
 				</label>
 				=
@@ -201,7 +201,7 @@
 						tl-controlled
 						placeholder="F"
 						unit="fahrenheit"
-						tl-attrmap="fahrenheit:value"
+						tl-attrmap="value:fahrenheit"
 						tl-trigger="input"
 					/>
 					Fahrenheit
@@ -246,7 +246,7 @@
 			<in-progressbar value="3" max="10">
 				<div>
 					<input id="value" type="number" tl-controlled tl-trigger="input" />
-					<input id="max" type="number" tl-controlled tl-attrmap="max:value" tl-trigger="input" />
+					<input id="max" type="number" tl-controlled tl-attrmap="value:max" tl-trigger="input" />
 				</div>
 				<progress value="${'value'}" max="${'max'}"></progress>
 				<div>${'warning'}</div>

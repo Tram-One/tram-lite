@@ -1,7 +1,7 @@
 /**
  * TBA
  *
- * {@link https://tram-one.io/tram-lite/#tl-emitter}
+ * {@link https://tram-one.io/tram-lite/#tl-emit}
  */
 class AttrEmitter {
 	/**
@@ -44,5 +44,5 @@ class AttrEmitter {
 	}
 }
 
-// setup shadow root processor so that tl-emitter that are added are processed correctly
-TramLite.appendShadowRootProcessor('[tl-emitter]', AttrEmitter, TramLite.ComponentInterface);
+// setup shadow root processor so that tl-emit that are added are processed correctly
+TramLite.appendShadowRootProcessor('[tl-emit]', AttrEmitter, TramLite.ComponentInterface);
