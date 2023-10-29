@@ -35,26 +35,3 @@
 	separate files, check out the documentation on
 	<a href="#importing-and-exporting">Importing & Exporting Components</a>.
 </p>
-
-<h2>Javascript API</h2>
-<p>
-	If you only want access to the Javascript API, or are using tram-lite in a non-browser environment, you can pull just
-	the class definitions by pointing to the <code>api.js</code>. This is also useful if you don't want the side-effects
-	of Tram-Lite, or plan on using different versions of Tram-Lite in the same environment.
-
-	<code-template-js>
-		<template>
-			<script>
-				npm i tram-lite@4
-			</script>
-		</template>
-	</code-template-js>
-
-	<code-template-js>
-		<template>
-			<script>
-				const TramLite = require('tram-lite/output/api.js');
-			</script>
-		</template>
-	</code-template-js>
-</p>
