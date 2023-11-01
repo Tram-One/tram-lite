@@ -23,7 +23,7 @@ class AttrBroadcaster {
 		TramLite.addAttributeListener(hostElement, attributes, () => {
 			// add a new attribute listener for each event direction
 			eventDirections.forEach((eventDirection) => {
-				TramLite.dispatchEvent(hostElement, eventName, eventDirection);
+				TramLite.broadcastEvent(hostElement, eventName, eventDirection);
 			});
 		});
 	}

@@ -183,7 +183,7 @@ class TramLite {
 	 * @param {string} eventName - event name, can be listened for from other elements
 	 * @param {'up' | 'down'} eventDirection - dictates which elements should receive the event, parents ('up') or children ('down')
 	 */
-	static dispatchEvent(targetElement, eventName, eventDirection) {
+	static broadcastEvent(targetElement, eventName, eventDirection) {
 		const eventDetails = { originalElement: targetElement };
 		if (eventDirection === 'up') {
 			const customEvent = new CustomEvent(eventName, {
