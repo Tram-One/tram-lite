@@ -14,32 +14,13 @@ class AttrEmitter {
 		const attributeString = newNode.getAttribute('tl-dependencies');
 		const attributes = attributeString.split(' ');
 		const eventName = newNode.getAttribute('tl-eventname');
-		const eventDirection = newNode.getAttribute('tl-eventdirection') || 'up';
+		const eventDirection = newNode.getAttribute('tl-direction') || 'up';
 
 		const hostElement = newNode.getRootNode().host;
 
 		// emit an event whenever thes attributes change
 		TramLite.addAttributeListener(hostElement, attributes, () => {
-			const eventDetails = { originalElement: hostElement };
-			if (eventDirection === 'up') {
-				const customEvent = new CustomEvent(eventName, {
-					bubbles: true,
-					composed: true,
-					detail: eventDetails,
-				});
-				hostElement.dispatchEvent(customEvent);
-			}
-			if (eventDirection === 'down') {
-				// if we are dispatching an event to child elements, query all child elements,
-				//   and dispatch on each one individually
-				const customEvent = new CustomEvent(eventName, {
-					bubbles: false,
-					composed: false,
-					detail: eventDetails,
-				});
-				const allChildElements = hostElement.shadowRoot.querySelectorAll('*');
-				allChildElements.forEach((child) => child.dispatchEvent(customEvent));
-			}
+			TramLite.dispatchEvent(hostElement, hostElement, eventName, eventDirection);
 		});
 	}
 }
