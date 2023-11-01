@@ -70,6 +70,7 @@
 			} else if (totalChecked > 0) {
 				// if we have some selected, but not all, make the checkbox indeterminate
 				this.setAttribute('all_indeterminate', '');
+				this.removeAttribute('all_checked');
 			} else if (totalChecked === 0) {
 				// if we have none selected, uncheck the checkbox
 				this.removeAttribute('all_indeterminate');
