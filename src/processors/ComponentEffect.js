@@ -21,7 +21,11 @@ class ComponentEffect {
 
 		// provide a scoped evaluation of the script tags in this element
 		const scopedEval = (script) => {
-			return Function('document', 'window', script).bind(hostElement)(hostElement.shadowRoot, window);
+			return Function('document', 'window', 'TramLite', script).bind(hostElement)(
+				hostElement.shadowRoot,
+				window,
+				TramLite,
+			);
 		};
 
 		scopedEval(scriptTag.innerHTML);
