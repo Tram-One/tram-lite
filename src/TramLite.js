@@ -158,6 +158,7 @@ class TramLite {
 
 	/**
 	 * function to set up a callback for when an element's attribute changes
+	 * {@link https://tram-one.io/tram-lite/#addAttributeListener Read the full docs here.}
 	 * @param {Element} targetElement - The DOM element to observe.
 	 * @param {string[]} attributeNames - The name of the attribute (or list of attributes) to observe for changes.
 	 * @param {function(MutationRecord):void} callback - The function to call when the observed attribute changes.

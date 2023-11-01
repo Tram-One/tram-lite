@@ -1,0 +1,68 @@
+<h2><code>TramLite.addAttributeListener</code></h2>
+<section>
+	<p>
+		<code>TramLite.addAttributeListener</code> is a helper function to set up a callback for when an element's attribute
+		changes. This allows your component to react more dynamically to attribute changes (beyond simple templating).
+	</p>
+	<p>
+		It is the underlying function behind <tag-code tag="script" attribute="tl-effect"></tag-code>, and
+		<tag-code tag="input" attribute="tl-controlled"></tag-code>.
+	</p>
+</section>
+<section>
+	<h2>Syntax</h2>
+	<p>
+		<code-template-js>
+			<template>
+				<script>
+					TramLite.addAttributeListener(element, attributeNames, callback);
+				</script>
+			</template>
+		</code-template-js>
+	</p>
+	<h3>Parameters</h3>
+	<dl>
+		<dt><code>element</code></dt>
+		<dd><p>Element to watch attribute changes for.</p></dd>
+		<dt><code>attributeNames</code></dt>
+		<dd><p>A list of attribute names on the element to watch changes for.</p></dd>
+		<dt><code>callback</code></dt>
+		<dd>
+			<p>The function to call when one of the listed attributes changes. It has the following parameters:</p>
+			<dl>
+				<dt><code>mutationRecord</code></dt>
+				<dd>
+					A
+					<a href="https://developer.mozilla.org/en-US/docs/Web/API/MutationRecord"><code>MutationRecord</code></a>
+					object for the change that was triggered.
+				</dd>
+			</dl>
+		</dd>
+	</dl>
+	<h3>Return Value</h3>
+	<p>None</p>
+	<h3>Exceptions</h3>
+	<p>To Be Added...</p>
+</section>
+<section>
+	<h2>Example</h2>
+	<p>
+		<code-template-js>
+			<template>
+				<script>
+					const alertingCount = document.createELement('x-counter');
+					document.body.appendChild(alertingCount);
+					alertingCount.setAttribute('count', 4);
+
+					// setup observer
+					TramLite.addAttributeListener(alertingCount, ['count'], () => {
+						console.log(`Count: ${alertingCount.getAttribute('count')}`);
+					});
+
+					// update count, which will trigger the alert
+					alertingCount.setAttribute('count', '5');
+				</script>
+			</template>
+		</code-template-js>
+	</p>
+</section>
