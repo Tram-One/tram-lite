@@ -65,4 +65,4 @@ class ComponentEffect {
 }
 
 // setup shadow root processor so that tl-effects that are added are processed correctly
-TramLite.appendShadowRootProcessor('[tl-effect]', ComponentEffect, TramLite.ComponentInterface);
+TramLite.appendShadowRootProcessor('[tl-effect]', ComponentEffect);

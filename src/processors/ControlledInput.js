@@ -55,4 +55,4 @@ class ControlledInput {
 }
 
 // setup shadow root processor so that tl-controlled that are added are processed correctly
-TramLite.appendShadowRootProcessor('[tl-controlled]', ControlledInput, TramLite.ComponentInterface);
+TramLite.appendShadowRootProcessor('[tl-controlled]', ControlledInput);

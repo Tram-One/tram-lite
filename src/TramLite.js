@@ -206,7 +206,7 @@ class TramLite {
 	 * @param {{ connect: function }} processorClass
 	 * @param {typeof HTMLElement} [componentInterface=HTMLElement]
 	 */
-	static appendShadowRootProcessor(matcher, processorClass, componentInterface = HTMLElement) {
+	static appendShadowRootProcessor(matcher, processorClass, componentInterface = TramLite.ComponentInterface) {
 		// override attachShadow so that we can add shadowRootProcessors
 		const attachShadow = componentInterface.prototype.attachShadow;
 

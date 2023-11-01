@@ -47,7 +47,7 @@
 			<template>
 				<script>
 					// prettier-ignore
-					TramLite.appendShadowRootProcessor(cssSelector, behaviorClass, shadowRoot = ShadowRoot.prototype);
+					TramLite.appendShadowRootProcessor(cssSelector, behaviorClass, componentInterface = TramLite.ComponentInterface);
 				</script>
 			</template>
 		</code-template-js>
@@ -62,11 +62,11 @@
 		<dd>
 			<p>class with a <code>static connect</code> function, which are associated with newly attached nodes.</p>
 		</dd>
-		<dt><code>shadowRoot</code><optional-badge>optional</optional-badge></dt>
+		<dt><code>componentInterface</code><optional-badge>optional</optional-badge></dt>
 		<dd>
 			<p>
-				a specific shadowRoot instance to update the behavior for - by default this is the shadowRoot prototype for all
-				components, but by passing a specific shadowRoot, you only update the behavior of that component's shadowRoot.
+				a Web Component class that extends <code>HTMLElement</code> that we should apply this shadowRootProcessor on. By
+				default, is the TramLite component interface, that all Tram-Lite defined components extend off of.
 			</p>
 		</dd>
 	</dl>

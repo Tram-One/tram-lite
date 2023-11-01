@@ -26,4 +26,4 @@ class AttrEmitter {
 }
 
 // setup shadow root processor so that tl-emit that are added are processed correctly
-TramLite.appendShadowRootProcessor('[tl-emit]', AttrEmitter, TramLite.ComponentInterface);
+TramLite.appendShadowRootProcessor('[tl-emit]', AttrEmitter);
