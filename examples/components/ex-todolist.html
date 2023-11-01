@@ -8,7 +8,7 @@
 		<input type="checkbox" tl-controlled tl-attrmap="checked:checked" />
 		<slot></slot>
 	</label>
-	<span tl-emit tl-dependencies="checked" tl-eventname="todoitem-checked"></span>
+	<tl-broadcast tl-dependencies="checked" tl-eventname="todoitem-checked"></tl-broadcast>
 	<script tl-effect>
 		this.addEventListener('select-all-updated', (event) => {
 			const all_checked = event.detail.originalElement.hasAttribute('all_checked');
@@ -48,12 +48,11 @@
 		</label>
 		<hr />
 	</todo-section>
-	<span
-		tl-emit
+	<tl-broadcast
 		tl-dependencies="all_checked all_indeterminate"
 		tl-eventname="select-all-updated"
 		tl-direction="down"
-	></span>
+	></tl-broadcast>
 	<script tl-effect>
 		/* set up functions for this component */
 

@@ -1,6 +1,6 @@
 class TramLite {
 	static version = APP_VERSION;
-	static installed = false;
+	static installed = INSTALL;
 
 	// extending HTMLElement so that we can attach shadow root processors
 	//   without interfering with the global HTMLElement prototype
@@ -157,7 +157,7 @@ class TramLite {
 	}
 
 	/**
-	 * helper function to set up a callback for when an element's attribute changes
+	 * function to set up a callback for when an element's attribute changes
 	 * @param {Element} targetElement - The DOM element to observe.
 	 * @param {string[]} attributeNames - The name of the attribute (or list of attributes) to observe for changes.
 	 * @param {function(MutationRecord):void} callback - The function to call when the observed attribute changes.
@@ -176,7 +176,13 @@ class TramLite {
 		observer.observe(targetElement, { attributes: true, attributeFilter: attributeNames, attributeOldValue: true });
 	}
 
-	static dispatchEvent(hostElement, targetElement, eventName, eventDirection) {
+	/**
+	 * function to dispatch events up or down from a host component.
+	 * @param {HTMLElement} targetElement - element to associate with the event, and to dispatch from
+	 * @param {string} eventName - event name, can be listened for from other elements
+	 * @param {'up' | 'down'} eventDirection - dictates which elements should receive the event, parents ('up') or children ('down')
+	 */
+	static dispatchEvent(targetElement, eventName, eventDirection) {
 		const eventDetails = { originalElement: targetElement };
 		if (eventDirection === 'up') {
 			const customEvent = new CustomEvent(eventName, {
@@ -184,7 +190,7 @@ class TramLite {
 				composed: true,
 				detail: eventDetails,
 			});
-			hostElement.dispatchEvent(customEvent);
+			targetElement.dispatchEvent(customEvent);
 		}
 		if (eventDirection === 'down') {
 			// if we are dispatching an event to child elements, query all child elements,
@@ -194,17 +200,18 @@ class TramLite {
 				composed: false,
 				detail: eventDetails,
 			});
-			const allChildElements = hostElement.shadowRoot.querySelectorAll('*');
+			const allChildElements = targetElement.shadowRoot.querySelectorAll('*');
 			allChildElements.forEach((child) => child.dispatchEvent(customEvent));
 		}
 	}
 
 	/**
 	 * function to append new behaviors to elements that are attached to the shadowDOM.
+	 * Can be used for Tram-Lite component definitions, and generic Web-Component classes.
 	 * {@link https://tram-one.io/tram-lite/#appendShadowRootProcessor Read the full docs here.}
-	 * @param {string} matcher
-	 * @param {{ connect: function }} processorClass
-	 * @param {typeof HTMLElement} [componentInterface=HTMLElement]
+	 * @param {string} matcher - css selectors to match on new elements that are appended to shadowDOM.
+	 * @param {{ connect: function }} processorClass - class with a static connect function, which are associated with newly attached nodes.
+	 * @param {typeof HTMLElement} [componentInterface=TramLite.ComponentInterface] - Web Component class that we should add this shadowRootProcessor on
 	 */
 	static appendShadowRootProcessor(matcher, processorClass, componentInterface = TramLite.ComponentInterface) {
 		// override attachShadow so that we can add shadowRootProcessors
@@ -230,9 +237,4 @@ class TramLite {
 			return shadowRoot;
 		};
 	}
-}
-
-if (INSTALL === true) {
-	// if this is a script tag, note that we've installed Tram-Lite listeners
-	TramLite.installed = true;
 }
