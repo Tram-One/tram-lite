@@ -12,6 +12,12 @@
 			rel="stylesheet"
 		/>
 
+		<!-- icon font -->
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+		/>
+
 		<!-- open props -->
 		<link rel="stylesheet" href="https://unpkg.com/open-props" />
 		<link rel="stylesheet" href="https://unpkg.com/open-props/normalize.dark.min.css" />
@@ -59,7 +65,7 @@
 		<script src="./components/code-template-js.js"></script>
 		<script
 			src="https://unpkg.com/tram-lite@4/output/import-components.js"
-			tl-components="./components/optional-badge.html ./components/tag-code.html"
+			tl-components="./components/optional-badge.html ./components/tag-code.html ./components/material-icon.html"
 		></script>
 	</head>
 	<body>
@@ -96,13 +102,14 @@
 				<a href="#appendShadowRootProcessor"><code>appendShadowRootProcessor</code></a>
 			</side-nav-section>
 			<a href="#projects-and-posts">Projects & Posts</a>
-			<a href="#micro-guide">Micro Guide (Beta)</a>
+			<a href="#micro-guide">Micro Guide</a>
 			<a href="#guiding-principles">Guiding Principles</a>
 		</side-nav>
 		<main>
 			<page id="about"><html-import src="./pages/about.html"></html-import></page>
 			<page id="install"><html-import src="./pages/install.html"></html-import></page>
 			<page id="tl-definition"><html-import src="./pages/html-tl-definition.html"></html-import></page>
+			<page id="tl-broadcast"><html-import src="./pages/html-tl-broadcast.html"></html-import></page>
 			<page id="tl-controlled"><html-import src="./pages/html-tl-controlled.html"></html-import></page>
 			<page id="tl-effect"><html-import src="./pages/html-tl-effect.html"></html-import></page>
 			<page id="define"><html-import src="./pages/js-define.html"></html-import></page>

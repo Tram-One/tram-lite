@@ -22,7 +22,7 @@
 	<p>
 		<code-template-html>
 			<template>
-				<input tl-controlled tl-attrmap="target-name:host-name" tl-trigger="change" />
+				<input tl-controlled tl-attrmap="attribute:reference" tl-trigger="change" />
 			</template>
 		</code-template-html>
 	</p>
@@ -31,8 +31,9 @@
 		<dt><code>tl-attrmap</code> <optional-badge>optional</optional-badge></dt>
 		<dd>
 			<p>
-				Mapping of target element's attributes to attribute names that will be on the host, defaults to
-				<code>"value:value"</code>. Can be multiple values (space delimited).
+				Mapping of target element's state (<code>attribute</code>) to an attribute name that will be on the host
+				web-component (<code>reference</code>), defaults to <code>"value:value"</code>. Can be multiple values (space
+				delimited).
 			</p>
 		</dd>
 		<dt><code>tl-trigger</code> <optional-badge>optional</optional-badge></dt>
@@ -54,7 +55,7 @@
 			<template>
 				<script src="https://unpkg.com/tram-lite@5"></script>
 				<script>
-					TramLite.appendShadowRootProcessor('[tl-controlled]', AttrEmitter, MyWebComponentClass);
+					TramLite.appendShadowRootProcessor('[tl-controlled]', ControlledInput, MyWebComponentClass);
 				</script>
 			</template>
 		</code-template-html>
