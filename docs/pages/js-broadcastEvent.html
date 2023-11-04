@@ -1,0 +1,49 @@
+<h2><code>TramLite.broadcastEvent</code></h2>
+<section>
+	<p>
+		<code>TramLite.broadcastEvent</code> is a function to dispatch events up or down the light and shadow DOM. This can
+		be useful when you want other elements to react to an event happening from this element.
+	</p>
+	<p>It is the underlying function behind <tag-code tag="tl-broadcast"></tag-code>, and <code>tl-rebroadcast</code>.</p>
+</section>
+<section>
+	<h2>Syntax</h2>
+	<p>
+		<code-template-js>
+			<template>
+				<script>
+					TramLite.broadcastEvent(element, eventName, eventDirection);
+				</script>
+			</template>
+		</code-template-js>
+	</p>
+	<h3>Parameters</h3>
+	<dl>
+		<dt><code>element</code></dt>
+		<dd>
+			<p>
+				Element to associate the event with. It can be referenced using <code>event.detail.originalElement</code>. It is
+				the reference point for which children or parent elements will receive the event.
+			</p>
+		</dd>
+		<dt><code>eventName</code></dt>
+		<dd><p>The name of the event to dispatch.</p></dd>
+		<dt><code>eventDirection</code> <optional-badge>optional</optional-badge></dt>
+		<dd>
+			<p>
+				The direction to send the event. Can be <code>up</code>, triggering on parent elements, or <code>down</code>,
+				triggering on child elements. Note, when using <code>down</code>, the event target will be the child element -
+				use <code>event.detail.originalElement</code> to have a reference to the original web-component. Defaults to
+				<code>up</code>.
+			</p>
+		</dd>
+	</dl>
+	<h3>Return Value</h3>
+	<p>None</p>
+	<h3>Exceptions</h3>
+	<p>To Be Added...</p>
+</section>
+<section>
+	<h2>Example</h2>
+	<p>To be added...</p>
+</section>

@@ -179,19 +179,20 @@ class TramLite {
 
 	/**
 	 * function to dispatch events up or down from a host component.
-	 * @param {HTMLElement} targetElement - element to associate with the event, and to dispatch from
+	 * {@link https://tram-one.io/tram-lite/#broadcastEvent Read the full docs here.}
+	 * @param {HTMLElement} element - element to associate with the event, and to dispatch from
 	 * @param {string} eventName - event name, can be listened for from other elements
 	 * @param {'up' | 'down'} eventDirection - dictates which elements should receive the event, parents ('up') or children ('down')
 	 */
-	static broadcastEvent(targetElement, eventName, eventDirection) {
-		const eventDetails = { originalElement: targetElement };
+	static broadcastEvent(element, eventName, eventDirection) {
+		const eventDetails = { originalElement: element };
 		if (eventDirection === 'up') {
 			const customEvent = new CustomEvent(eventName, {
 				bubbles: true,
 				composed: true,
 				detail: eventDetails,
 			});
-			targetElement.dispatchEvent(customEvent);
+			element.dispatchEvent(customEvent);
 		}
 		if (eventDirection === 'down') {
 			// if we are dispatching an event to child elements, query all child elements,
@@ -201,10 +202,7 @@ class TramLite {
 				composed: false,
 				detail: eventDetails,
 			});
-			const allChildElements = [
-				...targetElement.shadowRoot.querySelectorAll('*'),
-				...targetElement.querySelectorAll('*'),
-			];
+			const allChildElements = [...element.shadowRoot.querySelectorAll('*'), ...element.querySelectorAll('*')];
 			allChildElements.forEach((child) => child.dispatchEvent(customEvent));
 		}
 	}
