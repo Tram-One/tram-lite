@@ -30,6 +30,7 @@ const classFiles = [
 	'src/processors/ComponentEffect.js',
 	'src/processors/ControlledInput.js',
 	'src/processors/AttrBroadcaster.js',
+	'src/processors/EventRebroadcaster.js',
 	'src/ComponentDefinition.js',
 ];
 const loadedClassFiles = Object.fromEntries(

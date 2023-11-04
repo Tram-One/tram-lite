@@ -40,15 +40,37 @@
 			</in-title>
 
 			<in-counter count="0" label="Green" color="#CEFFCE">
+				<tl-broadcast tl-dependencies="count" tl-eventname="count-update"></tl-broadcast>
 				<button style="color: ${'color'}">${'label'}: ${'count'}</button>
 				<script tl-effect>
-					const inCounter = this;
-					inCounter.shadowRoot.querySelector('button').addEventListener('click', () => {
-						const newCount = parseInt(inCounter.getAttribute('count')) + 1;
-						inCounter.setAttribute('count', newCount);
+					this.shadowRoot.querySelector('button').addEventListener('click', () => {
+						const newCount = parseInt(this.getAttribute('count')) + 1;
+						this.setAttribute('count', newCount);
+					});
+
+					this.addEventListener('reset', () => {
+						this.setAttribute('count', '0');
 					});
 				</script>
 			</in-counter>
+
+			<in-counter-container count="0">
+				<span>
+					Total: ${'count'}
+					<button tl-rebroadcast tl-eventmap="click:reset" tl-direction="down">Reset</button>
+				</span>
+				<hr />
+				<slot></slot>
+				<script tl-effect>
+					this.addEventListener('count-update', () => {
+						let sum = 0;
+						this.querySelectorAll('in-counter').forEach((counter) => {
+							sum += parseInt(counter.getAttribute('count'));
+						});
+						this.setAttribute('count', sum);
+					});
+				</script>
+			</in-counter-container>
 
 			<in-mirror value="" is-mirrored="">
 				<input size="10" id="reflection" placeholder="Mirrored" disabled tl-controlled />
@@ -263,9 +285,11 @@
 
 		<in-title>Tram-Lite Components!</in-title>
 		<in-container name="Counters">
-			<in-counter id="blue" label="Blue" color="#CECEFF"></in-counter>
-			<in-counter id="red" label="Red" color="#FFCECE"></in-counter>
-			<in-counter id="default"></in-counter>
+			<in-counter-container>
+				<in-counter id="blue" label="Blue" color="#CECEFF"></in-counter>
+				<in-counter id="red" label="Red" color="#FFCECE"></in-counter>
+				<in-counter id="default"></in-counter>
+			</in-counter-container>
 		</in-container>
 		<in-container name="Mirror Input">
 			<in-mirror></in-mirror>

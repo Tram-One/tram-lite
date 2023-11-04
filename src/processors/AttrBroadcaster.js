@@ -1,5 +1,6 @@
 /**
- * TBA
+ * AttrBroadcaster is a class that extends the tl-broadcast custom element, which allows developers
+ * to emit events when a component's dependencies update.
  *
  * {@link https://tram-one.io/tram-lite/#tl-broadcast}
  */

@@ -201,7 +201,10 @@ class TramLite {
 				composed: false,
 				detail: eventDetails,
 			});
-			const allChildElements = targetElement.shadowRoot.querySelectorAll('*');
+			const allChildElements = [
+				...targetElement.shadowRoot.querySelectorAll('*'),
+				...targetElement.querySelectorAll('*'),
+			];
 			allChildElements.forEach((child) => child.dispatchEvent(customEvent));
 		}
 	}

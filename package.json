@@ -14,13 +14,13 @@
 	},
 	"scripts": {
 		"prestart": "npm run build",
-		"start": "serve .",
+		"start": "serve . -p 3000",
 		"build": "node build.js",
 		"prepublishOnly": "npm run build",
 		"build-test-components": "bash ./examples/components/build-test-components.sh",
 		"pretest": "npm run build && npm run build-test-components",
 		"test": "cypress open",
-		"docs": "serve ./docs"
+		"docs": "serve ./docs -p 4000"
 	},
 	"author": {
 		"name": "Jesse Jurman",
