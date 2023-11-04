@@ -16,6 +16,17 @@ describe('Tram-Lite Example Components', () => {
 		cy.get('in-counter#red').click(); // clicking a counter should increment
 		cy.get('in-counter#red').contains(/Red: 1/);
 
+		/* validate that broadcasted events work as expected */
+		cy.get('in-counter#default').click();
+		cy.get('in-counter#default').click();
+		cy.get('in-counter#blue').click();
+		cy.get('in-counter-container').contains(/Total: 4/);
+		cy.get('in-counter-container').find('button#reset').click(); // click reset button
+		cy.get('in-counter#default').contains(/Green: 0/);
+		cy.get('in-counter#red').contains(/Red: 0/);
+		cy.get('in-counter#blue').contains(/Blue: 0/);
+		cy.get('in-counter-container').contains(/Total: 0/);
+
 		/* verify that updating inputs updates attributes as expected (tl-controlled) */
 		cy.get('in-mirror').find('input#source').type('Hello, World');
 		cy.get('in-mirror').find('input#reflection').should('have.value', 'Hello, World');
