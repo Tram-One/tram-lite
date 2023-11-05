@@ -1,17 +1,16 @@
-<h2><code>tl-broadcast</code></h2>
+<h2><code>tl-rebroadcast</code></h2>
 <section>
 	<p>
-		<code>tl-broadcast</code> is a custom element that lets you dispatch events up or down the tree when a
-		web-component's attributes update.
+		<code>tl-rebroadcast</code> is an attribute for any tag, which lets you dispatch events up or down the tree when a
+		an event is triggered.
 	</p>
 	<p>
 		<code-template-html>
 			<template>
 				<template tl-definition>
-					<x-counter count="0">
-						<span>Count: ${'count'}</span>
-						<tl-broadcast tl-dependencies="count" tl-eventname="count_updated"></tl-broadcast>
-					</x-counter>
+					<x-reset>
+						<button tl-rebroadcast tl-eventmap="click:reset">Reset</button>
+					</x-reset>
 				</template>
 			</template>
 		</code-template-html>
@@ -22,21 +21,19 @@
 	<p>
 		<code-template-html>
 			<template>
-				<tl-broadcast tl-dependencies="attributes" tl-eventname="eventName" tl-direction="direction"></tl-broadcast>
+				<button tl-rebroadcast tl-eventmap="originalEvent:eventName" tl-direction="direction"></button>
 			</template>
 		</code-template-html>
 	</p>
 	<h3>Parameters</h3>
 	<dl>
-		<dt><code>tl-dependencies</code></dt>
+		<dt><code>tl-eventmap</code> <optional-badge>optional</optional-badge></dt>
 		<dd>
 			<p>
-				A list (space delimited) of attributes that will re-trigger the event when updated on the host web-component.
+				Mapping of an event for the target element (<code>originalEvent</code>) to an event name that will be dispatched
+				from the host web-component (<code>eventName</code>), defaults to <code>"change:change"</code>. Can be multiple
+				values (space delimited).
 			</p>
-		</dd>
-		<dt><code>tl-eventname</code></dt>
-		<dd>
-			<p>The name of the event to emit from the web-component.</p>
 		</dd>
 		<dt><code>tl-direction</code> <optional-badge>optional</optional-badge></dt>
 		<dd>

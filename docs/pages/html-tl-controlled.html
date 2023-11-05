@@ -22,7 +22,7 @@
 	<p>
 		<code-template-html>
 			<template>
-				<input tl-controlled tl-attrmap="attribute:reference" tl-trigger="change" />
+				<input tl-controlled tl-attrmap="attribute:reference" tl-trigger="eventName" />
 			</template>
 		</code-template-html>
 	</p>
@@ -74,14 +74,14 @@
 		<pre data-lang="html">
 &lt;script src="https://unpkg.com/tram-lite@5">&lt;/script>
 
-		&lt;template tl-definition>
-			&lt;x-greeting>
-				&lt;h1>Hello ${'name'}&lt;/h1>
-			&lt;input tl-controlled tl-attrmap="value:name" tl-trigger="input" />
-			&lt;/x-greeting>
-		&lt;/template>
+&lt;template tl-definition>
+	&lt;x-greeting>
+		&lt;h1>Hello ${'name'}&lt;/h1>
+	&lt;input tl-controlled tl-attrmap="value:name" tl-trigger="input" />
+	&lt;/x-greeting>
+&lt;/template>
 
-		&lt;x-greeting name="World">&lt;/x-greeting></pre
+&lt;x-greeting name="World">&lt;/x-greeting></pre
 		>
 	</div>
 

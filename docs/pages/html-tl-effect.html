@@ -93,20 +93,20 @@
 		<pre data-lang="html">
 &lt;script src="https://unpkg.com/tram-lite@4">&lt;/script>
 
-		&lt;template tl-definition>
-			&lt;sum-machine>
-				&lt;span>${'a'} + ${'b'} = ${'result'}&lt;/span>
+&lt;template tl-definition>
+	&lt;sum-machine>
+		&lt;span>${'a'} + ${'b'} = ${'result'}&lt;/span>
 
-				&lt;!-- script to run on initial mount, and any time a or b update -->
-				&lt;script tl-effect tl-dependencies="a b">
-					const a = parseInt(this.getAttribute('a'));
-					const b = parseInt(this.getAttribute('b'));
-					this.setAttribute('result', a + b)
-				&lt;/script>
-			&lt;/sum-machine>
-		&lt;/template>
+		&lt;!-- script to run on initial mount, and any time a or b update -->
+		&lt;script tl-effect tl-dependencies="a b">
+			const a = parseInt(this.getAttribute('a'));
+			const b = parseInt(this.getAttribute('b'));
+			this.setAttribute('result', a + b)
+		&lt;/script>
+	&lt;/sum-machine>
+&lt;/template>
 
-		&lt;sum-machine a="2" b="2">&lt;/sum-machine></pre
+&lt;sum-machine a="2" b="2">&lt;/sum-machine></pre
 		>
 	</div>
 	<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
