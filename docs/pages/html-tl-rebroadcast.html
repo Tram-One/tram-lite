@@ -73,23 +73,26 @@
 		data-prefill="{}"
 	>
 		<pre data-lang="html">
-&lt;script src="https://unpkg.com/tram-lite@5">&lt;/script>
+&lt;script src="https://unpkg.com/tram-lite@5.0.0-beta.5">&lt;/script>
 
 &lt;template tl-definition>
-	&lt;x-counter count="0">
-		&lt;div>Count: ${'count'}&lt;/div>
-		&lt;input type="number" tl-controlled tl-attrmap="value:count"/>
-		&lt;tl-broadcast tl-dependencies="count" tl-eventname="count_updated">&lt;/tl-broadcast>
-	&lt;/span>
+	&lt;x-generator>
+		&lt;button tl-rebroadcast tl-eventmap="click:random-number">Roll Dice&lt;/button>
+	&lt;/x-generator>
 &lt;/template>
 
-&lt;x-counter>&lt;/x-counter>
+&lt;x-generator>&lt;/x-generator>
 
 &lt;script>
-	document.body.addEventListener('count_updated', (event) => {
-		const counter = event.detail.originalElement;
-		const logLine = document.createElement('div')
-		logLine.textContent = 'Count Updated: ' + counter.getAttribute('count')
+	document.body.addEventListener('random-number', (event) => {
+		const logLine = document.createElement('div');
+		const firstRoll = Math.ceil(Math.random()*6)
+		const secondRoll = Math.ceil(Math.random()*6)
+		if (firstRoll !== secondRoll) {
+			logLine.textContent = `Rolled a ${firstRoll} and a ${secondRoll}`
+		} else {
+			logLine.textContent = `Rolled double ${firstRoll}s`
+		}
 		document.body.appendChild(logLine)
 	})
 &lt;/script></pre
