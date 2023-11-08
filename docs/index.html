@@ -12,6 +12,12 @@
 			rel="stylesheet"
 		/>
 
+		<!-- icon font -->
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+		/>
+
 		<!-- open props -->
 		<link rel="stylesheet" href="https://unpkg.com/open-props" />
 		<link rel="stylesheet" href="https://unpkg.com/open-props/normalize.dark.min.css" />
@@ -53,14 +59,13 @@
 			hljs.highlightAll();
 		</script>
 
-		<!-- Tram-Lite, HTML Import, and components -->
-		<script src="https://unpkg.com/tram-lite@4"></script>
+		<!-- HTML Import, and Components -->
 		<script src="https://unpkg.com/html-import-element@1"></script>
 		<script src="./components/code-template-html.js"></script>
 		<script src="./components/code-template-js.js"></script>
 		<script
 			src="https://unpkg.com/tram-lite@4/output/import-components.js"
-			tl-components="./components/optional-badge.html ./components/tag-code.html"
+			tl-components="./components/optional-badge.html ./components/tag-code.html ./components/material-icon.html"
 		></script>
 	</head>
 	<body>
@@ -73,7 +78,7 @@
 			<a href="https://tram-one.io/tram-lite/">Tram-Lite</a>
 			<a href="https://github.com/Tram-One/tram-lite">Github</a>
 			<a href="https://discord.gg/dpBXAQC">Discord</a>
-			<a href="https://codepen.io/pen?template=LYqYByM">CodePen</a>
+			<a href="https://codepen.io/pen?template=LYqWbYx">CodePen</a>
 		</top-nav>
 		<side-nav>
 			<a href="#about">About</a>
@@ -88,27 +93,31 @@
 				<a href="#tl-definition"><code>tl-definition</code></a>
 				<a href="#tl-controlled"><code>tl-controlled</code></a>
 				<a href="#tl-effect"><code>tl-effect</code></a>
+				<a href="#tl-broadcast"><code>tl-broadcast</code></a>
+				<a href="#tl-rebroadcast"><code>tl-rebroadcast</code></a>
 			</side-nav-section>
 			<a>Javascript API</a>
 			<side-nav-section>
 				<a href="#define"><code>define</code></a>
+				<a href="#broadcastEvent"><code>broadcastEvent</code></a>
 				<a href="#addAttributeListener"><code>addAttributeListener</code></a>
-				<a href="#updateRootAttr"><code>updateRootAttr</code></a>
 				<a href="#appendShadowRootProcessor"><code>appendShadowRootProcessor</code></a>
 			</side-nav-section>
 			<a href="#projects-and-posts">Projects & Posts</a>
-			<a href="#micro-guide">Micro Guide (Beta)</a>
+			<a href="#micro-guide">Micro Guide</a>
 			<a href="#guiding-principles">Guiding Principles</a>
 		</side-nav>
 		<main>
 			<page id="about"><html-import src="./pages/about.html"></html-import></page>
 			<page id="install"><html-import src="./pages/install.html"></html-import></page>
 			<page id="tl-definition"><html-import src="./pages/html-tl-definition.html"></html-import></page>
+			<page id="tl-broadcast"><html-import src="./pages/html-tl-broadcast.html"></html-import></page>
+			<page id="tl-rebroadcast"><html-import src="./pages/html-tl-rebroadcast.html"></html-import></page>
 			<page id="tl-controlled"><html-import src="./pages/html-tl-controlled.html"></html-import></page>
 			<page id="tl-effect"><html-import src="./pages/html-tl-effect.html"></html-import></page>
 			<page id="define"><html-import src="./pages/js-define.html"></html-import></page>
-			<page id="updateRootAttr"><html-import src="./pages/js-updateRootAttr.html"></html-import></page>
 			<page id="addAttributeListener"><html-import src="./pages/js-addAttributeListener.html"></html-import></page>
+			<page id="broadcastEvent"><html-import src="./pages/js-broadcastEvent.html"></html-import></page>
 			<page id="appendShadowRootProcessor"
 				><html-import src="./pages/js-appendShadowRootProcessor.html"></html-import
 			></page>

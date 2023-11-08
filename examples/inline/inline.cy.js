@@ -16,6 +16,17 @@ describe('Tram-Lite Example Components', () => {
 		cy.get('in-counter#red').click(); // clicking a counter should increment
 		cy.get('in-counter#red').contains(/Red: 1/);
 
+		/* validate that broadcasted events work as expected */
+		cy.get('in-counter#default').click();
+		cy.get('in-counter#default').click();
+		cy.get('in-counter#blue').click();
+		cy.get('in-counter-container').contains(/Total: 4/);
+		cy.get('in-counter-container').find('button#reset').click(); // click reset button
+		cy.get('in-counter#default').contains(/Green: 0/);
+		cy.get('in-counter#red').contains(/Red: 0/);
+		cy.get('in-counter#blue').contains(/Blue: 0/);
+		cy.get('in-counter-container').contains(/Total: 0/);
+
 		/* verify that updating inputs updates attributes as expected (tl-controlled) */
 		cy.get('in-mirror').find('input#source').type('Hello, World');
 		cy.get('in-mirror').find('input#reflection').should('have.value', 'Hello, World');
@@ -51,8 +62,18 @@ describe('Tram-Lite Example Components', () => {
 		cy.get('in-todolist').find('span').contains('(0/3)');
 
 		/* verify that boolean attributes on controlled elements update when host attributes update */
-		cy.get('in-todolist').find('button#select-all').click();
+		cy.get('in-todolist').find('input#select-all').click();
+		cy.get('in-todolist').find('span').contains('(3/3)');
 		cy.get('in-todoitem').find('input').should('be.checked');
+
+		/* verify that attribute removal also emits events */
+		cy.get('in-todolist').find('input#select-all').click(); // deselect all elements
+		cy.get('in-todolist').find('span').contains('(0/3)');
+		cy.get('in-todoitem').click({ multiple: true }); // manually select all elements
+		cy.get('in-todolist').find('span').contains('(3/3)');
+		cy.get('in-todolist').find('input#select-all').should('be.checked'); // it should be checked (since all items are selected)
+		cy.get('in-todolist').find('input#select-all').click(); // should deselect all elements
+		cy.get('in-todolist').find('span').contains('(0/3)');
 
 		/* verify that component effects trigger on dependency updates */
 		cy.get('in-temperature').find('input#f').type('19');

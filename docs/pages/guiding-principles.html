@@ -4,38 +4,35 @@
 	Tram-Lite library.
 </p>
 
-<h3>1. Not a Framework</h3>
+<h3>1. Provide an HTML Experience First</h3>
+<p>
+	While Javascript is a very powerful tool, the current interfaces around Web-Component definitions requires familiarity
+	with concepts like classes, state management, lifecycles events, and more. Libraries like React have considerably
+	raised the technical floor for would-be developers in the Frontend space.
+</p>
+<p>
+	We believe that a native HTML interface will enable more developers to enter the frontend space, and should allow
+	developers to progressively learn Frontend technologies and concepts, without first requiring a strong javascript
+	foundation.
+</p>
+<h3>2. Interoperability with Native Interfaces</h3>
+<p>
+	Tram-Lite aspires to use and work with native web interfaces as much as possible, including Web-Components, element
+	attributes, and custom events. Should always be interoperable with these interfaces, whether they are coming from
+	Tram-Lite, or some other source.
+</p>
+<h3>3. Favor No-Build Environments</h3>
+<p>
+	Tram-Lite's target environment is a basic html file. It should offer everything needed, and let developers build
+	immediately, with no other tools or libraries required. While many frameworks will recommend generators or platforms
+	for an optimal development experience, we should strive to make the HTML and vanilla javascript experience ideal,
+	where only a static web host may be available.
+</p>
+<h3>4. Not a Framework</h3>
 <p>
 	Tram-Lite is a <b>library</b>, it is <b>not a framework</b>. As much as possible, users should run and orchestrate
 	their own code. In the face of bloat and tradeoffs associated with frameworks, and the difficulty associated with
 	learning new syntax and data models, we'd like Tram-Lite to be a simple alternative. With respect to the
 	<a href="https://github.com/frameworkless-movement/manifesto">Frameworkless Manifesto</a>, we believe that Tram-Lite
 	can be an alternative that offers few tradeoffs, and seamless integration with other libraries or frameworks.
-</p>
-<p><b> This is the main guiding principle that inspires all others. </b></p>
-<h3>2. Defer to native APIs</h3>
-<p>
-	Tram-Lite should strive to only offer functions when they would offer substantial benefit over native existing
-	options. Additionally Tram-Lite aspires to use and work with native web APIs as much as possible, including (namely)
-	web-components. As future native APIs evolve (such as custom-element behaviors), we will work to make Tram-Lite work
-	with those interfaces.
-</p>
-<h3>3. Interoperable and optional</h3>
-<p>
-	Tram-Lite functions should never depend on each other. While we may offer functions that help enable patterns created
-	as a side effect of other elements in the Tram-Lite library, they should be functional in an environment where no
-	other Tram-Lite functions are being used.
-</p>
-<h3>4. Favor no-build environments</h3>
-<p>
-	Tram-Lite's target environment is a basic html file. It should offer everything needed, and let developers build
-	immediately, with no other tools or libraries required.
-</p>
-<p>
-	While many frameworks will recommend generators or platforms for an optimal development experience, we should strive
-	to make the HTML and vanilla javascript experience ideal, where only a static web host may be available.
-</p>
-<p>
-	To this end, while we should be interoperable with other libraries, we should not be totally contingent on other
-	libraries to provide a delightful experience.
 </p>

@@ -1,0 +1,103 @@
+<h2><code>tl-broadcast</code></h2>
+<section>
+	<p>
+		<code>tl-broadcast</code> is a custom element that lets you dispatch events up or down the tree when a
+		web-component's attributes update.
+	</p>
+	<p>
+		<code-template-html>
+			<template>
+				<template tl-definition>
+					<x-counter count="0">
+						<span>Count: ${'count'}</span>
+						<tl-broadcast tl-dependencies="count" tl-eventname="count_updated"></tl-broadcast>
+					</x-counter>
+				</template>
+			</template>
+		</code-template-html>
+	</p>
+</section>
+<section>
+	<h2>Syntax</h2>
+	<p>
+		<code-template-html>
+			<template>
+				<tl-broadcast tl-dependencies="attributes" tl-eventname="eventName" tl-direction="direction"></tl-broadcast>
+			</template>
+		</code-template-html>
+	</p>
+	<h3>Parameters</h3>
+	<dl>
+		<dt><code>tl-dependencies</code></dt>
+		<dd>
+			<p>
+				A list (space delimited) of attributes that will re-trigger the event when updated on the host web-component.
+			</p>
+		</dd>
+		<dt><code>tl-eventname</code></dt>
+		<dd>
+			<p>The name of the event to emit from the web-component.</p>
+		</dd>
+		<dt><code>tl-direction</code> <optional-badge>optional</optional-badge></dt>
+		<dd>
+			<p>
+				The direction to send the event. Can be <code>up</code>, triggering on parent elements, or <code>down</code>,
+				triggering on child elements. Note, when using <code>down</code>, the event target will be the child element -
+				use <code>event.detail.originalElement</code> to have a reference to the original web-component. Can be a space
+				separated list. Defaults to <code>up</code>.
+			</p>
+		</dd>
+	</dl>
+</section>
+<section>
+	<h2>Custom Web Components</h2>
+	<p>
+		If you'd like to use this api with components that aren't defined in Tram-Lite, you can use the Javascript API to
+		apply it to a class using <code>TramLite.appendShadowRootProcessor</code>
+
+		<code-template-html>
+			<template>
+				<script src="https://unpkg.com/tram-lite@5"></script>
+				<script>
+					TramLite.appendShadowRootProcessor('tl-broadcast', AttrBroadcaster, MyWebComponentClass);
+				</script>
+			</template>
+		</code-template-html>
+	</p>
+</section>
+<section>
+	<h2>Live Example</h2>
+	<div
+		class="codepen"
+		data-height="300"
+		data-theme-id="dark"
+		data-default-tab="html,result"
+		data-editable="true"
+		data-prefill="{}"
+	>
+		<pre data-lang="html">
+&lt;script src="https://unpkg.com/tram-lite@5">&lt;/script>
+
+&lt;template tl-definition>
+	&lt;x-counter count="0">
+		&lt;div>Count: ${'count'}&lt;/div>
+		&lt;input type="number" tl-controlled tl-attrmap="value:count"/>
+		&lt;tl-broadcast tl-dependencies="count" tl-eventname="count_updated">&lt;/tl-broadcast>
+	&lt;/x-counter>
+&lt;/template>
+
+&lt;x-counter>&lt;/x-counter>
+
+&lt;script>
+	document.body.addEventListener('count_updated', (event) => {
+		const counter = event.detail.originalElement;
+		const logLine = document.createElement('div')
+		logLine.textContent = 'Count Updated: ' + counter.getAttribute('count')
+		document.body.appendChild(logLine)
+	})
+&lt;/script></pre
+		>
+	</div>
+
+	<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+</section>

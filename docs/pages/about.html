@@ -7,7 +7,7 @@
 	<code-template-html>
 		<template>
 			<!-- include the tram-lite library -->
-			<script src="https://unpkg.com/tram-lite@4"></script>
+			<script src="https://unpkg.com/tram-lite@5"></script>
 
 			<!-- define a new web-component, custom-title -->
 			<template tl-definition>
@@ -19,7 +19,7 @@
 					<h1>${'page'}</h1>
 
 					<!-- use controlled elements to update the component attributes -->
-					<input tl-controlled placeholder="Title" tl-hostattr="page" />
+					<input tl-controlled placeholder="Title" tl-attrmap="value:page" />
 
 					<!-- effects run on mount, and when dependencies change -->
 					<script tl-effect tl-dependencies="page">
@@ -69,10 +69,6 @@
 		<a href="#addAttributeListener"><code>TramLite.addAttributeListener</code></a>
 	</dt>
 	<dd><p>Function to set up a callback for when an element's attribute changes</p></dd>
-	<dt>
-		<a href="#updateRootAttr"><code>TramLite.updateRootAttr</code></a>
-	</dt>
-	<dd><p>Event handler to update web-component attributes when inputs change</p></dd>
 	<dt>
 		<a href="#appendShadowRootProcessor"><code>TramLite.appendShadowRootProcessor</code></a>
 	</dt>

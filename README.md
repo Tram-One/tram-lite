@@ -11,8 +11,8 @@
   <a href="https://tram-one.io/tram-lite/">
     <img src="https://img.shields.io/npm/v/tram-lite.svg" alt="Version">
   </a>
-  <a href="https://unpkg.com/tram-lite@4.0.0/output/tram-lite.min.js">
-    <img src="https://img.shields.io/badge/gzip-1.7kB-006369.svg?style=flat" alt="Gzipped Size">
+  <a href="https://unpkg.com/tram-lite/output/tram-lite.min.js">
+    <img src="https://img.shields.io/badge/gzip-2.2kB-006369.svg?style=flat" alt="Gzipped Size">
   </a>
   <a href="https://github.com/Tram-One/tram-lite/blob/main/LICENSE">
     <img src="https://img.shields.io/npm/l/tram-lite.svg" alt="License">
@@ -29,7 +29,7 @@ web-applications easier and more elegant!
 
 ```html
 <!-- include the tram-lite library -->
-<script src="https://unpkg.com/tram-lite@4"></script>
+<script src="https://unpkg.com/tram-lite@5"></script>
 
 <!-- define a new web-component, custom-title -->
 <template tl-definition>
@@ -41,7 +41,7 @@ web-applications easier and more elegant!
 		<h1>${'page'}</h1>
 
 		<!-- use controlled elements to update the component attributes -->
-		<input tl-controlled placeholder="Title" tl-hostattr="page" />
+		<input tl-controlled placeholder="Title" tl-attrmap="value:page" />
 
 		<!-- effects run on mount, and when dependencies change -->
 		<script tl-effect tl-dependencies="page">
@@ -57,7 +57,7 @@ web-applications easier and more elegant!
 To install, you can simply include a script tag pointed to `unpkg.com` in your `index.html`:
 
 ```html
-<script src="https://unpkg.com/tram-lite@4"></script>
+<script src="https://unpkg.com/tram-lite@5"></script>
 ```
 
 To learn more check out the website at https://tram-one.io/tram-lite

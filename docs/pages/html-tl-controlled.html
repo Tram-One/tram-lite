@@ -5,15 +5,12 @@
 		set up 2-way data binding to a parent web-component.
 	</p>
 	<p>
-		Note, the following example uses Tram-Lite template definitions, but works with any web-component with shadow DOM.
-	</p>
-	<p>
 		<code-template-html>
 			<template>
 				<template tl-definition>
 					<x-greeting>
 						<h1>Hello ${'name'}</h1>
-						<input tl-controlled tl-hostattr="name" />
+						<input tl-controlled tl-attrmap="value:name" />
 					</x-greeting>
 				</template>
 			</template>
@@ -25,19 +22,19 @@
 	<p>
 		<code-template-html>
 			<template>
-				<input tl-controlled tl-hostattr="value" tl-targetattr="value" tl-trigger="change" />
+				<input tl-controlled tl-attrmap="attribute:reference" tl-trigger="eventName" />
 			</template>
 		</code-template-html>
 	</p>
 	<h3>Parameters</h3>
 	<dl>
-		<dt><code>tl-hostattr</code> <optional-badge>optional</optional-badge></dt>
+		<dt><code>tl-attrmap</code> <optional-badge>optional</optional-badge></dt>
 		<dd>
-			<p>Attribute to set on the host web-component, default to <code>"value"</code>.</p>
-		</dd>
-		<dt><code>tl-targetattr</code> <optional-badge>optional</optional-badge></dt>
-		<dd>
-			<p>The attribute to read from the <code>input</code> element, defaults to <code>"value"</code>.</p>
+			<p>
+				Mapping of target element's state (<code>attribute</code>) to an attribute name that will be on the host
+				web-component (<code>reference</code>), defaults to <code>"value:value"</code>. Can be multiple values (space
+				delimited).
+			</p>
 		</dd>
 		<dt><code>tl-trigger</code> <optional-badge>optional</optional-badge></dt>
 		<dd>
@@ -47,6 +44,22 @@
 			</p>
 		</dd>
 	</dl>
+</section>
+<section>
+	<h2>Custom Web Components</h2>
+	<p>
+		If you'd like to use this api with components that aren't defined in Tram-Lite, you can use the Javascript API to
+		apply it to a class using <code>TramLite.appendShadowRootProcessor</code>
+
+		<code-template-html>
+			<template>
+				<script src="https://unpkg.com/tram-lite@5"></script>
+				<script>
+					TramLite.appendShadowRootProcessor('[tl-controlled]', ControlledInput, MyWebComponentClass);
+				</script>
+			</template>
+		</code-template-html>
+	</p>
 </section>
 <section>
 	<h2>Live Example</h2>
@@ -59,16 +72,16 @@
 		data-prefill="{}"
 	>
 		<pre data-lang="html">
-&lt;script src="https://unpkg.com/tram-lite@4">&lt;/script>
+&lt;script src="https://unpkg.com/tram-lite@5">&lt;/script>
 
-		&lt;template tl-definition>
-			&lt;x-greeting>
-				&lt;h1>Hello ${'name'}&lt;/h1>
-			&lt;input tl-controlled tl-hostattr="name" tl-trigger="input" />
-			&lt;/x-greeting>
-		&lt;/template>
+&lt;template tl-definition>
+	&lt;x-greeting>
+		&lt;h1>Hello ${'name'}&lt;/h1>
+	&lt;input tl-controlled tl-attrmap="value:name" tl-trigger="input" />
+	&lt;/x-greeting>
+&lt;/template>
 
-		&lt;x-greeting name="World">&lt;/x-greeting></pre
+&lt;x-greeting name="World">&lt;/x-greeting></pre
 		>
 	</div>
 

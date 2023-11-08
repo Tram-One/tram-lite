@@ -130,12 +130,6 @@ class ComponentDefinition {
 	}
 }
 
-if (MODULE === true) {
-	// if module is available, export this class
-	if (typeof module !== 'undefined') {
-		module.exports.ComponentDefinition = ComponentDefinition;
-	}
-}
 if (INSTALL === true) {
 	// process any existing template definitions (if this was added after-the-fact)
 	ComponentDefinition.processExistingTemplates();
