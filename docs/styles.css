@@ -67,6 +67,7 @@ top-nav {
 side-nav {
 	grid-area: side-nav;
 	margin-top: 2rem;
+	overflow-y: auto;
 }
 
 @media only screen and (max-width: 800px) {
