@@ -1,0 +1,48 @@
+<h2>Migration Guide</h2>
+<p>
+	This page goes over all the major breaking changes between different versions of Tram-Lite. While upgrading is never
+	required, if you want to make use of newer features in your old projects, this should help! If you need any help
+	following this guide, or if there is a case that isn't covered, feel free to join the discord and reach out!
+</p>
+
+<h3>Breaking changes in Version 5</h3>
+<p>If you are upgrading from version 4, here are the key breaking changes you'll need to fix to go to version 5</p>
+
+<p>Removed Node Support. If you have a compelling use case here, please reach out!</p>
+
+<p>
+	Removed shadowRootProcessors on base HTMLElement. If you were using a shadowRootProcessor on a non-Tram-Lite component
+	(like <code>tl-effect</code> or <code>tl-controlled</code>) these will no longer work by default. In order to keep
+	this behavior, you can run
+	<code>TramLite.appendShadowRootProcessor('[tl-effect]', ComponentEffect, HTMLElement);</code>
+</p>
+
+<p>
+	Changed <code>tl-hostattr</code> and <code>tl-targetattr</code> to <code>tl-attrmap</code>. This should allow users to
+	map multiple attributes in a single input. You will not be able to map attribute with a <code>:</code> in their name,
+	if that was something you were doing before.
+</p>
+
+<h3>Breaking changes in Version 4</h3>
+<p>If you are upgrading from version 3, here are the key breaking changes you'll need to fix to go to version 4</p>
+
+<p>
+	Places where you had <tag-code tag="template" attribute='is="component-definition"'></tag-code> should now be
+	<tag-code tag="template" attribute="tl-definition"></tag-code>
+</p>
+
+<p>
+	Script tags now need the attribute <code>tl-effect</code>. Script tags that referenced external sources will no longer
+	work. See this <a href="https://github.com/Tram-One/tram-lite/issues/44">github issue</a>.
+</p>
+
+<p>
+	Removed <code>html</code> and <code>svg</code> functions. There are no substitutes for this API in v4. If you still
+	need this functionality, you can recreate it by creating an element and setting the <code>innerHTML</code>.
+</p>
+
+<p>
+	Top-level functions like <code>define</code>, <code>updateRootAttr</code>, and <code>addAttributeListener</code> were
+	moved to static methods in the <code>TramLite</code> class. You should be able to call the new methods off the
+	<code>TramLite</code> class, e.g. <code>TramLite.define</code>.
+</p>
