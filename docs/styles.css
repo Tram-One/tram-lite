@@ -181,3 +181,43 @@ tag-code {
 .cp_embed_wrapper {
 	max-inline-size: 700px;
 }
+
+@media print {
+	/* make all pages visible in print mode */
+	page {
+		display: inherit;
+	}
+
+	/* set the height to be unbounded, and remove sidebar */
+	body {
+		height: unset;
+		grid-template-columns: 100%;
+		grid-template-rows: auto;
+		grid-template-areas:
+			'logo'
+			'main-content';
+	}
+
+	#logo img {
+		width: 100%;
+		height: auto;
+	}
+
+	/* hide iframes, which can break print styling */
+	iframe {
+		display: none !important;
+	}
+	.cp_embed_wrapper::after {
+		content: 'visit tram-one.io/tram-lite to see a live codepen example here!';
+	}
+
+	/* page break hints */
+	code-template-html,
+	code-template-js {
+		display: block;
+		break-inside: avoid;
+	}
+	page {
+		break-before: page;
+	}
+}
