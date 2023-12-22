@@ -183,6 +183,11 @@ tag-code {
 }
 
 @media print {
+	/* expand the inline content size */
+	:root {
+		--size-content-3: unset;
+	}
+
 	/* make all pages visible in print mode */
 	page {
 		display: inherit;
