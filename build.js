@@ -31,6 +31,7 @@ const classFiles = [
 	'src/processors/ControlledInput.js',
 	'src/processors/AttrBroadcaster.js',
 	'src/processors/EventRebroadcaster.js',
+	'src/processors/ContextConsumer.js',
 	'src/ComponentDefinition.js',
 ];
 const loadedClassFiles = Object.fromEntries(
