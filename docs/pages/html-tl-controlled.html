@@ -22,7 +22,7 @@
 	<p>
 		<code-template-html>
 			<template>
-				<input tl-controlled tl-attrmap="attribute:reference" tl-trigger="eventName" />
+				<input tl-controlled tl-attrmap="input-attribute:host-attribute" tl-trigger="eventName" />
 			</template>
 		</code-template-html>
 	</p>
@@ -31,9 +31,9 @@
 		<dt><code>tl-attrmap</code> <optional-badge>optional</optional-badge></dt>
 		<dd>
 			<p>
-				Mapping of target element's state (<code>attribute</code>) to an attribute name that will be on the host
-				web-component (<code>reference</code>), defaults to <code>"value:value"</code>. Can be multiple values (space
-				delimited).
+				Mapping of input element's state (<code>input-attribute</code>) to an attribute name that will be on the host
+				web-component (<code>host-attribute</code>), defaults to <code>"value:value"</code>. Can be multiple values
+				(space delimited).
 			</p>
 		</dd>
 		<dt><code>tl-trigger</code> <optional-badge>optional</optional-badge></dt>

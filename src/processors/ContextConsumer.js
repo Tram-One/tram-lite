@@ -1,11 +1,13 @@
 /**
- * TBA
+ * ContextConsumer is a class that extends the tl-context custom element, which allows developers
+ * to share state across multiple components under a tl-provider element.
  *
  * {@link https://tram-one.io/tram-lite/#tl-context}
  */
 class ContextConsumer {
 	/**
-	 * TBA
+	 * connect function for ContextConsumer - when this is attached to an element, we
+	 *   set up a binding of attributes on the Provider and the host web-component.
 	 * @param {HTMLElement} newNode
 	 */
 	static connect(newNode) {

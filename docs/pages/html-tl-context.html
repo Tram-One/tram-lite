@@ -1,0 +1,117 @@
+<h2><code>tl-context</code></h2>
+<section>
+	<p>
+		<tag-code tag="tl-context"></tag-code> is a custom element that lets you retrieve and write state to a
+		<tag-code tag="tl-provider"></tag-code> parent element. The main purpose is to share state across multiple
+		components without depending on prop-drilling or sending state via events.
+	</p>
+	<p>
+		<code-template-html>
+			<template>
+				<!-- component definition -->
+				<template tl-definition>
+					<text-preview>
+						<tl-context tl-name="font-size"></tl-context>
+						<div style="font-size: ${'size'}">
+							<slot></slot>
+						</div>
+					</text-preview>
+				</template>
+
+				<!-- in the HTML Template -->
+				<tl-provider tl-name="font-size" size="1em">
+					<text-preview>This is some text content</text-preview>
+				</tl-provider>
+			</template>
+		</code-template-html>
+	</p>
+</section>
+<section>
+	<h2>Syntax</h2>
+	<p>
+		<code-template-html>
+			<template>
+				<tl-context tl-name="provider-name" tl-attrmap="provider-attribute:host-attribute"></tl-context>
+			</template>
+		</code-template-html>
+	</p>
+	<h3>Parameters</h3>
+	<dl>
+		<dt><code>tl-name</code></dt>
+		<dd>
+			<p>The name of the provider to pull context values from.</p>
+		</dd>
+		<dt><code>tl-attrmap</code> <optional-badge>optional</optional-badge></dt>
+		<dd>
+			<p>
+				Mapping of provider element's state (<code>provider-attribute</code>) to an attribute name that will be on the
+				host web-component (<code>host-attribute</code>), defaults to all the user-defined attributes on the provider
+				mapped to their same name. Can be multiple values (space delimited).
+			</p>
+		</dd>
+	</dl>
+</section>
+<section>
+	<h2>Custom Web Components</h2>
+	<p>
+		If you'd like to use this api with components that aren't defined in Tram-Lite, you can use the Javascript API to
+		apply it to a class using <code>TramLite.appendShadowRootProcessor</code>
+
+		<code-template-html>
+			<template>
+				<script src="https://unpkg.com/tram-lite@5"></script>
+				<script>
+					TramLite.appendShadowRootProcessor('tl-context', ContextConsumer, MyWebComponentClass);
+				</script>
+			</template>
+		</code-template-html>
+	</p>
+</section>
+<section>
+	<h2>Live Example</h2>
+	<div
+		class="codepen"
+		data-height="300"
+		data-theme-id="dark"
+		data-default-tab="html,result"
+		data-editable="true"
+		data-prefill="{}"
+	>
+		<pre data-lang="html">
+&lt;script src="https://unpkg.com/tram-lite@5">&lt;/script>
+
+&lt;!-- component definitions -->
+&lt;template tl-definition>
+
+  &lt;!-- example component definition -->
+  &lt;font-toggle>
+    &lt;tl-context tl-name="font-size">&lt;/tl-context>
+    &lt;label>
+      Font Size
+      &lt;select tl-controlled tl-attrmap="value:size">
+        &lt;option value="0.8em">Small&lt;/option>
+        &lt;option value="1em">Medium&lt;/option>
+        &lt;option value="1.2em">Large&lt;/option>
+      &lt;/select>
+    &lt;/label>
+  &lt;/font-toggle>
+
+  &lt;text-preview>
+    &lt;tl-context tl-name="font-size">&lt;/tl-context>
+    &lt;div style="font-size: ${'size'}">
+      &lt;slot>&lt;/slot>
+    &lt;/div>
+  &lt;/text-preview>
+
+&lt;/template>
+
+&lt;!-- HTML Page -->
+&lt;tl-provider tl-name="font-size" size="1em">
+  &lt;font-toggle>&lt;/font-toggle>
+  &lt;text-preview>This is a text preview&lt;/text-preview>
+&lt;/tl-provider></pre
+		>
+	</div>
+
+	<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+</section>
