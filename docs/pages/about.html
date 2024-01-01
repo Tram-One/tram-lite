@@ -1,7 +1,7 @@
 <h1>Tram-Lite</h1>
 
 <p>
-	Tram-Lite is an HTML-first library that helps developers build native web-components, and makes building simple native
+	Tram-Lite is an HTML-first library that helps developers build native web components, and makes building simple native
 	web-applications easier and more elegant!
 
 	<code-template-html>
@@ -9,7 +9,7 @@
 			<!-- include the tram-lite library -->
 			<script src="https://unpkg.com/tram-lite@5"></script>
 
-			<!-- define a new web-component, custom-title -->
+			<!-- define a new web component, custom-title -->
 			<template tl-definition>
 				<custom-title color="blue">
 					<!-- embed attributes right in the template -->
@@ -37,26 +37,26 @@
 <h2>HTML API</h2>
 <p>
 	Tram-Lite's main API is through HTML attributes that you can apply to native or custom elements. These attributes
-	(aside from <code>tl-definition</code>) can be used for any web-components that use shadow DOM.
+	(aside from <code>tl-definition</code>) can be used for any web components that use shadow DOM.
 </p>
 <dl>
 	<dt>
 		<a href="#tl-definition"><code>tl-definition</code></a>
 	</dt>
-	<dd><p>Attribute for defining new web-components.</p></dd>
+	<dd><p>Attribute for defining new web components.</p></dd>
 	<dt>
 		<a href="#tl-controlled"><code>tl-controlled</code></a>
 	</dt>
 	<dd>
 		<p>
 			Attribute for establishing 2-way data binding between <tag-code tag="input"></tag-code> (and similar) elements and
-			a host web-component.
+			a host web component.
 		</p>
 	</dd>
 	<dt>
 		<a href="#tl-effect"><code>tl-effect</code></a>
 	</dt>
-	<dd><p>Attribute for building attribute driven side-effects in web-components.</p></dd>
+	<dd><p>Attribute for building attribute driven side-effects in web components.</p></dd>
 	<dt>
 		<a href="#tl-rebroadcast"><code>tl-rebroadcast</code></a>
 	</dt>
@@ -68,7 +68,7 @@
 	<dt>
 		<a href="#tl-broadcast"><code>tl-broadcast</code></a>
 	</dt>
-	<dd><p>Custom Element for emitting events when an attribute updates in a web-component.</p></dd>
+	<dd><p>Custom Element for emitting events when an attribute updates in a web component.</p></dd>
 	<dt>
 		<a href="#tl-context"><code>tl-context</code></a>
 	</dt>
@@ -80,7 +80,7 @@
 	</dt>
 	<dd>
 		<p>
-			Custom Element (can live in the shadow or light DOM), that can provide state to web-components with a
+			Custom Element (can live in the shadow or light DOM), that can provide state to web components with a
 			<tag-code tag="tl-context"></tag-code> element.
 		</p>
 	</dd>
@@ -91,7 +91,7 @@
 	<dt>
 		<a href="#define"><code>TramLite.define</code></a>
 	</dt>
-	<dd><p>Template tag function for building native web-components.</p></dd>
+	<dd><p>Template tag function for building native web components.</p></dd>
 	<dt>
 		<a href="#broadcastEvent"><code>TramLite.broadcastEvent</code></a>
 	</dt>
@@ -103,5 +103,5 @@
 	<dt>
 		<a href="#appendShadowRootProcessor"><code>TramLite.appendShadowRootProcessor</code></a>
 	</dt>
-	<dd><p>Build new behaviors for elements that appear in web-components.</p></dd>
+	<dd><p>Build new behaviors for elements that appear in web components.</p></dd>
 </dl>

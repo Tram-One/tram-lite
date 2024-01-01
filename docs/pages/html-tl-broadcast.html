@@ -2,7 +2,7 @@
 <section>
 	<p>
 		<tag-code tag="tl-broadcast"></tag-code> is a custom element that lets you dispatch events up or down the tree when
-		a web-component's attributes update.
+		a web component's attributes update.
 	</p>
 	<p>
 		<code-template-html>
@@ -31,19 +31,19 @@
 		<dt><code>tl-dependencies</code></dt>
 		<dd>
 			<p>
-				A list (space delimited) of attributes that will re-trigger the event when updated on the host web-component.
+				A list (space delimited) of attributes that will re-trigger the event when updated on the host web component.
 			</p>
 		</dd>
 		<dt><code>tl-eventname</code></dt>
 		<dd>
-			<p>The name of the event to emit from the web-component.</p>
+			<p>The name of the event to emit from the web component.</p>
 		</dd>
 		<dt><code>tl-direction</code> <optional-badge>optional</optional-badge></dt>
 		<dd>
 			<p>
 				The direction to send the event. Can be <code>up</code>, triggering on parent elements, or <code>down</code>,
 				triggering on child elements. Note, when using <code>down</code>, the event target will be the child element -
-				use <code>event.detail.originalElement</code> to have a reference to the original web-component. Can be a space
+				use <code>event.detail.originalElement</code> to have a reference to the original web component. Can be a space
 				separated list. Defaults to <code>up</code>.
 			</p>
 		</dd>
