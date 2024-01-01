@@ -58,14 +58,33 @@
 	</dt>
 	<dd><p>Attribute for building attribute driven side-effects in web-components.</p></dd>
 	<dt>
-		<a href="#tl-broadcast"><code>tl-broadcast</code></a>
-	</dt>
-	<dd><p>Custom Element for emitting events when an attribute updates in a web-component.</p></dd>
-	<dt>
 		<a href="#tl-rebroadcast"><code>tl-rebroadcast</code></a>
 	</dt>
 	<dd><p>Attribute for emitting events when another event is triggered on an element.</p></dd>
 </dl>
+<p>
+	Additionally, Tram-Lite also has a set of custom elements that can be used in web components to enhance their
+	behavior.
+	<dt>
+		<a href="#tl-broadcast"><code>tl-broadcast</code></a>
+	</dt>
+	<dd><p>Custom Element for emitting events when an attribute updates in a web-component.</p></dd>
+	<dt>
+		<a href="#tl-context"><code>tl-context</code></a>
+	</dt>
+	<dd>
+		<p>Custom Element for pulling state down from a <tag-code tag="tl-provider"></tag-code>.</p>
+	</dd>
+	<dt>
+		<a href="#tl-provider"><code>tl-provider</code></a>
+	</dt>
+	<dd>
+		<p>
+			Custom Element (can live in the shadow or light DOM), that can provide state to web-components with a
+			<tag-code tag="tl-context"></tag-code> element.
+		</p>
+	</dd>
+</p>
 
 <h2>Javascript API</h2>
 <dl>

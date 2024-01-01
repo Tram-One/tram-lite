@@ -1,0 +1,32 @@
+<h2><code>tl-provider</code></h2>
+<section>
+	<p>
+		<tag-code tag="tl-provider"></tag-code> is a custom Element that can provide state to multiple
+		<tag-code tag="tl-context"></tag-code> elements. <tag-code tag="tl-provider"></tag-code> can live in the shadow or
+		light DOM.
+	</p>
+</section>
+<section>
+	<h2>Syntax</h2>
+	<p>
+		<code-template-html>
+			<template>
+				<tl-provider tl-name="provider-name" custom-attributes></tl-provider>
+			</template>
+		</code-template-html>
+	</p>
+	<h3>Parameters</h3>
+	<dl>
+		<dt><code>tl-name</code></dt>
+		<dd>
+			<p>Name to match with <tag-code tag="tl-context"></tag-code> tag.</p>
+		</dd>
+		<dt><code>custom-attributes</code> <optional-badge>optional</optional-badge></dt>
+		<dd>
+			<p>
+				User defined attributes to make available to components that use <tag-code tag="tl-context"></tag-code>. Can be
+				boolean or string values. No specific prefix is required.
+			</p>
+		</dd>
+	</dl>
+</section>

@@ -86,5 +86,25 @@ describe('Tram-Lite Example Components', () => {
 		cy.get('in-progressbar').should('have.attr', 'warning');
 		cy.get('in-progressbar').find('input#max').clear().type('15');
 		cy.get('in-progressbar').should('not.have.attr', 'warning');
+
+		/* verify that components pull initial state from providers */
+		cy.get('tl-provider[tl-name="color-theme"]').find('in-start-color-setter').should('have.attr', 'color', '#E66465');
+		cy.get('tl-provider[tl-name="color-theme"]').find('in-end-color-setter').should('have.attr', 'color', '#9198E5');
+		cy.get('tl-provider[tl-name="color-theme"]').find('in-direction-setter').should('have.attr', 'degrees', '0');
+		cy.get('tl-provider[tl-name="color-theme"]')
+			.find('in-color-preview')
+			.should('have.attr', 'start-color', '#E66465')
+			.should('have.attr', 'end-color', '#9198E5')
+			.should('have.attr', 'degrees', '0');
+
+		/* verify that components update when provider state updates */
+		cy.get('tl-provider[tl-name="color-theme"]').invoke('attr', 'degrees', '45');
+		cy.get('tl-provider[tl-name="color-theme"]').find('in-direction-setter').should('have.attr', 'degrees', '45');
+		cy.get('tl-provider[tl-name="color-theme"]').find('in-color-preview').should('have.attr', 'degrees', '45');
+
+		/* verify that provider updates when component (with context) updates */
+		cy.get('tl-provider[tl-name="color-theme"]').find('in-direction-setter').invoke('attr', 'degrees', '90');
+		cy.get('tl-provider[tl-name="color-theme"]').should('have.attr', 'degrees', '90');
+		cy.get('tl-provider[tl-name="color-theme"]').find('in-color-preview').should('have.attr', 'degrees', '90');
 	});
 });

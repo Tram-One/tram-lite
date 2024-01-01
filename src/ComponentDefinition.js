@@ -10,7 +10,7 @@ class ComponentDefinition {
 
 	/**
 	 * function to test if node has an attribute value with a template variable
-	 * e.g. <custom-element style="color: ${'color'}">
+	 * e.g. \<custom-element style="color: ${'color'}"\>
 	 */
 	static nodeHasTramLiteAttr = (node) =>
 		[...node.attributes].some((attr) => attr.value.match(ComponentDefinition.templateVariableRegex))
@@ -19,7 +19,7 @@ class ComponentDefinition {
 
 	/**
 	 * function to test if node has an TEXT node with a template variable
-	 * e.g. <custom-element>Hello ${'name'}</custom-element>
+	 * e.g. \<custom-element\>Hello ${'name'}\</custom-element\>
 	 */
 	static nodeHasTextElementWithTramLiteAttr = (node) =>
 		node.textContent.match(ComponentDefinition.templateVariableRegex)
