@@ -1,9 +1,9 @@
 <h2><code>tl-context</code></h2>
 <section>
 	<p>
-		<tag-code tag="tl-context"></tag-code> is a custom element that lets you retrieve and write state to a
-		<tag-code tag="tl-provider"></tag-code> parent element. The main purpose is to share state across multiple
-		components without depending on prop-drilling or sending state via events.
+		<tag-code tag="tl-context"></tag-code> is a custom element that pulls the attributes from a
+		<tag-code tag="tl-provider"></tag-code> parent, and maps it to attributes in your web-component. The main purpose is
+		to share state across multiple components without depending on prop-drilling or sending state via events.
 	</p>
 	<p>
 		<code-template-html>
@@ -18,7 +18,7 @@
 					</text-preview>
 				</template>
 
-				<!-- in the HTML Template -->
+				<!-- main HTML -->
 				<tl-provider tl-name="font-size" size="1em">
 					<text-preview>This is some text content</text-preview>
 				</tl-provider>
