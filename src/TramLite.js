@@ -26,12 +26,15 @@ class TramLite {
 			defaultAttributeValues[attrNode.name] = attrNode.value;
 		});
 
-		// if there are any component-effects that aren't already on hold, hold them now
-		//   (we don't want them triggering before the component has been completely defined)
+		// if there are any component-effects that aren't already on hold, hold them now.
+		//   we will either hold them until the component has been defined, or if there are
+		//   external scripts, we will hold them until all scripts have loaded
 		// if there is already a hold, we won't touch these elements
 		//   (the developer may want to defer processing until later)
+		const hasExternalScripts = rootElement.querySelector('script[src]') !== null;
+
 		rootElement.querySelectorAll('script[tl-effect]:not([tl-hold])').forEach((componentEffect) => {
-			componentEffect.setAttribute('tl-hold', 'component-mount');
+			componentEffect.setAttribute('tl-hold', hasExternalScripts ? 'external-script' : 'component-mount');
 		});
 
 		// Custom element class with tram-lite template support.

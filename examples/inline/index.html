@@ -306,6 +306,17 @@
 				<tl-context tl-name="color-theme"></tl-context>
 				<input type="range" min="0" max="360" tl-controlled tl-attrmap="value:degrees" tl-trigger="input" />
 			</in-direction-setter>
+
+			<in-password-generator length="10">
+				<script src="./generateRandomString.js"></script>
+				<input disabled tl-controlled size="25" />
+				<input type="range" tl-controlled tl-attrmap="value:length" min="5" max="20" tl-trigger="input" />
+				<script tl-effect tl-dependencies="length">
+					const length = this.getAttribute('length');
+					const randomString = generateRandomString(length);
+					this.setAttribute('value', randomString);
+				</script>
+			</in-password-generator>
 		</template>
 
 		<in-title>Tram-Lite Components!</in-title>
@@ -338,6 +349,9 @@
 				<in-direction-setter></in-direction-setter>
 				<in-color-preview></in-color-preview>
 			</tl-provider>
+		</in-container>
+		<in-container name="Password Builder">
+			<in-password-generator></in-password-generator>
 		</in-container>
 	</body>
 </html>

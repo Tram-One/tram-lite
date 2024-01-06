@@ -106,5 +106,14 @@ describe('Tram-Lite Example Components', () => {
 		cy.get('tl-provider[tl-name="color-theme"]').find('in-direction-setter').invoke('attr', 'degrees', '90');
 		cy.get('tl-provider[tl-name="color-theme"]').should('have.attr', 'degrees', '90');
 		cy.get('tl-provider[tl-name="color-theme"]').find('in-color-preview').should('have.attr', 'degrees', '90');
+
+		/* verify that external scripts load and are available in tl-effects */
+		cy.get('in-password-generator')
+			.should('have.attr', 'value')
+			.and('match', /^[\w\d]{10}$/);
+		cy.get('in-password-generator').invoke('attr', 'length', '20');
+		cy.get('in-password-generator')
+			.should('have.attr', 'value')
+			.and('match', /^[\w\d]{20}$/);
 	});
 });
