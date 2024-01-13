@@ -74,21 +74,16 @@
 	<code-template-js>
 		<template>
 			<script>
-				npx tram-lite@5 export-components <components> [--output output-file.js] [--minified]
+				npx tram-lite@5 export-components <components> [--output output-file.js]
 			</script>
 		</template>
 	</code-template-js>
-	Aside from the required components, the command has two optional flags, <code>--output</code> and
-	<code>--minified</code>.
+	Aside from the required components, the command has one optional flag, <code>--output</code>.
 </p>
 <p>
 	<code>--output</code> (or <code>-o</code>) can be used to set the file name and directory of the resulting javascript.
 	If this flag is missing, the command will place the file in the current directory, named based on the component files
 	passed in.
-</p>
-<p>
-	<code>--minified</code> (or <code>-m</code>) can be used to import the minified Tram-Lite code as part of your export.
-	This should reduce the total size of the exported components.
 </p>
 <h4>Example Exporting an HTML Template to Javascript</h4>
 <p>

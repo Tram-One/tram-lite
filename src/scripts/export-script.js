@@ -7,9 +7,6 @@
 const fs = require('fs');
 const path = require('path');
 
-// check to see if we should use the minified flag for external dependencies
-const useMinified = process.argv.includes('-m') || process.argv.includes('--minified');
-
 // check to see if there is a predefined output filename (otherwise we will try to generate one)
 const outputFlagIndex = process.argv.findIndex((arg) => arg === '-o' || arg === '--output');
 const customOutputFile = outputFlagIndex !== -1 ? process.argv[outputFlagIndex + 1] : null;
@@ -26,11 +23,40 @@ if (filePaths.length === 0) {
 console.log('processing', filePaths, 'for export');
 const componentDefinitions = filePaths.map((filePath) => fs.readFileSync(filePath, 'utf8'));
 
-const tramLiteExportDependenciesPath = useMinified
-	? path.join(__dirname, './export-dependencies.min.js')
-	: path.join(__dirname, './export-dependencies.js');
+// load the core Tram-Lite library and classes (which are always needed)
+const coreFiles = [
+	'./export/TramLite.min.js',
+	'./export/ComponentDefinition.min.js',
+	'./export/ImportComponent.min.js',
+].map((filePath) => fs.readFileSync(path.join(__dirname, filePath)).toString());
 
-const tramLiteExportDepenedencies = fs.readFileSync(tramLiteExportDependenciesPath).toString();
+// load all shadow root processors
+const processorFiles = fs
+	.readdirSync(path.join(__dirname, './export/processors'))
+	.map((file) => `./export/processors/${file}`)
+	.map((filePath) => fs.readFileSync(path.join(__dirname, filePath)).toString());
+
+// determine if we need these processors for these components
+// (note, this is a very weak regex check, and not using proper CSS or static analysis)
+const processorFilesToInclude = processorFiles.filter((processorContent) => {
+	// the following regex matches on calls to appendShadowRootProcessor
+	// it specifically captures the first parameter (a CSS selector), and
+	// parses out the parameter as a whole, and then the text inside `[...]`
+	const matches = processorContent.match(/TramLite\.appendShadowRootProcessor\(\"([^\[\,]*(\[?(.+)\])?[^\]\,]*)\"/);
+
+	if (!matches) {
+		console.log(processorContent);
+	}
+
+	// get the last most match (the most specific)
+	const keySelector = [matches[1], matches[2], matches[3]].filter((selector) => selector != undefined).at(-1);
+
+	// see if any of our component definitions match with this selector
+	return componentDefinitions.some((template) => template.match(keySelector));
+});
+
+const tramLiteExportDepenedencies = [...coreFiles, ...processorFilesToInclude].join('');
+
 const templateAndLoadCode = componentDefinitions
 	.map((componentCode) => {
 		// update the component code, in case it also uses ``, we'll need to escape them

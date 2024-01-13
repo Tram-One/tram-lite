@@ -10,31 +10,32 @@ const UglifyJS = require('uglify-js');
 const { version } = require('./package.json');
 
 // before we start anything, make sure the output directory exists and is empty
-if (!fs.existsSync('output')) {
-	// if it doesn't exist make it
-	fs.mkdirSync('output');
-} else {
-	// if it does, remove all files in the directory
-	const files = fs.readdirSync('output');
-	for (const file of files) {
-		const filePath = path.join('output', file);
-		fs.unlinkSync(filePath);
+const outputDirectories = ['output', 'output/export', 'output/export/processors'];
+outputDirectories.forEach((directory) => {
+	if (!fs.existsSync(directory)) {
+		// if it doesn't exist make it
+		fs.mkdirSync(directory);
+	} else {
+		// if it does, remove all files in the directory
+		const files = fs.readdirSync(directory);
+		for (const file of files) {
+			const filePath = path.join(directory, file);
+			try {
+				fs.unlinkSync(filePath);
+			} catch {
+				// if we tried to delete a directory, this will blow up
+				// but it's actually fine...
+			}
+		}
 	}
-}
+});
 
 // load all source class files (these will be included in all builds)
 // ORDER IS IMPORTANT! We need ComponentDefinition to be last, so that
 //   shadow root processors exist by the time we start processing templates
-const classFiles = [
-	'src/TramLite.js',
-	'src/processors/ComponentEffect.js',
-	'src/processors/ControlledInput.js',
-	'src/processors/AttrBroadcaster.js',
-	'src/processors/EventRebroadcaster.js',
-	'src/processors/ExternalScript.js',
-	'src/processors/ContextConsumer.js',
-	'src/ComponentDefinition.js',
-];
+const processors = fs.readdirSync('src/processors').map((file) => `src/processors/${file}`);
+const classFiles = ['src/TramLite.js', ...processors, 'src/ComponentDefinition.js'];
+
 const loadedClassFiles = Object.fromEntries(
 	classFiles.map((filePath) => {
 		console.log('loading', filePath);
@@ -67,11 +68,6 @@ const buildConfigs = [
 		defines: { INSTALL: false },
 		enclose: true,
 	},
-	{
-		outputFile: 'output/export-dependencies.js',
-		files: { ...loadedClassFiles, ...importComponentClass },
-		defines: { INSTALL: false },
-	},
 ];
 
 buildConfigs.forEach((config) => {
@@ -97,12 +93,19 @@ buildConfigs.forEach((config) => {
 const minifyConfigs = [
 	{ inputFile: 'output/tram-lite.js', outputFile: 'output/tram-lite.min.js' },
 	{ inputFile: 'output/import-components.js', outputFile: 'output/import-components.min.js' },
-	{ inputFile: 'output/export-dependencies.js', outputFile: 'output/export-dependencies.min.js' },
+	// build files for use with the export-components script
+	...classFiles.map((classFile) => ({
+		inputFile: classFile,
+		outputFile: classFile.replace('src', 'output/export').replace('.js', '.min.js'),
+	})),
+	{ inputFile: 'src/ImportComponent.js', outputFile: 'output/export/ImportComponent.min.js' },
 ];
 
 minifyConfigs.forEach((config) => {
 	console.log('minifying', config.outputFile);
-	const result = UglifyJS.minify(fs.readFileSync(config.inputFile, 'utf8'));
+	const result = UglifyJS.minify(fs.readFileSync(config.inputFile, 'utf8'), {
+		compress: { global_defs: { APP_VERSION: version, INSTALL: false } },
+	});
 	fs.writeFileSync(config.outputFile, result.code);
 });
 
