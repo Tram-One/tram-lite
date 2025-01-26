@@ -1,3 +1,6 @@
+> [!warning]
+> this specific project in the Tram-One org is no longer under active development. We recommend checking out our other projects for web-development, namely [Tram-Deco](https://github.com/Tram-One/tram-deco)
+
 <p align="center">
   <a href="http://tram-one.io/tram-lite/" target="_blank">
     <img src="https://unpkg.com/@tram-one/tram-logo@5.0.1/dist/lite.svg" width="128">
